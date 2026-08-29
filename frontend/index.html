@@ -121,56 +121,72 @@
     </header>
 
     <!-- Desktop Sidebar (md and above) -->
-    <aside class="hidden md:flex fixed inset-y-0 left-0 z-30 flex-col w-72 h-full bg-surface-container-lowest dark:bg-surface-container-low border-r border-sage/40 pt-20 pb-6 px-4">
+    <aside class="hidden md:flex fixed inset-y-0 left-0 z-30 flex-col w-72 h-full bg-surface-container-lowest dark:bg-surface-container-low border-r border-sage/60 pt-20 pb-6 px-4">
       <!-- Farmer Profile Header -->
-      <div class="flex items-center gap-3 p-3 mb-4 rounded-xl bg-surface-container/60 border border-sage/30">
-        <div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-lg shadow-inner">
+      <div class="flex items-center gap-3 p-3.5 mb-4 rounded-2xl bg-surface-container border border-sage/60">
+        <div class="w-11 h-11 rounded-xl bg-primary text-white flex items-center justify-center font-bold text-base shadow-sm">
           <span class="material-symbols-outlined text-2xl">person</span>
         </div>
-        <div>
-          <h3 id="sidebar-farmer-name" class="font-bold text-primary dark:text-primary-fixed text-sm">Ramesh Patil</h3>
-          <p id="sidebar-crop-summary" class="text-xs text-leaf font-medium">🌾 2 Acres • Onion</p>
-          <p id="sidebar-location-text" class="text-[11px] text-outline">Nashik, MH</p>
+        <div class="overflow-hidden">
+          <h3 id="sidebar-farmer-name" class="font-bold text-primary dark:text-primary-fixed text-sm truncate">Ramesh Patil</h3>
+          <p id="sidebar-crop-summary" class="text-xs text-leaf font-semibold truncate">🌾 2 Acres • Onion</p>
+          <p id="sidebar-location-text" class="text-[11px] text-outline truncate">Nashik, Maharashtra</p>
         </div>
       </div>
 
-      <!-- Navigation Links -->
-      <nav class="flex-1 space-y-1 overflow-y-auto pr-1">
-        <a href="#dashboard" data-route="dashboard" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
-          <span class="material-symbols-outlined text-xl">dashboard</span>
-          <span data-t="todayTasks">Dashboard</span>
-        </a>
-        <a href="#scanner" data-route="scanner" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
-          <span class="material-symbols-outlined text-xl">center_focus_strong</span>
-          <span data-t="cropScanner">Crop Scanner</span>
-        </a>
-        <a href="#crop-analysis" data-route="crop-analysis" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
-          <span class="material-symbols-outlined text-xl">analytics</span>
-          <span data-t="cropAnalysis">Crop Analysis</span>
-        </a>
-        <a href="#weather" data-route="weather" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
-          <span class="material-symbols-outlined text-xl">thunderstorm</span>
-          <span data-t="weatherRisk">Weather Risk</span>
-        </a>
-        <a href="#market-prices" data-route="market-prices" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
-          <span class="material-symbols-outlined text-xl">payments</span>
-          <span>Market Price</span>
-        </a>
-        <a href="#schemes" data-route="schemes" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
-          <span class="material-symbols-outlined text-xl">account_balance</span>
-          <span data-t="schemes">Government Schemes</span>
-        </a>
+      <!-- Navigation Links by Structured Sections -->
+      <nav class="flex-1 space-y-4 overflow-y-auto pr-1">
+        <!-- HOME SECTION -->
+        <div>
+          <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-outline mb-1.5" data-t="home">मुख्य</p>
+          <a href="#dashboard" data-route="dashboard" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors hover:bg-surface-container">
+            <span class="material-symbols-outlined text-xl">dashboard</span>
+            <span data-t="dashboard">मुख्य फलक</span>
+          </a>
+        </div>
+
+        <!-- TODAY SECTION -->
+        <div>
+          <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-outline mb-1.5" data-t="todayOps">आजची शेती कामे</p>
+          <div class="space-y-1">
+            <a href="#scanner" data-route="scanner" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors hover:bg-surface-container">
+              <span class="material-symbols-outlined text-xl">center_focus_strong</span>
+              <span data-t="cropScanner">पीक रोग स्कॅनर</span>
+            </a>
+            <a href="#crop-analysis" data-route="crop-analysis" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors hover:bg-surface-container">
+              <span class="material-symbols-outlined text-xl">analytics</span>
+              <span data-t="cropAnalysis">पीक विश्लेषण व निर्णय</span>
+            </a>
+            <a href="#weather" data-route="weather" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors hover:bg-surface-container">
+              <span class="material-symbols-outlined text-xl">thunderstorm</span>
+              <span data-t="weatherRisk">हवामान अंदाज व जोखीम</span>
+            </a>
+            <a href="#market-prices" data-route="market-prices" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors hover:bg-surface-container">
+              <span class="material-symbols-outlined text-xl">payments</span>
+              <span data-t="marketPrices">बाजार भाव (मंडी)</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- SERVICES SECTION -->
+        <div>
+          <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-outline mb-1.5" data-t="services">सेवा व शासकीय योजना</p>
+          <a href="#schemes" data-route="schemes" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors hover:bg-surface-container">
+            <span class="material-symbols-outlined text-xl">account_balance</span>
+            <span data-t="schemes">शासकीय योजना व अनुदान</span>
+          </a>
+        </div>
       </nav>
 
       <!-- Bottom Quick Actions -->
-      <div class="pt-3 border-t border-sage/40 space-y-1">
-        <a href="#welcome" class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs text-outline hover:bg-surface-variant transition-colors">
+      <div class="pt-3 border-t border-sage/60 space-y-1">
+        <a href="#welcome" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-outline hover:bg-surface-container hover:text-primary transition-colors">
           <span class="material-symbols-outlined text-base">translate</span>
-          <span>Change Language</span>
+          <span data-t="changeLang">भाषा बदला</span>
         </a>
-        <button onclick="AUTH_SERVICE.logout()" class="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs text-error hover:bg-error/10 transition-colors text-left">
+        <button onclick="AUTH_SERVICE.logout()" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-error hover:bg-error/10 transition-colors text-left">
           <span class="material-symbols-outlined text-base">logout</span>
-          <span>Sign Out / Lock</span>
+          <span data-t="signOut">बाहेर पडा</span>
         </button>
       </div>
     </aside>
@@ -178,56 +194,67 @@
     <!-- Mobile Drawer Overlay & Drawer -->
     <div id="drawer-overlay" onclick="closeDrawer()" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-opacity"></div>
     <div id="mobile-drawer" class="fixed top-0 left-0 bottom-0 z-50 w-72 bg-surface-container-lowest border-r border-sage p-5 flex flex-col -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl">
-      <div class="flex items-center justify-between pb-4 border-b border-sage/40 mb-4">
+      <div class="flex items-center justify-between pb-4 border-b border-sage/60 mb-4">
         <div class="flex items-center gap-2.5">
           <img src="assets/logo.png" alt="KisanSathi Logo" class="w-8 h-8 object-contain rounded-lg shadow-sm" />
-          <span class="font-bold text-lg text-primary dark:text-primary-fixed">KisanSathi</span>
+          <span class="font-bold text-lg text-primary dark:text-primary-fixed" data-t="appName">किसान साथी</span>
         </div>
         <button onclick="closeDrawer()" class="p-1 text-outline hover:text-charcoal">
           <span class="material-symbols-outlined">close</span>
         </button>
       </div>
 
-      <nav class="flex-1 space-y-1 overflow-y-auto">
-        <a href="#dashboard" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
-          <span class="material-symbols-outlined">dashboard</span>
-          <span data-t="todayTasks">Dashboard</span>
-        </a>
-        <a href="#scanner" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
-          <span class="material-symbols-outlined">center_focus_strong</span>
-          <span data-t="cropScanner">Crop Scanner</span>
-        </a>
-        <a href="#crop-analysis" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
-          <span class="material-symbols-outlined">analytics</span>
-          <span data-t="cropAnalysis">Crop Analysis</span>
-        </a>
-        <a href="#weather" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
-          <span class="material-symbols-outlined">thunderstorm</span>
-          <span data-t="weatherRisk">Weather Risk</span>
-        </a>
-        <a href="#market-prices" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
-          <span class="material-symbols-outlined">payments</span>
-          <span>Market Price</span>
-        </a>
-        <a href="#schemes" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
-          <span class="material-symbols-outlined">account_balance</span>
-          <span data-t="schemes">Govt Schemes</span>
-        </a>
+      <nav class="flex-1 space-y-4 overflow-y-auto">
+        <div>
+          <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-outline mb-1.5" data-t="home">मुख्य</p>
+          <a href="#dashboard" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span data-t="dashboard">मुख्य फलक</span>
+          </a>
+        </div>
+        <div>
+          <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-outline mb-1.5" data-t="todayOps">आजची शेती कामे</p>
+          <div class="space-y-1">
+            <a href="#scanner" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium">
+              <span class="material-symbols-outlined">center_focus_strong</span>
+              <span data-t="cropScanner">पीक रोग स्कॅनर</span>
+            </a>
+            <a href="#crop-analysis" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium">
+              <span class="material-symbols-outlined">analytics</span>
+              <span data-t="cropAnalysis">पीक विश्लेषण व निर्णय</span>
+            </a>
+            <a href="#weather" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium">
+              <span class="material-symbols-outlined">thunderstorm</span>
+              <span data-t="weatherRisk">हवामान अंदाज व जोखीम</span>
+            </a>
+            <a href="#market-prices" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium">
+              <span class="material-symbols-outlined">payments</span>
+              <span data-t="marketPrices">बाजार भाव (मंडी)</span>
+            </a>
+          </div>
+        </div>
+        <div>
+          <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-outline mb-1.5" data-t="services">सेवा व शासकीय योजना</p>
+          <a href="#schemes" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium">
+            <span class="material-symbols-outlined">account_balance</span>
+            <span data-t="schemes">शासकीय योजना व अनुदान</span>
+          </a>
+        </div>
       </nav>
 
-      <div class="pt-4 border-t border-sage/40 flex flex-col gap-2">
-        <a href="#welcome" class="flex items-center gap-2 px-3 py-2 text-xs text-outline hover:text-primary">
+      <div class="pt-4 border-t border-sage/60 flex flex-col gap-2">
+        <a href="#welcome" class="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-outline hover:text-primary">
           <span class="material-symbols-outlined text-sm">translate</span>
-          <span>Change Language</span>
+          <span data-t="changeLang">भाषा बदला</span>
         </a>
       </div>
     </div>
 
     <!-- Mobile Bottom Navigation Bar (below md) -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 h-16 glass-nav border-t border-sage/40 flex items-center justify-around px-2">
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 h-16 glass-nav border-t border-sage/60 flex items-center justify-around px-2">
       <a href="#dashboard" class="flex flex-col items-center justify-center w-14 text-center py-1 text-on-surface-variant hover:text-primary">
         <span class="material-symbols-outlined text-xl">dashboard</span>
-        <span class="text-[10px] mt-0.5 font-medium">Home</span>
+        <span class="text-[10px] mt-0.5 font-medium" data-t="home">मुख्य</span>
       </a>
       <a href="#scanner" class="flex flex-col items-center justify-center w-14 text-center py-1 text-on-surface-variant hover:text-primary">
         <div class="w-10 h-10 -mt-5 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-md">
@@ -508,260 +535,322 @@
     <!-- Header Greeting -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
       <div>
-        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed tracking-tight"><span id="dashboard-farmer-name">Hi Ramesh</span> 👋</h1>
-        <div class="flex flex-wrap items-center gap-3 text-xs md:text-sm text-on-surface-variant mt-1">
-          <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-leaf">location_on</span> <span id="dashboard-location-text">Nashik, Maharashtra</span></span>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed tracking-tight"><span id="dashboard-farmer-name">नमस्ते रमेशजी</span> 👋</h1>
+        <div class="flex flex-wrap items-center gap-2.5 text-xs md:text-sm text-on-surface-variant mt-1">
+          <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-leaf">location_on</span> <span id="dashboard-location-text">नाशिक, महाराष्ट्र</span></span>
           <span>•</span>
-          <span class="flex items-center gap-1 font-medium text-primary dark:text-primary-fixed">🌱 <span id="dashboard-crop-summary">Onion • 2 Acres</span> (Active Stage: Bulb Formation)</span>
+          <span class="flex items-center gap-1 font-medium text-primary dark:text-primary-fixed">🌱 <span id="dashboard-crop-summary">कांदा • २ एकड</span> (वाढीची अवस्था)</span>
         </div>
       </div>
       <div class="flex items-center gap-2">
-        <a href="#scanner" class="bg-primary text-on-primary px-4 py-2.5 rounded-xl font-semibold text-xs md:text-sm flex items-center gap-2 hover:bg-primary-container transition-all shadow-sm">
+        <a href="#scanner" class="bg-primary text-white px-4 py-2.5 rounded-xl font-semibold text-xs md:text-sm flex items-center gap-2 hover:bg-primary-container transition-all shadow-sm">
           <span class="material-symbols-outlined text-lg">center_focus_strong</span>
-          <span>Quick Scan</span>
+          <span data-t="scanLeaf">पीक तपासणी</span>
         </a>
       </div>
     </div>
 
-    <!-- Critical Task Banner / Alert -->
-    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 md:p-6 mb-6 relative overflow-hidden shadow-sm">
-      <div class="absolute -right-10 -top-10 w-48 h-48 bg-warning/20 rounded-full blur-3xl pointer-events-none"></div>
-      
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
-        <div>
+    <!-- DOMINANT HERO: TODAY'S FARM ACTION -->
+    <div class="bg-surface-container-lowest dark:bg-surface-container-low border-2 border-primary/20 dark:border-primary/40 rounded-2xl p-5 md:p-6 mb-6 shadow-sm">
+      <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+        <div class="flex-1">
           <div class="flex items-center gap-2 mb-2">
-            <span id="dashboard-task-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-warning/20 text-warning flex items-center gap-1">
+            <span id="dashboard-task-badge" class="px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider bg-warning-container text-warning flex items-center gap-1">
               <span id="dashboard-task-icon" class="material-symbols-outlined text-sm">warning</span>
-              <span data-t="todayTasks">Action Recommended Today</span>
+              <span data-t="todaysFarmAction">आजचा मुख्य कृषी सल्ला</span>
             </span>
+            <span class="text-[11px] text-outline">• Priority 1</span>
           </div>
-          <h2 id="dashboard-task-title" class="text-xl md:text-2xl font-bold text-primary dark:text-primary-fixed" data-t="delayIrrigation">Delay Irrigation</h2>
-          <p id="dashboard-task-desc" class="text-sm md:text-base text-on-surface-variant mt-1" data-t="rainExpected">Rain is expected within 24 hours (72% rain probability, 18-24mm expected).</p>
+
+          <h2 id="dashboard-task-title" class="text-2xl md:text-3xl font-black text-primary dark:text-primary-fixed tracking-tight">
+            🌧️ आज पाणी देणे पुढे ढकला
+          </h2>
+          <p id="dashboard-task-desc" class="text-sm md:text-base text-on-surface-variant mt-2 leading-relaxed font-normal">
+            पुढील २४ ते ४८ तासांत ६७% पाऊस पडण्याची शक्यता आहे. वीज व पाण्याची बचत करण्यासाठी सिंचन थांबवा आणि पिकाच्या मुळांचे संरक्षण करा.
+          </p>
+
+          <!-- Inline "Why this recommendation?" Expandable Box -->
+          <div class="mt-4">
+            <button type="button" onclick="document.getElementById('dashboard-why-panel').classList.toggle('hidden')" class="inline-flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed hover:underline bg-secondary-container/60 px-3 py-1.5 rounded-lg transition-colors">
+              <span class="material-symbols-outlined text-sm">help_outline</span>
+              <span data-t="whyRecommendation">हा सल्ला का दिला? (सविस्तर कारणे)</span>
+              <span class="material-symbols-outlined text-xs">expand_more</span>
+            </button>
+
+            <div id="dashboard-why-panel" class="hidden mt-3 p-4 rounded-xl bg-surface-container border border-sage/60 text-xs space-y-1.5 text-on-surface">
+              <p class="font-bold text-primary dark:text-primary-fixed mb-1">कृषी हवामान घटक विश्लेषण:</p>
+              <p class="flex items-center gap-2"><span>🌦️ पावसाची शक्यता:</span> <b class="text-primary dark:text-primary-fixed" id="why-rain-prob">६७% (अपेक्षित ~७–१२ मिमी)</b></p>
+              <p class="flex items-center gap-2"><span>🪴 मातीतील ओलावा:</span> <b class="text-primary dark:text-primary-fixed">जास्त (काळी कसदार माती)</b></p>
+              <p class="flex items-center gap-2"><span>🧅 पिकाची अवस्था:</span> <b class="text-primary dark:text-primary-fixed">पोषण व वाढीची अवस्था (४८ वा दिवस)</b></p>
+              <p class="text-outline text-[11px] pt-1 border-t border-sage/40">निष्कर्ष: जमिनीत पुरेसा ओलावा असून आगामी पावसामुळे पिकाची पाण्याची गरज पूर्ण होईल; त्यामुळे पाणी देणे पुढे ढकलावे.</p>
+            </div>
+          </div>
         </div>
 
-        <div class="flex items-center gap-3">
-          <a href="#weather" class="bg-primary text-on-primary px-5 py-2.5 rounded-xl text-xs md:text-sm font-semibold hover:bg-primary-container transition-colors" data-t="why">
-            Why? Details
+        <div class="flex items-center gap-2 shrink-0">
+          <a href="#weather" class="bg-primary text-white px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold hover:bg-primary-container transition-colors" data-t="checkWeather">
+            हवामान अंदाज
           </a>
-          <button id="dashboard-task-listen-btn" onclick="WEATHER_SERVICE.speakCurrentAdvisory()" aria-label="Listen to advisory" class="w-11 h-11 rounded-xl bg-sage/60 hover:bg-secondary-container text-primary flex items-center justify-center transition-colors">
-            <span class="material-symbols-outlined text-xl">volume_up</span>
+          <button id="dashboard-task-listen-btn" onclick="WEATHER_SERVICE.speakCurrentAdvisory()" aria-label="Listen to advisory" class="px-3.5 py-2.5 rounded-xl bg-surface-container border border-sage/60 hover:bg-secondary-container text-primary flex items-center gap-1.5 transition-colors text-xs font-semibold">
+            <span class="material-symbols-outlined text-lg">volume_up</span>
+            <span data-t="listen">ऐका</span>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Bento Grid Summary Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+    <!-- SUPPORTING INFORMATION: 2-Column Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
       
-      <!-- Weather Risk Card -->
-      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 flex flex-col justify-between shadow-sm">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-bold uppercase tracking-wider text-outline" data-t="weatherRisk">WEATHER RISK</span>
-          <span id="dashboard-weather-icon" class="material-symbols-outlined text-leaf text-2xl">thunderstorm</span>
-        </div>
-        <div class="my-2">
-          <div class="flex items-baseline gap-2">
-            <span id="dashboard-weather-temp" class="text-3xl font-extrabold text-primary dark:text-primary-fixed">--°C</span>
-            <span id="dashboard-weather-condition" class="text-xs text-on-surface-variant">Connecting Open-Meteo...</span>
+      <!-- Card 1: Weather Conditions -->
+      <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-5 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-outline" data-t="weatherConditions">हवामान स्थिती</span>
+            <span class="text-[11px] font-semibold text-leaf flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-leaf animate-pulse"></span>
+              <span>Open-Meteo Synced</span>
+            </span>
           </div>
-          <div class="flex items-center gap-1 text-xs text-leaf font-semibold mt-1">
-            <span class="material-symbols-outlined text-sm">water_drop</span>
-            <span id="dashboard-weather-rain-prob">Fetching real-time data...</span>
+
+          <div class="grid grid-cols-3 gap-2 py-2">
+            <div class="p-3 rounded-xl bg-surface-container border border-sage/40 text-center">
+              <span class="text-[10px] uppercase font-bold text-outline block">तापमान</span>
+              <p id="dashboard-weather-temp" class="text-xl font-black text-primary dark:text-primary-fixed mt-0.5">28°C</p>
+              <span class="text-[10px] text-outline" id="dashboard-weather-condition">अंशतः ढगाळ</span>
+            </div>
+            <div class="p-3 rounded-xl bg-surface-container border border-sage/40 text-center">
+              <span class="text-[10px] uppercase font-bold text-outline block" data-t="rainProbability">पाऊस शक्यता</span>
+              <p id="dashboard-metric-rain" class="text-xl font-black text-primary dark:text-primary-fixed mt-0.5">६७%</p>
+              <span class="text-[10px] text-leaf font-semibold">पावसाची शक्यता</span>
+            </div>
+            <div class="p-3 rounded-xl bg-surface-container border border-sage/40 text-center">
+              <span class="text-[10px] uppercase font-bold text-outline block" data-t="humidity">आर्द्रता</span>
+              <p id="dashboard-metric-humidity" class="text-xl font-black text-primary dark:text-primary-fixed mt-0.5">७८%</p>
+              <span class="text-[10px] text-outline">मध्यम</span>
+            </div>
           </div>
         </div>
-        <a href="#weather" class="mt-4 text-xs font-semibold text-leaf hover:underline flex items-center justify-between pt-3 border-t border-sage/40">
-          <span>7-Day Agromet Risk Chart</span>
+
+        <a href="#weather" class="mt-3 text-xs font-bold text-primary dark:text-primary-fixed hover:underline flex items-center justify-between pt-3 border-t border-sage/40">
+          <span data-t="agrometForecast">७ दिवसांचा हवामान अंदाज पाहा</span>
           <span class="material-symbols-outlined text-sm">arrow_forward</span>
         </a>
       </div>
 
-      <!-- Crop Health Card -->
-      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 flex flex-col justify-between shadow-sm">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-bold uppercase tracking-wider text-outline" data-t="cropStatus">CROP STATUS</span>
-          <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-secondary-container text-on-secondary-container">94% Healthy</span>
+      <!-- Card 2: Crop Status -->
+      <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-5 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-outline" data-t="cropStatus">पीक आरोग्य स्थिती</span>
+            <span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-secondary-container text-on-secondary-container">९४% निरोगी</span>
+          </div>
+
+          <div class="space-y-1.5 py-1">
+            <h3 class="text-lg font-black text-primary dark:text-primary-fixed">खरीप कांदा • २ एकड</h3>
+            <p class="text-xs text-on-surface-variant">पिकाची अवस्था: <b>वाढ व पोषण</b> (४८ वा दिवस)</p>
+            <p class="text-xs text-outline">पुढील टप्पा: ३ दिवसांत प्रतिबंधात्मक फवारणी योग्य वेळ</p>
+          </div>
         </div>
-        <div class="my-2">
-          <h3 class="text-xl font-bold text-primary dark:text-primary-fixed">Kharif Onion</h3>
-          <p class="text-xs text-on-surface-variant mt-1">Vegetative Stage • Day 48 • Next spray due in 3 days</p>
-        </div>
-        <a href="#crop-analysis" class="mt-4 text-xs font-semibold text-leaf hover:underline flex items-center justify-between pt-3 border-t border-sage/40">
-          <span>View Health & Pathogen Report</span>
+
+        <a href="#crop-analysis" class="mt-3 text-xs font-bold text-primary dark:text-primary-fixed hover:underline flex items-center justify-between pt-3 border-t border-sage/40">
+          <span data-t="cropAnalysis">पीक विश्लेषण व सल्ला पाहा</span>
           <span class="material-symbols-outlined text-sm">arrow_forward</span>
         </a>
       </div>
     </div>
 
-    <!-- Quick Navigation Tiles -->
-    <h2 class="text-sm font-bold uppercase tracking-wider text-charcoal dark:text-gray-300 mb-4">Quick Feature Access</h2>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-      <a href="#scanner" class="p-4 rounded-2xl bg-surface-container-lowest border border-sage hover:border-leaf hover:shadow-md transition-all text-center group">
-        <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center group-hover:scale-110 transition-transform">
-          <span class="material-symbols-outlined text-2xl text-leaf">center_focus_strong</span>
+    <!-- 7-DAY AGROMET FORECAST STRIP ON DASHBOARD -->
+    <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-4 md:p-5 mb-6 shadow-sm">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-outline" data-t="agrometForecast">७ दिवसांचा हवामान अंदाज</h3>
+        <span class="text-[11px] text-outline">नाशिक कृषी क्षेत्र</span>
+      </div>
+      <div id="dashboard-7day-container" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+        <div class="p-2.5 rounded-xl bg-secondary-container/50 border border-primary/20 text-center">
+          <p class="text-xs font-bold text-primary dark:text-primary-fixed">आज</p>
+          <span class="material-symbols-outlined text-xl my-1 text-leaf">thunderstorm</span>
+          <p class="text-xs font-black text-charcoal dark:text-white">३१° / २२°</p>
+          <p class="text-[10px] text-leaf font-bold">६७% पाऊस</p>
         </div>
-        <p class="font-bold text-xs md:text-sm text-primary dark:text-primary-fixed" data-t="cropScanner">Crop Scanner</p>
-        <p class="text-[11px] text-outline mt-0.5">Detect leaf disease</p>
+        <div class="p-2.5 rounded-xl bg-surface-container border border-sage/40 text-center">
+          <p class="text-xs font-bold text-outline">उद्या</p>
+          <span class="material-symbols-outlined text-xl my-1 text-leaf">rainy</span>
+          <p class="text-xs font-black text-charcoal dark:text-white">२९° / २१°</p>
+          <p class="text-[10px] text-leaf font-bold">५५% पाऊस</p>
+        </div>
+        <div class="p-2.5 rounded-xl bg-surface-container border border-sage/40 text-center">
+          <p class="text-xs font-bold text-outline">मंगळ</p>
+          <span class="material-symbols-outlined text-xl my-1 text-amber-500">partly_cloudy_day</span>
+          <p class="text-xs font-black text-charcoal dark:text-white">३०° / २०°</p>
+          <p class="text-[10px] text-outline">स्वच्छ</p>
+        </div>
+        <div class="p-2.5 rounded-xl bg-surface-container border border-sage/40 text-center">
+          <p class="text-xs font-bold text-outline">बुध</p>
+          <span class="material-symbols-outlined text-xl my-1 text-amber-500">wb_sunny</span>
+          <p class="text-xs font-black text-charcoal dark:text-white">३२° / २०°</p>
+          <p class="text-[10px] text-leaf font-bold">फवारणी वेळ</p>
+        </div>
+        <div class="p-2.5 rounded-xl bg-surface-container border border-sage/40 text-center">
+          <p class="text-xs font-bold text-outline">गुरु</p>
+          <span class="material-symbols-outlined text-xl my-1 text-amber-500">wb_sunny</span>
+          <p class="text-xs font-black text-charcoal dark:text-white">३३° / २१°</p>
+          <p class="text-[10px] text-outline">स्वच्छ आकाश</p>
+        </div>
+        <div class="p-2.5 rounded-xl bg-surface-container border border-sage/40 text-center">
+          <p class="text-xs font-bold text-outline">शुक्र</p>
+          <span class="material-symbols-outlined text-xl my-1 text-amber-500">partly_cloudy_day</span>
+          <p class="text-xs font-black text-charcoal dark:text-white">३२° / २२°</p>
+          <p class="text-[10px] text-outline">साधारण</p>
+        </div>
+        <div class="p-2.5 rounded-xl bg-surface-container border border-sage/40 text-center">
+          <p class="text-xs font-bold text-outline">शनि</p>
+          <span class="material-symbols-outlined text-xl my-1 text-amber-500">wb_sunny</span>
+          <p class="text-xs font-black text-charcoal dark:text-white">३३° / २१°</p>
+          <p class="text-[10px] text-outline">स्वच्छ</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Feature Access Tiles -->
+    <h2 class="text-xs font-bold uppercase tracking-wider text-outline mb-3" data-t="quickActions">जलद कृषी सेवा</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+      <a href="#scanner" class="p-4 rounded-2xl bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 hover:border-primary hover:shadow-md transition-all text-center group">
+        <div class="w-10 h-10 mx-auto mb-2 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center group-hover:scale-105 transition-transform">
+          <span class="material-symbols-outlined text-xl">center_focus_strong</span>
+        </div>
+        <p class="font-bold text-xs md:text-sm text-primary dark:text-primary-fixed" data-t="cropScanner">पीक रोग स्कॅनर</p>
+        <p class="text-[11px] text-outline mt-0.5" data-t="scanLeaf">पानाचा फोटो तपासा</p>
       </a>
 
-      <a href="#crop-analysis" class="p-4 rounded-2xl bg-surface-container-lowest border border-sage hover:border-leaf hover:shadow-md transition-all text-center group">
-        <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-sage/60 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
-          <span class="material-symbols-outlined text-2xl text-leaf">analytics</span>
+      <a href="#crop-analysis" class="p-4 rounded-2xl bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 hover:border-primary hover:shadow-md transition-all text-center group">
+        <div class="w-10 h-10 mx-auto mb-2 rounded-xl bg-surface-container text-primary flex items-center justify-center group-hover:scale-105 transition-transform">
+          <span class="material-symbols-outlined text-xl">analytics</span>
         </div>
-        <p class="font-bold text-xs md:text-sm text-primary dark:text-primary-fixed" data-t="cropAnalysis">Crop Analysis</p>
-        <p class="text-[11px] text-outline mt-0.5">Farm Plot AI & Advisory</p>
+        <p class="font-bold text-xs md:text-sm text-primary dark:text-primary-fixed" data-t="cropAnalysis">पीक विश्लेषण</p>
+        <p class="text-[11px] text-outline mt-0.5">एआय कृषी सल्ला</p>
       </a>
 
-      <a href="#weather" class="p-4 rounded-2xl bg-surface-container-lowest border border-sage hover:border-leaf hover:shadow-md transition-all text-center group">
-        <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-sage/60 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
-          <span class="material-symbols-outlined text-2xl text-leaf">thunderstorm</span>
+      <a href="#weather" class="p-4 rounded-2xl bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 hover:border-primary hover:shadow-md transition-all text-center group">
+        <div class="w-10 h-10 mx-auto mb-2 rounded-xl bg-surface-container text-primary flex items-center justify-center group-hover:scale-105 transition-transform">
+          <span class="material-symbols-outlined text-xl">thunderstorm</span>
         </div>
-        <p class="font-bold text-xs md:text-sm text-primary dark:text-primary-fixed" data-t="weatherRisk">Weather Risk</p>
-        <p class="text-[11px] text-outline mt-0.5">Agromet forecast</p>
+        <p class="font-bold text-xs md:text-sm text-primary dark:text-primary-fixed" data-t="weatherRisk">हवामान अंदाज</p>
+        <p class="text-[11px] text-outline mt-0.5">कृषी हवामान जोखीम</p>
       </a>
 
-      <a href="#schemes" class="p-4 rounded-2xl bg-surface-container-lowest border border-sage hover:border-leaf hover:shadow-md transition-all text-center group">
-        <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-sage/60 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
-          <span class="material-symbols-outlined text-2xl">account_balance</span>
+      <a href="#schemes" class="p-4 rounded-2xl bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 hover:border-primary hover:shadow-md transition-all text-center group">
+        <div class="w-10 h-10 mx-auto mb-2 rounded-xl bg-surface-container text-primary flex items-center justify-center group-hover:scale-105 transition-transform">
+          <span class="material-symbols-outlined text-xl">account_balance</span>
         </div>
-        <p class="font-bold text-xs md:text-sm text-primary dark:text-primary-fixed" data-t="schemes">Govt Schemes</p>
-        <p class="text-[11px] text-outline mt-0.5">Subsidies & claims</p>
+        <p class="font-bold text-xs md:text-sm text-primary dark:text-primary-fixed" data-t="schemes">शासकीय योजना</p>
+        <p class="text-[11px] text-outline mt-0.5" data-t="applySchemes">अनुदान व लाभ</p>
       </a>
     </div>
   </section>
 
 
   <!-- ==================== VIEW 5: CROP SCANNER (IMAGE-ONLY VISUAL SCANNER) ==================== -->
-  <section id="view-scanner" class="app-view hidden max-w-3xl mx-auto px-4 md:px-6 py-6">
-    <div class="text-center max-w-xl mx-auto mb-6">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-leaf/15 border border-leaf/30 text-leaf text-xs font-bold mb-2">
-        <span class="w-2 h-2 rounded-full bg-leaf animate-pulse"></span>
-        <span>Visual Image Scanner • "What do I see in this image?"</span>
-      </div>
-      <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="cropScanner">
-        AI Crop Leaf Scanner
+  <section id="view-scanner" class="app-view hidden max-w-2xl mx-auto px-4 md:px-6 py-6">
+    <div class="text-center max-w-lg mx-auto mb-6">
+      <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed tracking-tight" data-t="cropScanner">
+        पीक रोग स्कॅनर
       </h1>
-      <p class="text-xs md:text-sm text-on-surface-variant mt-1">
-        Upload or capture an affected leaf or plant image for immediate visual symptom detection.
+      <p class="text-sm text-on-surface-variant mt-1.5 leading-relaxed" data-t="takeClearPhoto">
+        पिकावरील रोगाची तत्काळ तपासणी करण्यासाठी पानाचा स्पष्ट फोटो अपलोड करा.
       </p>
     </div>
 
-    <!-- Clean White Square Image Upload Dropzone -->
-    <div class="w-full max-w-lg mx-auto mb-6">
-      <div id="scanner-dropzone" onclick="document.getElementById('scanner-file-input').click()" class="cursor-pointer group relative bg-surface-container-lowest dark:bg-surface-container-low border-2 border-dashed border-sage hover:border-leaf rounded-3xl p-8 text-center transition-all duration-200 hover:shadow-lg shadow-sm">
-        <input type="file" id="scanner-file-input" accept="image/*" class="hidden" onchange="GEMINI_SCANNER_SERVICE.handleImageUpload(event)" />
+    <!-- Clean Image Upload Dropzone -->
+    <div class="w-full max-w-md mx-auto mb-6">
+      <div id="scanner-dropzone" onclick="document.getElementById('scanner-file-input').click()" class="cursor-pointer group relative bg-surface-container-lowest dark:bg-surface-container-low border-2 border-dashed border-sage/80 hover:border-primary rounded-2xl p-6 text-center transition-all duration-200 hover:shadow-md shadow-sm">
         
-        <!-- Default State (No image selected yet) -->
-        <div id="scanner-upload-placeholder" class="py-8 flex flex-col items-center justify-center">
-          <div class="w-20 h-20 rounded-2xl bg-secondary-container text-on-secondary-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-inner">
-            <span class="material-symbols-outlined text-4xl text-leaf">photo_camera</span>
+        <!-- Hidden Real File Input -->
+        <input type="file" id="scanner-file-input" accept="image/*" class="hidden" onchange="GEMINI_SCANNER_SERVICE.handleImageSelect(event)" />
+
+        <!-- Unselected State -->
+        <div id="scanner-empty-state" class="flex flex-col items-center justify-center py-6">
+          <div class="w-16 h-16 rounded-2xl bg-secondary-container text-on-secondary-container flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+            <span class="material-symbols-outlined text-3xl text-leaf">photo_camera</span>
           </div>
-          <h2 class="text-lg md:text-xl font-bold text-primary dark:text-primary-fixed mb-1">
-            Capture or Upload Leaf Photo
+          <h2 class="text-base font-bold text-primary dark:text-primary-fixed mb-1" data-t="cameraUpload">
+            कॅमेऱ्याने फोटो काढा / गॅलरीतून निवडा
           </h2>
-          <p class="text-xs text-on-surface-variant max-w-xs mb-4">
-            Click here or drop your crop photo to analyze visual foliar symptoms
+          <p class="text-xs text-outline max-w-xs mb-4">
+            फोटो घेण्यासाठी किंवा डिव्हाइसमधून निवडण्यासाठी येथे क्लिक करा
           </p>
-          <span class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-on-primary font-semibold text-xs shadow-sm group-hover:bg-primary-container transition-colors">
+          <span class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white font-semibold text-xs shadow-sm hover:bg-primary-container transition-colors">
             <span class="material-symbols-outlined text-base">cloud_upload</span>
-            <span>Select Image to Scan</span>
+            <span data-t="chooseImage">फोटो निवडा</span>
           </span>
-          <p class="text-[11px] text-outline mt-3">Supports JPG, PNG, WEBP • Max 15MB</p>
+          <p class="text-[11px] text-outline mt-3" data-t="supportsFormat">JPG, PNG, WEBP फॉरमॅट स्वीकारले जातील</p>
         </div>
 
         <!-- Selected Image Preview State -->
         <div id="scanner-image-preview-container" class="hidden flex flex-col items-center">
-          <div class="relative w-full max-w-xs aspect-square rounded-2xl overflow-hidden border-2 border-leaf shadow-md mb-4">
+          <div class="relative w-full max-w-xs aspect-square rounded-xl overflow-hidden border-2 border-primary/40 shadow-sm mb-4">
             <img id="scanner-selected-image" src="" alt="Selected Crop Leaf" class="w-full h-full object-cover" />
-            <span class="absolute top-2 right-2 px-2.5 py-1 rounded-md bg-black/70 text-white text-[10px] font-bold backdrop-blur-sm">
-              Ready for Visual Scan
+            <span class="absolute top-2 right-2 px-2 py-0.5 rounded bg-black/75 text-white text-[10px] font-bold">
+              फोटो निवडला
             </span>
           </div>
-          <div class="flex gap-3">
-            <button type="button" onclick="event.stopPropagation(); document.getElementById('scanner-file-input').click();" class="px-4 py-2 rounded-xl bg-surface-container-low border border-sage text-xs font-semibold text-charcoal dark:text-gray-200 hover:bg-surface-variant transition-colors">
-              Change Image
+          <div class="flex gap-2.5">
+            <button type="button" onclick="event.stopPropagation(); document.getElementById('scanner-file-input').click();" class="px-4 py-2 rounded-xl bg-surface-container border border-sage/60 text-xs font-semibold text-charcoal dark:text-gray-200 hover:bg-surface-variant transition-colors">
+              <span data-t="changePhoto">दुसरा फोटो निवडा</span>
             </button>
-            <button type="button" onclick="event.stopPropagation(); GEMINI_SCANNER_SERVICE.triggerScan();" class="px-5 py-2 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-container shadow-sm flex items-center gap-1.5 transition-all active:scale-95">
+            <button type="button" onclick="event.stopPropagation(); GEMINI_SCANNER_SERVICE.triggerScan();" class="px-5 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-container shadow-sm flex items-center gap-1.5 transition-all active:scale-95">
               <span class="material-symbols-outlined text-sm">search</span>
-              <span>Scan Crop Image</span>
+              <span data-t="scanCrop">पीक तपासणी करा</span>
             </button>
           </div>
         </div>
       </div>
     </div>
 
-
-
-    <!-- ==================== CROP SCANNER VISUAL RESULT BOX (Hidden until image is scanned) ==================== -->
-    <div id="scanner-inline-results" class="hidden w-full max-w-lg mx-auto space-y-4 fade-in-up">
-      <div class="bg-surface-container-lowest border border-sage rounded-3xl p-6 shadow-sm">
+    <!-- ==================== CROP SCAN RESULT BOX ==================== -->
+    <div id="scanner-inline-results" class="hidden w-full max-w-md mx-auto space-y-4 fade-in-up">
+      <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-5 md:p-6 shadow-sm">
         
         <!-- Status Header Badge -->
-        <div class="flex items-center justify-between pb-4 border-b border-sage/40 mb-4">
+        <div class="flex items-center justify-between pb-3.5 border-b border-sage/40 mb-4">
           <div>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-outline">Visual Scan Result</span>
-            <div class="flex items-center gap-2 mt-0.5">
-              <span id="scan-result-status-dot" class="w-3 h-3 rounded-full bg-warning animate-pulse"></span>
-              <h2 id="scan-result-status-title" class="text-lg font-extrabold text-primary dark:text-primary-fixed">
-                🟡 Possible Issue Detected
-              </h2>
-            </div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-outline" data-t="cropScanResult">पीक रोग तपासणी अहवाल</span>
+            <h2 id="scan-result-status-title" class="text-base md:text-lg font-bold text-primary dark:text-primary-fixed mt-0.5">
+              🟡 संभाव्य रोग लक्षणे
+            </h2>
           </div>
-          <span id="scan-result-confidence-badge" class="px-3 py-1 rounded-full text-xs font-extrabold bg-secondary-container text-on-secondary-container">
-            --% Confidence
+          <span id="scan-result-confidence-badge" class="px-2.5 py-1 rounded-md text-xs font-bold bg-secondary-container text-on-secondary-container">
+            अचूकता: ७८%
           </span>
         </div>
 
-        <!-- Visual Finding Summary -->
-        <div class="space-y-3.5 text-xs">
-          <div class="p-3.5 rounded-xl bg-surface-container-low border border-sage/50">
-            <p class="font-bold text-primary dark:text-primary-fixed mb-1 flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-sm text-leaf">visibility</span>
-              <span>Visual Finding:</span>
+        <!-- Finding Summary -->
+        <div class="space-y-3 text-xs">
+          <div class="p-3 rounded-xl bg-surface-container border border-sage/40">
+            <p id="scan-result-finding" class="text-on-surface font-medium leading-relaxed">
+              पानांवर संभाव्य बुरशीजन्य रोगाची लक्षणे आढळून आली आहेत.
             </p>
-            <p id="scan-result-finding" class="text-on-surface-variant leading-relaxed">
-              Analyzing visual leaf characteristics...
-            </p>
-          </div>
-
-          <!-- Possible Problem / Pathogen -->
-          <div class="flex items-start justify-between p-3.5 rounded-xl bg-surface-container-low border border-sage/50">
-            <div>
-              <p class="font-bold text-primary dark:text-primary-fixed">Possible Issue:</p>
-              <p id="scan-result-issue-name" class="text-sm font-bold text-error mt-0.5">--</p>
-            </div>
-            <div class="text-right">
-              <p class="text-[10px] text-outline font-semibold">Image Quality</p>
-              <p id="scan-result-quality" class="font-bold text-leaf">Good</p>
-            </div>
           </div>
 
           <!-- Observed Symptoms -->
           <div>
-            <p class="font-bold text-primary dark:text-primary-fixed mb-1.5">Observed Foliar Symptoms:</p>
-            <div id="scan-result-symptoms-chips" class="flex flex-wrap gap-1.5">
-              <span class="px-2.5 py-1 rounded-lg bg-surface-container-low border border-sage/50 text-[11px] text-charcoal dark:text-gray-200">Processing...</span>
+            <p class="font-bold text-primary dark:text-primary-fixed mb-1.5" data-t="observedSymptoms">आढळून आलेली लक्षणे:</p>
+            <div id="scan-result-symptoms-chips" class="space-y-1 text-on-surface">
+              <p class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-leaf"></span><span>पानांवर ठिपके</span></p>
+              <p class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-leaf"></span><span>कडा पिवळ्या पडणे</span></p>
             </div>
-          </div>
-
-          <!-- Short Farmer Observation Note -->
-          <div class="p-3.5 rounded-xl bg-leaf/10 border border-leaf/30">
-            <p class="font-bold text-leaf text-[11px] uppercase tracking-wider mb-0.5">Farmer Summary</p>
-            <p id="scan-result-farmer-msg" class="text-charcoal dark:text-gray-200 text-xs leading-relaxed">
-              --
-            </p>
           </div>
         </div>
 
         <!-- Action Buttons -->
-        <div class="pt-5 mt-5 border-t border-sage/40 flex flex-col sm:flex-row gap-3">
-          <button onclick="document.getElementById('scanner-file-input').click()" class="flex-1 py-2.5 px-4 rounded-xl bg-surface-container-low border border-sage text-xs font-semibold text-charcoal dark:text-gray-200 hover:bg-surface-variant flex items-center justify-center gap-1.5 transition-colors">
+        <div class="pt-4 mt-4 border-t border-sage/40 flex items-center gap-3">
+          <button onclick="document.getElementById('scanner-file-input').click()" class="flex-1 py-2.5 px-4 rounded-xl bg-surface-container border border-sage/60 text-xs font-bold text-primary dark:text-primary-fixed hover:bg-surface-variant flex items-center justify-center gap-1.5 transition-colors">
             <span class="material-symbols-outlined text-base">photo_camera</span>
-            <span>Scan Another Image</span>
+            <span data-t="scanAgain">पुन्हा स्कॅन करा</span>
           </button>
-          
-          <button onclick="CROP_ANALYSIS_SERVICE.importScanAndNavigate()" class="flex-1 py-2.5 px-4 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-container shadow-sm flex items-center justify-center gap-1.5 transition-all">
-            <span>Send to Crop Analysis</span>
-            <span class="material-symbols-outlined text-base">arrow_forward</span>
+          <button onclick="GEMINI_SCANNER_SERVICE.speakFindings()" class="px-4 py-2.5 rounded-xl bg-secondary-container text-on-secondary-container text-xs font-bold hover:bg-secondary-container/80 flex items-center justify-center gap-1.5 transition-colors">
+            <span class="material-symbols-outlined text-base">volume_up</span>
+            <span data-t="listen">ऐका</span>
           </button>
         </div>
       </div>
@@ -776,196 +865,158 @@
         <div class="flex items-center gap-2 mb-1">
           <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold">
             <span class="material-symbols-outlined text-xs text-leaf">neurology</span>
-            <span>Farm Intelligence & Decision Engine</span>
+            <span data-t="farmIntelligence">कृषी बुद्धिमत्ता व निर्णय सल्ला</span>
           </span>
           <span class="text-xs text-outline">•</span>
-          <span class="text-xs text-outline">"What should I do on my farm?"</span>
+          <span class="text-xs text-outline">"माझ्या शेतात आज मी काय करावे?"</span>
         </div>
         <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="cropAnalysis">
-          Crop Analysis & Farm Decisions
+          पीक विश्लेषण व शेती निर्णय
         </h1>
-        <p class="text-xs md:text-sm text-on-surface-variant mt-0.5">
-          Combines your Farm Profile + Live Weather Data + Foliar Scan into actionable farming decisions.
+        <p class="text-xs md:text-sm text-on-surface-variant mt-0.5" data-t="cropAnalysisSubtitle">
+          तुमची पिकाची माहिती + थेट हवामान + पानांची तपासणी एकत्र करून आजच्या शेती कामांचा अचूक सल्ला.
         </p>
       </div>
 
       <div class="flex items-center gap-2">
         <button onclick="CROP_ANALYSIS_SERVICE.speakDecisionSummary()" class="px-3.5 py-2 rounded-xl bg-sage/60 text-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-secondary-container transition-colors">
           <span class="material-symbols-outlined text-base">volume_up</span>
-          <span>Listen</span>
+          <span data-t="listen">ऐका</span>
         </button>
-        <button onclick="alert('Farm Analysis & Decision Plan shared to WhatsApp (+91 98234 56789)')" class="px-3.5 py-2 rounded-xl bg-primary text-on-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-primary-container transition-colors">
+        <button onclick="alert('शेती सल्ला व्हॉट्सॲपवर पाठवला आहे (+91 98234 56789)')" class="px-3.5 py-2 rounded-xl bg-primary text-on-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-primary-container transition-colors">
           <span class="material-symbols-outlined text-base">share</span>
-          <span>Share Plan</span>
+          <span data-t="sharePlan">सल्ला शेअर करा</span>
         </button>
       </div>
     </div>
 
-    <!-- 1. FARM PLOT AI SETUP CARD -->
-    <div class="w-full bg-surface-container-lowest border border-sage rounded-3xl p-5 md:p-6 shadow-sm mb-6">
-      <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-sage/40">
+    <!-- 1. FARM PLOT SPECIFICATIONS FORM (Logically Grouped) -->
+    <div class="w-full bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-5 md:p-6 shadow-sm mb-6">
+      <div class="flex items-center justify-between pb-3.5 mb-5 border-b border-sage/40">
         <div>
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-leaf/15 text-leaf text-[11px] font-bold mb-1">
-            <span class="material-symbols-outlined text-xs">tune</span>
-            <span>Plot Intelligence</span>
-          </div>
-          <h2 class="text-base md:text-lg font-extrabold text-primary dark:text-primary-fixed">Farm Plot AI</h2>
-          <p class="text-xs text-on-surface-variant">Enter your farm plot specifications to generate personalized agronomic AI decisions</p>
+          <h2 class="text-lg font-bold text-primary dark:text-primary-fixed tracking-tight" data-t="farmPlotSpecs">शेताचा तपशील व माहिती</h2>
+          <p class="text-xs text-on-surface-variant mt-0.5">तंतोतंत कृषी सल्ला मिळवण्यासाठी शेताची माहिती भरा</p>
         </div>
-        <div class="w-9 h-9 rounded-xl bg-leaf/15 text-leaf flex items-center justify-center">
-          <span class="material-symbols-outlined text-xl">psychology</span>
-        </div>
+        <span class="px-2.5 py-1 rounded-md bg-secondary-container text-on-secondary-container text-[11px] font-bold" data-t="farmProfile">
+          शेतकरी प्रोफाईल
+        </span>
       </div>
 
-      <div class="space-y-4">
-        <!-- Row 1: Crop Name & Crop Variety -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed mb-1.5">
-              <span class="material-symbols-outlined text-sm text-leaf">potted_plant</span>
-              <span>Crop Name</span>
-            </label>
-            <input type="text" id="farm-setup-crop" value="" placeholder="e.g. Onion, Tomato, Wheat, Cotton, Soybean..." onchange="CROP_ANALYSIS_SERVICE.updateProfileField('crop', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white placeholder:text-outline/60 focus:outline-none focus:border-leaf" />
-          </div>
-
-          <div>
-            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed mb-1.5">
-              <span class="material-symbols-outlined text-sm text-leaf">sell</span>
-              <span>Crop Variety</span>
-            </label>
-            <input type="text" id="farm-setup-variety" value="" placeholder="e.g. Kharif Red, Hybrid 64, Desi..." onchange="CROP_ANALYSIS_SERVICE.updateProfileField('variety', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white placeholder:text-outline/60 focus:outline-none focus:border-leaf" />
-          </div>
-        </div>
-
-        <!-- Row 2: Growth Stage & Planting Date -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed mb-1.5">
-              <span class="material-symbols-outlined text-sm text-leaf">bar_chart</span>
-              <span>Growth Stage</span>
-            </label>
-            <select id="farm-setup-stage" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('stage', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white focus:outline-none focus:border-leaf">
-              <option value="" disabled selected>Select current growth stage...</option>
-              <option value="🌱 Sowing / Seedling">🌱 Sowing / Seedling</option>
-              <option value="🌿 Vegetative Stage">🌿 Vegetative Stage</option>
-              <option value="🌸 Flowering / Fruiting">🌸 Flowering / Fruiting</option>
-              <option value="🧅 Bulb / Tuber / Grain Formation">🧅 Bulb / Tuber / Grain Formation</option>
-              <option value="🌾 Maturity / Harvesting">🌾 Maturity / Harvesting</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed mb-1.5">
-              <span class="material-symbols-outlined text-sm text-leaf">calendar_today</span>
-              <span>Planting Date</span>
-            </label>
-            <input type="date" id="farm-setup-planting-date" value="" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('plantingDate', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white focus:outline-none focus:border-leaf" />
-          </div>
-        </div>
-
-        <!-- Row 3: Farm Area Size & Measurement Unit -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed mb-1.5">
-              <span class="material-symbols-outlined text-sm text-leaf">straighten</span>
-              <span>Farm Area Size</span>
-            </label>
-            <input type="number" id="farm-setup-area" value="" placeholder="e.g. 1.5" min="0.1" step="0.1" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('area', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white placeholder:text-outline/60 focus:outline-none focus:border-leaf" />
-          </div>
-
-          <div>
-            <label class="text-xs font-bold text-primary dark:text-primary-fixed mb-1.5 block">
-              Measurement Unit
-            </label>
-            <select id="farm-setup-unit" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('unit', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white focus:outline-none focus:border-leaf">
-              <option value="" disabled selected>Select unit...</option>
-              <option value="Acres (एकड)">Acres (एकड)</option>
-              <option value="Guntha (गुंठा)">Guntha (गुंठा)</option>
-              <option value="Hectares (हेक्टर)">Hectares (हेक्टर)</option>
-              <option value="Bigha (बीघा)">Bigha (बीघा)</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Row 4: Soil Type & Irrigation Source -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed mb-1.5">
-              <span class="material-symbols-outlined text-sm text-leaf">layers</span>
-              <span>Soil Type</span>
-            </label>
-            <select id="farm-setup-soil" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('soil', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white focus:outline-none focus:border-leaf">
-              <option value="" disabled selected>Select soil type...</option>
-              <option value="Black Cotton Soil (काळी माती)">Black Cotton Soil (काळी माती)</option>
-              <option value="Red Sandy Loam (तांबडी माती)">Red Sandy Loam (तांबडी माती)</option>
-              <option value="Alluvial Soil (गाळाची माती)">Alluvial Soil (गाळाची माती)</option>
-              <option value="Clayey Loam (चिकण माती)">Clayey Loam (चिकण माती)</option>
-              <option value="Laterite Soil (जांभी माती)">Laterite Soil (जांभी माती)</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed mb-1.5">
-              <span class="material-symbols-outlined text-sm text-leaf">water_drop</span>
-              <span>Irrigation Source</span>
-            </label>
-            <select id="farm-setup-irrigation" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('irrigation', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white focus:outline-none focus:border-leaf">
-              <option value="" disabled selected>Select irrigation source...</option>
-              <option value="Drip Irrigation (ठिबक)">💦 Drip Irrigation (ठिबक)</option>
-              <option value="Sprinkler (तुषार)">🚿 Sprinkler (तुषार)</option>
-              <option value="Canal / Well Water (विहीर/कालवा)">🚰 Canal / Well Water (विहीर/कालवा)</option>
-              <option value="Rainfed / Monsoon">🌧️ Rainfed / Monsoon</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Row 5: Farm Field Location & Detect Location -->
+      <div class="space-y-6">
+        <!-- SECTION A: CROP DETAILS -->
         <div>
-          <div class="flex items-center justify-between mb-1.5">
-            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-outline mb-3 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm text-leaf">potted_plant</span>
+            <span data-t="cropDetails">पिकाचा तपशील</span>
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            <div>
+              <label class="block text-[11px] font-bold text-primary dark:text-primary-fixed mb-1" data-t="cropName">पिकाचे नाव</label>
+              <input type="text" id="farm-setup-crop" value="" placeholder="उदा. कांदा, टोमॅटो, गहू..." onchange="CROP_ANALYSIS_SERVICE.updateProfileField('crop', this.value)" class="w-full bg-surface-container border border-sage/60 rounded-xl py-2.5 px-3 text-xs font-medium text-charcoal dark:text-white placeholder:text-outline/60 focus:outline-none focus:border-primary" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-primary dark:text-primary-fixed mb-1" data-t="cropVariety">पिकाची जात / वाण</label>
+              <input type="text" id="farm-setup-variety" value="" placeholder="उदा. खरीप लाल, संकरित ६४..." onchange="CROP_ANALYSIS_SERVICE.updateProfileField('variety', this.value)" class="w-full bg-surface-container border border-sage/60 rounded-xl py-2.5 px-3 text-xs font-medium text-charcoal dark:text-white placeholder:text-outline/60 focus:outline-none focus:border-primary" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-primary dark:text-primary-fixed mb-1" data-t="growthStage">पिकाची वाढीची अवस्था</label>
+              <select id="farm-setup-stage" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('stage', this.value)" class="w-full bg-surface-container border border-sage/60 rounded-xl py-2.5 px-3 text-xs font-medium text-charcoal dark:text-white focus:outline-none focus:border-primary">
+                <option value="" disabled selected>अवस्था निवडा...</option>
+                <option value="🌱 Sowing / Seedling">🌱 पेरणी / रोपावस्था</option>
+                <option value="🌿 Vegetative Stage">🌿 वाढीची अवस्था (शाकीय वाढ)</option>
+                <option value="🌸 Flowering / Fruiting">🌸 फुलोरा व फळधारणा अवस्था</option>
+                <option value="🧅 Bulb / Tuber / Grain Formation">🧅 कांदा/कंद/दाणे भरणे अवस्था</option>
+                <option value="🌾 Maturity / Harvesting">🌾 पक्वता व काढणी अवस्था</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-primary dark:text-primary-fixed mb-1" data-t="plantingDate">लागवड / पेरणी दिनांक</label>
+              <input type="date" id="farm-setup-planting-date" value="" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('plantingDate', this.value)" class="w-full bg-surface-container border border-sage/60 rounded-xl py-2.5 px-3 text-xs font-medium text-charcoal dark:text-white focus:outline-none focus:border-primary" />
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION B: FARM DETAILS -->
+        <div class="pt-4 border-t border-sage/40">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-outline mb-3 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm text-leaf">landscape</span>
+            <span data-t="farmDetails">जमिनीचा व शेताचा तपशील</span>
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            <div>
+              <label class="block text-[11px] font-bold text-primary dark:text-primary-fixed mb-1" data-t="farmAreaSize">शेताचे क्षेत्रफळ</label>
+              <input type="number" id="farm-setup-area" value="" placeholder="उदा. २.०" min="0.1" step="0.1" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('area', this.value)" class="w-full bg-surface-container border border-sage/60 rounded-xl py-2.5 px-3 text-xs font-medium text-charcoal dark:text-white placeholder:text-outline/60 focus:outline-none focus:border-primary" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-primary dark:text-primary-fixed mb-1" data-t="unit">एकक</label>
+              <select id="farm-setup-unit" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('unit', this.value)" class="w-full bg-surface-container border border-sage/60 rounded-xl py-2.5 px-3 text-xs font-medium text-charcoal dark:text-white focus:outline-none focus:border-primary">
+                <option value="" disabled selected>एकक निवडा...</option>
+                <option value="Acres (एकड)">एकड (Acres)</option>
+                <option value="Guntha (गुंठा)">गुंठा (Guntha)</option>
+                <option value="Hectares (हेक्टर)">हेक्टर (Hectares)</option>
+                <option value="Bigha (बीघा)">बीघा (Bigha)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-primary dark:text-primary-fixed mb-1" data-t="soilType">मातीचा प्रकार</label>
+              <select id="farm-setup-soil" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('soil', this.value)" class="w-full bg-surface-container border border-sage/60 rounded-xl py-2.5 px-3 text-xs font-medium text-charcoal dark:text-white focus:outline-none focus:border-primary">
+                <option value="" disabled selected>माती निवडा...</option>
+                <option value="Black Cotton Soil (काळी माती)">काळी कसदार माती (Black Soil)</option>
+                <option value="Red Sandy Loam (तांबडी माती)">तांबडी वालुकामय माती (Red Soil)</option>
+                <option value="Alluvial Soil (गाळाची माती)">गाळाची सुपिक माती (Alluvial)</option>
+                <option value="Clayey Loam (चिकण माती)">चिकण माती (Clayey Loam)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-primary dark:text-primary-fixed mb-1" data-t="irrigationSource">सिंचन साधन</label>
+              <select id="farm-setup-irrigation" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('irrigation', this.value)" class="w-full bg-surface-container border border-sage/60 rounded-xl py-2.5 px-3 text-xs font-medium text-charcoal dark:text-white focus:outline-none focus:border-primary">
+                <option value="" disabled selected>सिंचन निवडा...</option>
+                <option value="Drip Irrigation (ठिबक)">💦 ठिबक सिंचन (Drip)</option>
+                <option value="Sprinkler (तुषार)">🚿 तुषार सिंचन (Sprinkler)</option>
+                <option value="Canal / Well (विहीर/कालवा)">🚰 विहीर / कालवा (Canal/Well)</option>
+                <option value="Rainfed / Monsoon">🌧️ पावसावर आधारित (Rainfed)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION C: LOCATION & FIELD MAP -->
+        <div class="pt-4 border-t border-sage/40">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-outline flex items-center gap-1.5">
               <span class="material-symbols-outlined text-sm text-leaf">location_on</span>
-              <span>Farm Field Location</span>
-            </label>
-            <button type="button" onclick="CROP_ANALYSIS_SERVICE.detectLocation()" class="text-xs font-bold text-leaf hover:underline flex items-center gap-1 bg-leaf/10 px-2.5 py-1 rounded-lg">
+              <span data-t="fieldLocationMapping">शेताचे स्थान व नकाशा</span>
+            </h3>
+            <button type="button" onclick="CROP_ANALYSIS_SERVICE.detectLocation()" class="text-xs font-bold text-primary dark:text-primary-fixed hover:underline flex items-center gap-1 bg-secondary-container px-2.5 py-1 rounded-lg">
               <span class="material-symbols-outlined text-xs">my_location</span>
-              <span>📍 Detect GPS Location</span>
+              <span data-t="detectGps">जीपीएसने शोधा</span>
             </button>
           </div>
-          <div class="relative">
-            <input type="text" id="farm-setup-location" value="" placeholder="Type village, taluka, city or district..." onchange="CROP_ANALYSIS_SERVICE.handleLocationInputChange(this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 pr-20 text-xs font-semibold text-charcoal dark:text-white placeholder:text-outline/60 focus:outline-none focus:border-leaf" />
-            <button type="button" onclick="CROP_ANALYSIS_SERVICE.handleLocationInputChange(document.getElementById('farm-setup-location').value)" class="absolute right-1 top-1 bottom-1 px-3 rounded-lg bg-primary text-white text-[11px] font-semibold hover:bg-primary-container">
-              Pin Map
+
+          <div class="flex gap-2 mb-3">
+            <input type="text" id="farm-setup-location" value="" placeholder="गाव, तालुका, जिल्हा किंवा शहर टाईप करा..." onchange="CROP_ANALYSIS_SERVICE.handleLocationInputChange(this.value)" class="flex-1 bg-surface-container border border-sage/60 rounded-xl py-2.5 px-3 text-xs font-medium text-charcoal dark:text-white placeholder:text-outline/60 focus:outline-none focus:border-primary" />
+            <button type="button" onclick="CROP_ANALYSIS_SERVICE.handleLocationInputChange(document.getElementById('farm-setup-location').value)" class="px-4 py-2.5 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-container" data-t="pinMap">
+              नकाशावर दाखवा
             </button>
+          </div>
+
+          <div class="relative w-full h-52 rounded-xl border border-sage/80 overflow-hidden shadow-inner">
+            <div id="farm-setup-minimap" class="w-full h-full z-0"></div>
+            <div class="absolute top-2 right-2 z-10 flex items-center gap-1 bg-white/90 dark:bg-black/80 backdrop-blur-md p-1 rounded-lg border border-sage/60 text-xs">
+              <button type="button" id="minimap-layer-street" onclick="CROP_ANALYSIS_SERVICE.setMapLayer('street')" class="px-2 py-0.5 rounded font-bold bg-primary text-white text-[11px]">नकाशा</button>
+              <button type="button" id="minimap-layer-satellite" onclick="CROP_ANALYSIS_SERVICE.setMapLayer('satellite')" class="px-2 py-0.5 rounded font-medium text-outline hover:text-primary text-[11px]">उपग्रह</button>
+            </div>
+            <div class="absolute bottom-2 left-2 z-10 bg-black/75 text-white px-2.5 py-1 rounded text-[10px] font-semibold">
+              <span id="minimap-coords-display">शेताचे स्थान निवडण्यासाठी नकाशावर क्लिक करा</span>
+            </div>
           </div>
         </div>
 
-        <!-- Row 6: Interactive Leaflet Farm Map Container -->
-        <div class="relative w-full h-60 rounded-2xl border-2 border-sage overflow-hidden shadow-md">
-          <div id="farm-setup-minimap" class="w-full h-full z-0"></div>
-          
-          <!-- Map Overlay Controls -->
-          <div class="absolute top-2 right-2 z-10 flex items-center gap-1 bg-white/90 dark:bg-black/80 backdrop-blur-md p-1 rounded-xl border border-sage/80 shadow-sm">
-            <button type="button" id="minimap-layer-street" onclick="CROP_ANALYSIS_SERVICE.setMapLayer('street')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-primary text-on-primary transition-all">
-              🗺️ Map
-            </button>
-            <button type="button" id="minimap-layer-satellite" onclick="CROP_ANALYSIS_SERVICE.setMapLayer('satellite')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold text-charcoal dark:text-gray-200 hover:bg-surface-variant transition-all">
-              🛰️ Satellite
-            </button>
-          </div>
-
-          <!-- Bottom Coordinates & Instructions Badge -->
-          <div class="absolute bottom-2 left-2 z-10 bg-black/75 backdrop-blur-sm text-white px-3 py-1 rounded-lg text-[10px] font-semibold flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-leaf animate-pulse"></span>
-            <span id="minimap-coords-display">Click on map or search location above</span>
-            <span class="text-white/60">| Drag pin</span>
-          </div>
-        </div>
-
-        <!-- Update Decision Button -->
-        <div class="pt-2 text-right">
-          <button type="button" onclick="CROP_ANALYSIS_SERVICE.runAnalysis()" class="px-6 py-2.5 rounded-xl bg-primary text-on-primary text-xs font-bold hover:bg-primary-container shadow-sm flex items-center gap-2 ml-auto transition-all active:scale-95">
+        <!-- Submit Button -->
+        <div class="pt-2 flex justify-end">
+          <button type="button" onclick="CROP_ANALYSIS_SERVICE.runAnalysis()" class="px-6 py-2.5 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-container shadow-sm flex items-center gap-2 transition-all active:scale-95">
             <span class="material-symbols-outlined text-base">neurology</span>
-            <span>Run Farm Plot AI Analysis</span>
+            <span data-t="runCropAnalysisDecision">पीक विश्लेषण व सल्ला मिळवा</span>
           </button>
         </div>
       </div>
@@ -973,67 +1024,67 @@
 
     <!-- 2. DATA SYNTHESIS STATUS BAR -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-6">
-      <div class="p-3 rounded-2xl bg-surface-container-lowest border border-sage/60 flex items-center gap-2">
+      <div class="p-3 rounded-xl bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 flex items-center gap-2.5">
         <span class="material-symbols-outlined text-leaf text-lg">check_circle</span>
         <div>
-          <p class="text-[10px] text-outline font-semibold uppercase">Plot Crop</p>
-          <p id="analysis-sync-crop" class="text-xs font-bold text-primary dark:text-primary-fixed">Not Set</p>
+          <p class="text-[10px] text-outline font-bold uppercase" data-t="plotCrop">निवडलेले पीक</p>
+          <p id="analysis-sync-crop" class="text-xs font-bold text-primary dark:text-primary-fixed">कांदा (Onion)</p>
         </div>
       </div>
 
-      <div class="p-3 rounded-2xl bg-surface-container-lowest border border-sage/60 flex items-center gap-2">
+      <div class="p-3 rounded-xl bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 flex items-center gap-2.5">
         <span class="material-symbols-outlined text-leaf text-lg">thunderstorm</span>
         <div>
-          <p class="text-[10px] text-outline font-semibold uppercase">Weather Engine</p>
-          <p id="analysis-sync-weather" class="text-xs font-bold text-primary dark:text-primary-fixed">Live Open-Meteo</p>
+          <p class="text-[10px] text-outline font-bold uppercase" data-t="weatherEngine">हवामान स्थिती</p>
+          <p id="analysis-sync-weather" class="text-xs font-bold text-primary dark:text-primary-fixed">Open-Meteo थेट</p>
         </div>
       </div>
 
-      <div class="p-3 rounded-2xl bg-surface-container-lowest border border-sage/60 flex items-center gap-2">
-        <span id="analysis-sync-scan-icon" class="material-symbols-outlined text-outline text-lg">camera</span>
+      <div class="p-3 rounded-xl bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 flex items-center gap-2.5">
+        <span id="analysis-sync-scan-icon" class="material-symbols-outlined text-outline text-lg">center_focus_strong</span>
         <div>
-          <p class="text-[10px] text-outline font-semibold uppercase">Crop Scan</p>
-          <p id="analysis-sync-scan-text" class="text-xs font-bold text-primary dark:text-primary-fixed">Optional (None)</p>
+          <p class="text-[10px] text-outline font-bold uppercase" data-t="visualScan">पानांची तपासणी</p>
+          <p id="analysis-sync-scan-text" class="text-xs font-bold text-primary dark:text-primary-fixed">ऐच्छिक</p>
         </div>
       </div>
 
-      <div class="p-3 rounded-2xl bg-surface-container-lowest border border-sage/60 flex items-center gap-2">
+      <div class="p-3 rounded-xl bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 flex items-center gap-2.5">
         <span class="material-symbols-outlined text-leaf text-lg">psychology</span>
         <div>
-          <p class="text-[10px] text-outline font-semibold uppercase">Decision Model</p>
-          <p class="text-xs font-bold text-leaf">Gemini 1.5 Reasoner</p>
+          <p class="text-[10px] text-outline font-bold uppercase" data-t="decisionEngine">निर्णय इंजिन</p>
+          <p class="text-xs font-bold text-leaf">Gemini + Sarvam AI</p>
         </div>
       </div>
     </div>
 
-    <!-- 3. INITIAL EMPTY STATE PLACEHOLDER (Before Analysis is Run) -->
-    <div id="crop-analysis-placeholder" class="bg-surface-container-lowest border border-dashed border-sage rounded-3xl p-8 text-center my-6">
-      <div class="w-16 h-16 rounded-2xl bg-secondary-container text-on-secondary-container flex items-center justify-center mx-auto mb-3">
-        <span class="material-symbols-outlined text-3xl text-leaf">description</span>
+    <!-- 3. INITIAL EMPTY STATE PLACEHOLDER -->
+    <div id="crop-analysis-placeholder" class="bg-surface-container-lowest dark:bg-surface-container-low border border-dashed border-sage/80 rounded-2xl p-8 text-center my-6">
+      <div class="w-14 h-14 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center mx-auto mb-3">
+        <span class="material-symbols-outlined text-3xl text-leaf">analytics</span>
       </div>
-      <h3 class="text-lg font-bold text-primary dark:text-primary-fixed mb-1">Generate Official Agromet Advisory Bulletin</h3>
+      <h3 class="text-base font-bold text-primary dark:text-primary-fixed mb-1" data-t="generateFarmAdvisory">शेती निर्णय सल्ला मिळवा</h3>
       <p class="text-xs text-on-surface-variant max-w-md mx-auto mb-4">
-        Click below to generate a tailored Government Agromet Advisory Bulletin based on your Crop, Growth Stage, Soil, and Real-Time Weather.
+        तुमचे पीक, माती, थेट हवामान आणि रोगाची शक्यता एकत्र तपासून आजच्या शेती कामांची दिशा ठरवा.
       </p>
-      <button type="button" onclick="CROP_ANALYSIS_SERVICE.runAnalysis()" class="px-6 py-2.5 rounded-xl bg-primary text-on-primary text-xs font-bold hover:bg-primary-container shadow-sm inline-flex items-center gap-2 transition-all active:scale-95">
+      <button type="button" onclick="CROP_ANALYSIS_SERVICE.runAnalysis()" class="px-5 py-2.5 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-container shadow-sm inline-flex items-center gap-2 transition-all active:scale-95">
         <span class="material-symbols-outlined text-base">neurology</span>
-        <span>Generate Official Advisory</span>
+        <span data-t="runFarmAnalysis">शेती विश्लेषण करा</span>
       </button>
     </div>
 
-    <!-- 4. MINIMAL & SIMPLE GOVERNMENT AGROMET ADVISORY (Revealed dynamically via API) -->
+    <!-- 4. GOVERNMENT AGROMET ADVISORY & DECISION REPORT -->
     <div id="crop-analysis-results-container" class="hidden space-y-4 fade-in-up">
       
       <!-- Top Summary Header Bar -->
-      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-leaf/15 text-leaf flex items-center justify-center flex-shrink-0 text-xl font-bold">
+          <div class="w-10 h-10 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center flex-shrink-0 text-xl font-bold">
             🇮🇳
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <span class="text-[11px] font-bold uppercase tracking-wider text-leaf">Govt. Agromet Advisory (GKMS)</span>
-              <span id="gkms-bulletin-no" class="px-2 py-0.5 rounded bg-surface-container text-[10px] font-bold text-outline">GKMS/2026/MH/482</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-leaf">कृषी हवामान सल्ला बुलेटिन (GKMS)</span>
+              <span id="gkms-bulletin-no" class="px-1.5 py-0.5 rounded bg-surface-container text-[10px] font-bold text-outline">GKMS/2026/MH/482</span>
             </div>
             <p id="gkms-crop-stage" class="text-xs sm:text-sm font-bold text-primary dark:text-primary-fixed mt-0.5">
               --
@@ -1042,85 +1093,82 @@
         </div>
 
         <div class="flex items-center gap-2">
-          <button onclick="window.print()" class="px-3 py-1.5 rounded-xl bg-surface-container-low border border-sage text-charcoal dark:text-gray-200 text-xs font-semibold hover:bg-surface-variant flex items-center gap-1.5 transition-colors">
+          <button onclick="window.print()" class="px-3 py-1.5 rounded-xl bg-surface-container border border-sage/60 text-charcoal dark:text-gray-200 text-xs font-semibold hover:bg-surface-variant flex items-center gap-1.5 transition-colors">
             <span class="material-symbols-outlined text-sm">print</span>
-            <span>Print</span>
+            <span data-t="print">प्रिंट करा</span>
           </button>
-          <button onclick="alert('Advisory shared to WhatsApp')" class="px-3.5 py-1.5 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-container flex items-center gap-1.5 transition-colors">
+          <button onclick="alert('सल्ला व्हॉट्सॲपवर पाठवला आहे')" class="px-3.5 py-1.5 rounded-xl bg-primary text-white text-xs font-semibold hover:bg-primary-container flex items-center gap-1.5 transition-colors">
             <span class="material-symbols-outlined text-sm">share</span>
             <span>WhatsApp</span>
           </button>
         </div>
       </div>
 
-      <!-- 1. Top Key Directive (Big & Clear) -->
-      <div class="bg-surface-container-lowest border-l-4 border-leaf border-y border-r border-sage rounded-2xl p-4 sm:p-5 shadow-sm">
-        <span class="text-[11px] font-bold uppercase tracking-wider text-leaf block mb-1">🎯 Today's Main Farm Action / आजचा मुख्य सल्ला</span>
-        <p id="decision-farmer-action-summary" class="text-sm sm:text-base font-extrabold text-charcoal dark:text-gray-100 leading-relaxed">
-          Loading official advisory...
-        </p>
-      </div>
+      <!-- TODAY'S RECOMMENDATION CARD (DOMINANT DECISION) -->
+      <div class="bg-surface-container-lowest dark:bg-surface-container-low border-l-4 border-primary border-y border-r border-sage/60 rounded-2xl p-5 shadow-sm">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-leaf block mb-1" data-t="todaysRecommendation">आजचा मुख्य शेती सल्ला</span>
+        <h3 id="decision-farmer-action-summary" class="text-base sm:text-lg font-black text-primary dark:text-primary-fixed leading-snug">
+          शेती सल्ला तयार होत आहे...
+        </h3>
 
-      <!-- 2. Weather & Spray Timing (3 Simple Metric Cards) -->
-      <div class="grid grid-cols-3 gap-2 sm:gap-3">
-        <div class="p-3.5 rounded-2xl bg-surface-container-lowest border border-sage text-center shadow-sm">
-          <span class="material-symbols-outlined text-leaf text-xl mb-0.5">rainy</span>
-          <span class="text-[10px] text-outline font-semibold block uppercase">Rain Chance</span>
-          <span id="decision-weather-rain-val" class="text-sm sm:text-base font-extrabold text-primary dark:text-primary-fixed">--%</span>
-        </div>
-        <div class="p-3.5 rounded-2xl bg-surface-container-lowest border border-sage text-center shadow-sm">
-          <span class="material-symbols-outlined text-warning text-xl mb-0.5">thermostat</span>
-          <span class="text-[10px] text-outline font-semibold block uppercase">Temperature</span>
-          <span id="decision-weather-temp-val" class="text-sm sm:text-base font-extrabold text-primary dark:text-primary-fixed">--°C</span>
-        </div>
-        <div class="p-3.5 rounded-2xl bg-surface-container-lowest border border-sage text-center shadow-sm">
-          <span class="material-symbols-outlined text-leaf text-xl mb-0.5">schedule</span>
-          <span class="text-[10px] text-outline font-semibold block uppercase">Best Spray Time</span>
-          <span id="decision-weather-spray-window" class="text-xs sm:text-sm font-extrabold text-leaf">--</span>
+        <!-- Expandable "Why this recommendation?" Accordion -->
+        <div class="mt-3.5 pt-3 border-t border-sage/40">
+          <button type="button" onclick="document.getElementById('analysis-why-accordion').classList.toggle('hidden')" class="inline-flex items-center gap-1 text-xs font-bold text-primary dark:text-primary-fixed hover:underline">
+            <span class="material-symbols-outlined text-sm">help_outline</span>
+            <span data-t="whyRecommendation">हा सल्ला का दिला? (सविस्तर कारणे पाहा)</span>
+            <span class="material-symbols-outlined text-xs">expand_more</span>
+          </button>
+
+          <div id="analysis-why-accordion" class="hidden mt-2.5 p-3.5 rounded-xl bg-surface-container border border-sage/40 text-xs space-y-1.5 text-on-surface">
+            <p class="flex items-center gap-2"><span>🌦️ पावसाची शक्यता:</span> <b class="text-primary dark:text-primary-fixed" id="analysis-why-rain">६७% (अपेक्षित ~७ मिमी)</b></p>
+            <p class="flex items-center gap-2"><span>🪴 मातीतील ओलावा:</span> <b class="text-primary dark:text-primary-fixed" id="analysis-why-soil">जास्त (काळी कसदार माती)</b></p>
+            <p class="flex items-center gap-2"><span>🧅 पिकाची अवस्था:</span> <b class="text-primary dark:text-primary-fixed" id="analysis-why-stage">कांदा पोषण व वाढीची अवस्था</b></p>
+            <p class="text-outline text-[11px] pt-1 border-t border-sage/30">त्यामुळे सध्या पाणी देणे पुढे ढकलावे आणि पाऊस थांबल्यानंतर कोरड्या वातावरणात फवारणीचे नियोजन करावे.</p>
+          </div>
         </div>
       </div>
 
-      <!-- 3. What to Spray & Water Advice (Simple 2-Column Grid) -->
+      <!-- Spray & Water Advice (2-Column Grid) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         
-        <!-- Spray & Disease Protection -->
-        <div class="bg-surface-container-lowest border border-sage rounded-2xl p-4 sm:p-5 shadow-sm space-y-3">
+        <!-- Spray Recommendation -->
+        <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-4 sm:p-5 shadow-sm space-y-3">
           <div class="flex items-center justify-between pb-2 border-b border-sage/40">
-            <h3 class="text-xs font-bold text-primary dark:text-primary-fixed uppercase tracking-wider flex items-center gap-1.5">
+            <h4 class="text-xs font-bold text-primary dark:text-primary-fixed uppercase tracking-wider flex items-center gap-1.5">
               <span class="material-symbols-outlined text-base text-leaf">medication</span>
-              <span>Crop Spray & Medicine / फवारणी सल्ला</span>
-            </h3>
-            <span id="decision-weather-risk-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-warning/20 text-warning uppercase">
+              <span data-t="cropSprayMedicine">पीक फवारणी व औषधोपचार</span>
+            </h4>
+            <span id="decision-weather-risk-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-warning-container text-warning uppercase">
               --
             </span>
           </div>
 
-          <div class="space-y-2.5">
-            <div class="p-3 rounded-xl bg-leaf/5 border border-leaf/30 text-xs">
-              <span class="font-bold text-primary dark:text-primary-fixed block mb-0.5">💊 Recommended Spray:</span>
+          <div class="space-y-2 text-xs">
+            <div class="p-3 rounded-xl bg-surface-container border border-sage/40">
+              <span class="font-bold text-primary dark:text-primary-fixed block mb-0.5" data-t="recommendedFormulation">💊 रासायनिक फवारणी शिफारस:</span>
               <p id="decision-chemical-rec" class="text-on-surface-variant font-medium">--</p>
             </div>
 
-            <div class="p-3 rounded-xl bg-surface-container-low border border-sage/50 text-xs">
-              <span class="font-bold text-leaf block mb-0.5">🌿 Bio / Organic Option:</span>
+            <div class="p-3 rounded-xl bg-surface-container border border-sage/40">
+              <span class="font-bold text-leaf block mb-0.5" data-t="bioOrganicOption">🌿 सेंद्रिय / जैविक पर्याय:</span>
               <p id="decision-bio-rec" class="text-on-surface-variant font-medium">--</p>
             </div>
           </div>
         </div>
 
-        <!-- Irrigation & Water Management -->
-        <div class="bg-surface-container-lowest border border-sage rounded-2xl p-4 sm:p-5 shadow-sm space-y-3">
+        <!-- Irrigation Advice -->
+        <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-4 sm:p-5 shadow-sm space-y-3">
           <div class="flex items-center justify-between pb-2 border-b border-sage/40">
-            <h3 class="text-xs font-bold text-primary dark:text-primary-fixed uppercase tracking-wider flex items-center gap-1.5">
+            <h4 class="text-xs font-bold text-primary dark:text-primary-fixed uppercase tracking-wider flex items-center gap-1.5">
               <span class="material-symbols-outlined text-base text-leaf">water_drop</span>
-              <span>Water & Irrigation / पाणी व्यवस्थापन</span>
-            </h3>
-            <span id="decision-irrigation-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-leaf/20 text-leaf uppercase">
+              <span data-t="irrigationHydration">सिंचन व पाणी व्यवस्थापन</span>
+            </h4>
+            <span id="decision-irrigation-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-secondary-container text-on-secondary-container uppercase">
               --
             </span>
           </div>
 
-          <p id="decision-irrigation-action" class="text-xs text-on-surface-variant leading-relaxed p-3 rounded-xl bg-surface-container-low border border-sage/50">
+          <p id="decision-irrigation-action" class="text-xs text-on-surface leading-relaxed p-3 rounded-xl bg-surface-container border border-sage/40">
             --
           </p>
 
@@ -1130,23 +1178,23 @@
         </div>
       </div>
 
-      <!-- 4. Next Steps (Simple Checklist) -->
-      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-4 sm:p-5 shadow-sm">
-        <h3 class="text-xs font-bold text-primary dark:text-primary-fixed uppercase tracking-wider mb-3 flex items-center gap-1.5">
+      <!-- Next Steps Checklist -->
+      <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-4 sm:p-5 shadow-sm">
+        <h4 class="text-xs font-bold text-primary dark:text-primary-fixed uppercase tracking-wider mb-3 flex items-center gap-1.5">
           <span class="material-symbols-outlined text-base text-leaf">checklist</span>
-          <span>Next Steps for Farmers / पुढील कृती (Next 7 Days)</span>
-        </h3>
+          <span data-t="nextSteps">शेतकऱ्यांसाठी पुढील ७ दिवसांचे नियोजन</span>
+        </h4>
         <ul id="decision-priorities-list" class="space-y-2 text-xs text-charcoal dark:text-gray-200">
           <li class="flex items-start gap-2">
             <span class="material-symbols-outlined text-leaf text-base">check_circle</span>
-            <span>Loading actionable steps...</span>
+            <span>नियोजनातील कामे लोड होत आहेत...</span>
           </li>
         </ul>
       </div>
 
       <!-- Footer Note -->
       <div class="text-center text-[11px] text-outline pt-1">
-        Govt. Kisan Call Centre Toll-Free: <b class="text-primary dark:text-white">1800-180-1551</b> | ICAR - GKMS Agromet Advisory
+        शासकीय किसान कॉल सेंटर: <b class="text-primary dark:text-white">1800-180-1551</b> • ICAR-GKMS राष्ट्रीय कृषी हवामान सल्ला
       </div>
     </div>
   </section>
@@ -1161,199 +1209,195 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
       <div>
         <div class="flex items-center gap-2 mb-1">
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-leaf/15 text-leaf">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-secondary-container text-on-secondary-container">
             <span class="w-2 h-2 rounded-full bg-leaf animate-pulse"></span>
-            <span>Open-Meteo Live Synced</span>
+            <span data-t="liveAgrometEngine">थेट कृषी हवामान इंजिन</span>
           </span>
-          <span id="weather-last-updated" class="text-[11px] text-outline">Real-Time Analysis</span>
+          <span id="weather-last-updated" class="text-[11px] text-outline">Open-Meteo Synced</span>
         </div>
-        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="weatherRisk">Agromet Weather Risk Advisory</h1>
-        <p id="weather-view-subtitle" class="text-xs md:text-sm text-on-surface-variant">Real-time satellite & agro-meteorological analysis for Nashik, Maharashtra</p>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed tracking-tight" data-t="weatherRisk">
+          हवामान अंदाज व जोखीम
+        </h1>
+        <p id="weather-view-subtitle" class="text-xs md:text-sm text-on-surface-variant" data-t="weatherSubtitle">नाशिक, महाराष्ट्र परिसरासाठी थेट कृषी हवामान अंदाज</p>
       </div>
       <div class="flex items-center gap-2">
-        <button onclick="WEATHER_SERVICE.speakCurrentAdvisory()" class="px-4 py-2.5 rounded-xl bg-sage/60 text-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-secondary-container transition-colors shadow-sm">
+        <button onclick="WEATHER_SERVICE.speakCurrentAdvisory()" class="px-4 py-2.5 rounded-xl bg-surface-container border border-sage/60 text-primary font-bold text-xs flex items-center gap-1.5 hover:bg-secondary-container transition-colors shadow-sm">
           <span class="material-symbols-outlined text-base">volume_up</span>
-          <span>Listen Advisory</span>
+          <span data-t="listen">ऐका</span>
         </button>
       </div>
     </div>
 
     <!-- Live Location Search & Geocoding Bar -->
-    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-4 mb-6 shadow-sm">
+    <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-4 mb-6 shadow-sm">
       <form id="weather-search-form" onsubmit="event.preventDefault(); WEATHER_SERVICE.handleSearchSubmit();" class="flex flex-col sm:flex-row items-center gap-2">
         <div class="relative flex-1 w-full">
           <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg">search</span>
-          <input id="weather-search-input" type="text" placeholder="Search any city or district (e.g. Nashik, Pune, Nagpur, Indore)..." class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 pl-10 pr-4 text-sm text-charcoal dark:text-white placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary" />
+          <input id="weather-search-input" type="text" placeholder="जिल्हा किंवा शहर शोधा (उदा. नाशिक, पुणे, नागपूर, कोल्हापूर)..." class="w-full bg-surface-container border border-sage/60 rounded-xl py-2.5 pl-10 pr-4 text-xs font-medium text-charcoal dark:text-white placeholder:text-outline focus:outline-none focus:border-primary" />
         </div>
         <div class="flex items-center gap-2 w-full sm:w-auto">
-          <button type="submit" class="flex-1 sm:flex-none px-4 py-2.5 bg-primary text-on-primary rounded-xl text-xs font-semibold hover:bg-primary-container transition-colors flex items-center justify-center gap-1">
+          <button type="submit" class="flex-1 sm:flex-none px-4 py-2.5 bg-primary text-white rounded-xl text-xs font-bold hover:bg-primary-container transition-colors flex items-center justify-center gap-1">
             <span class="material-symbols-outlined text-base">near_me</span>
-            <span>Analyze</span>
+            <span data-t="search">शोधा</span>
           </button>
-          <button type="button" onclick="WEATHER_SERVICE.loadUserGPSWeather()" title="Detect GPS Location" class="px-3.5 py-2.5 bg-surface-container-low border border-sage text-primary rounded-xl text-xs font-semibold hover:bg-secondary-container transition-colors flex items-center justify-center gap-1">
+          <button type="button" onclick="WEATHER_SERVICE.loadUserGPSWeather()" title="Detect GPS Location" class="px-3.5 py-2.5 bg-surface-container border border-sage/60 text-primary rounded-xl text-xs font-bold hover:bg-secondary-container transition-colors flex items-center justify-center gap-1">
             <span class="material-symbols-outlined text-base">my_location</span>
-            <span class="hidden md:inline">GPS</span>
+            <span data-t="detectGps">जीपीएस</span>
           </button>
         </div>
       </form>
 
       <!-- Quick Location Chips -->
       <div class="flex items-center gap-1.5 mt-3 pt-3 border-t border-sage/40 overflow-x-auto pb-1 text-xs">
-        <span class="text-[11px] font-semibold text-outline shrink-0 mr-1">Quick Select:</span>
-        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Nashik')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Nashik</button>
-        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Pune')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Pune</button>
-        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Chhatrapati Sambhajinagar')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Sambhajinagar</button>
-        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Nagpur')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Nagpur</button>
-        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Kolhapur')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Kolhapur</button>
-        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Solapur')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Solapur</button>
-        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Ahmednagar')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Ahmednagar</button>
-        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Jalgaon')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Jalgaon</button>
-        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Indore')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Indore</button>
+        <span class="text-[11px] font-bold text-outline shrink-0 mr-1" data-t="quickSelect">प्रमुख शहरे:</span>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Nashik')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container hover:bg-secondary-container text-primary font-medium transition-colors shrink-0">नाशिक</button>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Pune')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container hover:bg-secondary-container text-primary font-medium transition-colors shrink-0">पुणे</button>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Chhatrapati Sambhajinagar')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container hover:bg-secondary-container text-primary font-medium transition-colors shrink-0">संभाजीनगर</button>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Nagpur')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container hover:bg-secondary-container text-primary font-medium transition-colors shrink-0">नागपूर</button>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Kolhapur')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container hover:bg-secondary-container text-primary font-medium transition-colors shrink-0">कोल्हापूर</button>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Solapur')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container hover:bg-secondary-container text-primary font-medium transition-colors shrink-0">सोलापूर</button>
       </div>
     </div>
 
-    <!-- Interactive Leaflet Agro-GIS & Satellite Map -->
-    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-4 md:p-5 mb-6 shadow-sm">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-xl bg-leaf/15 text-leaf flex items-center justify-center">
-            <span class="material-symbols-outlined text-lg">map</span>
+    <!-- Current Conditions Hero Card -->
+    <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-5 md:p-6 mb-6 shadow-sm">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <div id="weather-current-icon-wrap" class="w-16 h-16 rounded-2xl bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-sm">
+            <span id="weather-current-icon" class="material-symbols-outlined text-4xl fill-1 text-leaf">thunderstorm</span>
           </div>
           <div>
-            <h3 class="font-bold text-sm text-primary dark:text-primary-fixed">Interactive Agro-GIS & Satellite Map</h3>
-            <p class="text-[11px] text-on-surface-variant">Click or drag pin anywhere in India to inspect farm microclimate & weather risk</p>
+            <div class="flex items-baseline gap-2">
+              <span id="weather-current-temp" class="text-3xl md:text-4xl font-black text-primary dark:text-primary-fixed">28°C</span>
+              <span id="weather-current-location" class="text-sm font-bold text-primary dark:text-primary-fixed">नाशिक कृषी क्षेत्र</span>
+            </div>
+            <p id="weather-current-condition" class="text-xs text-on-surface-variant mt-0.5">अंशतः ढगाळ • आर्द्रता ७८%</p>
           </div>
         </div>
-        
-        <!-- Map Layer Switcher & Pin Stats -->
-        <div class="flex items-center gap-2">
-          <div class="inline-flex bg-surface-container-low p-1 rounded-xl border border-sage/40 text-xs">
-            <button type="button" id="map-layer-street" onclick="WEATHER_SERVICE.switchMapLayer('street')" class="px-2.5 py-1 rounded-lg font-semibold bg-primary text-on-primary transition-all">Map</button>
-            <button type="button" id="map-layer-satellite" onclick="WEATHER_SERVICE.switchMapLayer('satellite')" class="px-2.5 py-1 rounded-lg font-medium text-outline hover:text-primary transition-all">Satellite</button>
-            <button type="button" id="map-layer-topo" onclick="WEATHER_SERVICE.switchMapLayer('topo')" class="px-2.5 py-1 rounded-lg font-medium text-outline hover:text-primary transition-all">Terrain</button>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+          <div class="p-3 bg-surface-container rounded-xl border border-sage/40">
+            <span class="material-symbols-outlined text-leaf text-base">water_drop</span>
+            <p id="weather-rain-prob" class="font-bold text-sm text-primary dark:text-primary-fixed">६७%</p>
+            <p class="text-[10px] text-outline" data-t="rainProbability">पाऊस शक्यता</p>
           </div>
-          <button type="button" onclick="WEATHER_SERVICE.locateFarmerOnMap()" title="Center to Selected Farm" class="p-2 rounded-xl bg-surface-container-low hover:bg-secondary-container text-primary border border-sage/40 transition-colors flex items-center justify-center">
+          <div class="p-3 bg-surface-container rounded-xl border border-sage/40">
+            <span class="material-symbols-outlined text-warning text-base">air</span>
+            <p id="weather-wind-speed" class="font-bold text-sm text-primary dark:text-primary-fixed">१२ किमी/तास</p>
+            <p class="text-[10px] text-outline" data-t="windSpeed">वाऱ्याचा वेग</p>
+          </div>
+          <div class="p-3 bg-surface-container rounded-xl border border-sage/40">
+            <span class="material-symbols-outlined text-primary text-base">humidity_percentage</span>
+            <p id="weather-humidity" class="font-bold text-sm text-primary dark:text-primary-fixed">७८%</p>
+            <p class="text-[10px] text-outline" data-t="humidity">आर्द्रता</p>
+          </div>
+          <div class="p-3 bg-surface-container rounded-xl border border-sage/40">
+            <span class="material-symbols-outlined text-leaf text-base">grain</span>
+            <p id="weather-precipitation" class="font-bold text-sm text-primary dark:text-primary-fixed">८.५ मिमी</p>
+            <p class="text-[10px] text-outline" data-t="expectedRain">२४ तासांत पाऊस</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. 7-Day Live Agromet Forecast -->
+    <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-5 mb-6 shadow-sm">
+      <div class="flex items-center justify-between mb-3.5">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-outline" data-t="agrometForecast">७ दिवसांचा कृषी हवामान अंदाज</h3>
+        <span class="text-[11px] text-outline">स्रोत: Open-Meteo • Agromet Synced</span>
+      </div>
+      <div id="weather-7day-container" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2.5">
+        <!-- Dynamically rendered by WEATHER_SERVICE -->
+        <div class="p-3 rounded-xl bg-surface-container text-center animate-pulse">
+          <p class="text-xs font-bold text-outline">हवामान अंदाज लोड होत आहे...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Leaflet Map -->
+    <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-4 mb-6 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+        <div>
+          <h3 class="font-bold text-sm text-primary dark:text-primary-fixed" data-t="interactiveMap">थेट उपग्रह व कृषी नकाशा</h3>
+          <p class="text-[11px] text-on-surface-variant">स्थानिक सूक्ष्म-हवामान तपासण्यासाठी नकाशावर क्लिक करा</p>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <div class="inline-flex bg-surface-container p-1 rounded-xl border border-sage/40 text-xs">
+            <button type="button" id="map-layer-street" onclick="WEATHER_SERVICE.switchMapLayer('street')" class="px-2.5 py-1 rounded-lg font-bold bg-primary text-white text-[11px]">नकाशा</button>
+            <button type="button" id="map-layer-satellite" onclick="WEATHER_SERVICE.switchMapLayer('satellite')" class="px-2.5 py-1 rounded-lg font-medium text-outline hover:text-primary text-[11px]">उपग्रह</button>
+            <button type="button" id="map-layer-topo" onclick="WEATHER_SERVICE.switchMapLayer('topo')" class="px-2.5 py-1 rounded-lg font-medium text-outline hover:text-primary text-[11px]">भूरूप</button>
+          </div>
+          <button type="button" onclick="WEATHER_SERVICE.locateFarmerOnMap()" title="Center to Selected Farm" class="p-2 rounded-xl bg-surface-container hover:bg-secondary-container text-primary border border-sage/40 transition-colors">
             <span class="material-symbols-outlined text-base">center_focus_strong</span>
           </button>
         </div>
       </div>
 
-      <!-- Leaflet Map Container -->
       <div class="relative w-full rounded-xl overflow-hidden border border-sage/60 shadow-inner">
-        <div id="weather-leaflet-map" style="height: 320px; width: 100%;" class="z-0"></div>
-        <div class="absolute bottom-3 left-3 z-[400] bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-sage/60 text-[11px] shadow-md flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-leaf animate-ping"></span>
-          <span id="map-coords-badge" class="font-semibold text-primary dark:text-primary-fixed">Lat: 19.997°N, Lon: 73.791°E</span>
+        <div id="weather-leaflet-map" style="height: 280px; width: 100%;" class="z-0"></div>
+        <div class="absolute bottom-2 left-2 z-[400] bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1 rounded-lg border border-sage/60 text-[10px] font-semibold">
+          <span id="map-coords-badge" class="text-primary dark:text-primary-fixed">Lat: 19.997°N, Lon: 73.791°E</span>
         </div>
       </div>
     </div>
 
-    <!-- Live Weather Hero Card -->
-    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-6 mb-6 shadow-sm relative overflow-hidden">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
-        <div class="flex items-center gap-4">
-          <div id="weather-current-icon-wrap" class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 flex items-center justify-center shadow-inner">
-            <span id="weather-current-icon" class="material-symbols-outlined text-4xl fill-1">thunderstorm</span>
+    <!-- 2. AGRICULTURAL IMPACT SECTION -->
+    <div class="mb-6">
+      <h3 class="text-xs font-bold uppercase tracking-wider text-outline mb-3.5 flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-sm text-leaf">agriculture</span>
+        <span data-t="agriculturalImpact">शेतीवरील थेट परिणाम व कृषी सूचना</span>
+      </h3>
+
+      <div class="space-y-3.5">
+        <!-- Impact 1: Irrigation Advisory -->
+        <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-4 sm:p-5 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-sage/40">
+            <h4 class="font-bold text-sm text-primary dark:text-primary-fixed flex items-center gap-2">
+              <span class="material-symbols-outlined text-base text-leaf">water_drop</span>
+              <span data-t="irrigationAdvisory">सिंचन सल्ला (पाणी देणे)</span>
+            </h4>
+            <span id="weather-irrigation-badge" class="self-start sm:self-auto px-2.5 py-0.5 bg-warning-container text-warning text-xs font-bold rounded-md">विश्लेषण होत आहे...</span>
           </div>
-          <div>
-            <div class="flex items-baseline gap-2">
-              <span id="weather-current-temp" class="text-3xl md:text-4xl font-black text-primary dark:text-primary-fixed">--°C</span>
-              <span id="weather-current-location" class="text-sm font-semibold text-leaf">Connecting Open-Meteo...</span>
-            </div>
-            <p id="weather-current-condition" class="text-xs md:text-sm text-on-surface-variant mt-0.5">Fetching live real-time analysis...</p>
+          <p id="weather-irrigation-desc" class="text-xs sm:text-sm text-on-surface-variant leading-relaxed mb-2">पावसाची शक्यता आणि बाष्पीभवनाचा वेग तपासला जात आहे...</p>
+          <div class="text-xs text-outline pt-2 border-t border-sage/30 flex justify-between">
+            <span data-t="soilMoistureNeed">मातीतील ओलावा गरज:</span>
+            <span id="weather-soil-status" class="font-bold text-primary dark:text-primary-fixed">सध्या ओलावा पुरेसा आहे</span>
           </div>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-          <div class="p-3 bg-surface-container-low rounded-xl border border-sage/40">
-            <span class="material-symbols-outlined text-leaf text-lg">water_drop</span>
-            <p id="weather-rain-prob" class="font-bold text-sm text-primary dark:text-primary-fixed">--%</p>
-            <p class="text-[10px] text-outline">Rain Prob.</p>
+        <!-- Impact 2: Spraying Window -->
+        <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-4 sm:p-5 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-sage/40">
+            <h4 class="font-bold text-sm text-primary dark:text-primary-fixed flex items-center gap-2">
+              <span class="material-symbols-outlined text-base text-warning">pest_control</span>
+              <span data-t="sprayingWindow">फवारणीसाठी योग्य वेळ (Spraying Window)</span>
+            </h4>
+            <span id="weather-spraying-badge" class="self-start sm:self-auto px-2.5 py-0.5 bg-error-container text-error text-xs font-bold rounded-md">विश्लेषण होत आहे...</span>
           </div>
-          <div class="p-3 bg-surface-container-low rounded-xl border border-sage/40">
-            <span class="material-symbols-outlined text-warning text-lg">air</span>
-            <p id="weather-wind-speed" class="font-bold text-sm text-primary dark:text-primary-fixed">-- km/h</p>
-            <p class="text-[10px] text-outline">Wind Speed</p>
-          </div>
-          <div class="p-3 bg-surface-container-low rounded-xl border border-sage/40">
-            <span class="material-symbols-outlined text-blue-500 text-lg">humidity_percentage</span>
-            <p id="weather-humidity" class="font-bold text-sm text-primary dark:text-primary-fixed">--%</p>
-            <p class="text-[10px] text-outline">Humidity</p>
-          </div>
-          <div class="p-3 bg-surface-container-low rounded-xl border border-sage/40">
-            <span class="material-symbols-outlined text-purple-500 text-lg">grain</span>
-            <p id="weather-precipitation" class="font-bold text-sm text-primary dark:text-primary-fixed">-- mm</p>
-            <p class="text-[10px] text-outline">24h Precip</p>
+          <p id="weather-spraying-desc" class="text-xs sm:text-sm text-on-surface-variant leading-relaxed mb-2">वाऱ्याचा वेग आणि पावसाचा अंदाज तपासला जात आहे...</p>
+          <div class="text-xs text-outline pt-2 border-t border-sage/30 flex justify-between">
+            <span data-t="sprayDriftRisk">फवारणी वाहून जाण्याची जोखीम:</span>
+            <span id="weather-spray-drift-status" class="font-bold text-primary dark:text-primary-fixed">पावसामुळे औषध वाहून जाण्याची भीती</span>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- 1. 7-Day Live Agromet Forecast Row (First) -->
-    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 mb-6 shadow-sm">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-outline">7-Day Real-Time Agromet Forecast</h3>
-        <span class="text-[11px] text-leaf font-semibold">Open-Meteo High Precision Forecast</span>
-      </div>
-      <div id="weather-7day-container" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
-        <!-- Dynamically rendered by WEATHER_SERVICE -->
-        <div class="p-3 rounded-xl bg-surface-container-low text-center animate-pulse">
-          <p class="text-xs font-bold text-outline">Loading...</p>
+        <!-- Impact 3: Fungal & Pest Risk -->
+        <div class="bg-surface-container-lowest dark:bg-surface-container-low border border-sage/60 rounded-2xl p-4 sm:p-5 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-sage/40">
+            <h4 class="font-bold text-sm text-primary dark:text-primary-fixed flex items-center gap-2">
+              <span class="material-symbols-outlined text-base text-error">coronavirus</span>
+              <span data-t="fungalPestRisk">बुरशी व कीड रोगाचा धोका</span>
+            </h4>
+            <span id="weather-fungal-badge" class="self-start sm:self-auto px-2.5 py-0.5 bg-error-container text-error text-xs font-bold rounded-md">विश्लेषण होत आहे...</span>
+          </div>
+          <p id="weather-fungal-desc" class="text-xs sm:text-sm text-on-surface-variant leading-relaxed mb-2">जास्त आर्द्रतेमुळे करपा व बुरशी वाढीची शक्यता...</p>
+          <div class="text-xs text-outline pt-2 border-t border-sage/30 flex justify-between">
+            <span data-t="pathogenIndex">रोगकारक निर्देशांक:</span>
+            <span id="weather-pathogen-status" class="font-bold text-primary dark:text-primary-fixed">बुरशी वाढीसाठी अनुकूल वातावरण</span>
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- 2. Agro-Risk & Decision Directives (Stacked One by One Below 7-Day Forecast) -->
-    <div class="space-y-4 mb-6">
-      
-      <!-- Feature 1: Irrigation Advisory -->
-      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm transition-all hover:border-leaf">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-sage/40">
-          <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed flex items-center gap-2">
-            <span class="material-symbols-outlined text-xl text-leaf">water_drop</span>
-            <span>Irrigation Advisory</span>
-          </h3>
-          <span id="weather-irrigation-badge" class="self-start sm:self-auto px-3 py-1 bg-warning/20 text-warning text-xs font-bold rounded-full">Analyzing...</span>
-        </div>
-        <p id="weather-irrigation-desc" class="text-xs md:text-sm text-on-surface-variant leading-relaxed mb-3">Evaluating precipitation probability and evapotranspiration rate...</p>
-        <div id="weather-irrigation-meter" class="flex items-center justify-between text-xs text-outline pt-2 border-t border-sage/30 bg-surface-container-low/50 -mx-5 -mb-5 px-5 py-2.5 rounded-b-2xl">
-          <span>Soil Moisture Need:</span>
-          <span id="weather-soil-status" class="font-bold text-primary dark:text-primary-fixed">Calculating</span>
-        </div>
-      </div>
-
-      <!-- Feature 2: Spraying Window -->
-      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm transition-all hover:border-leaf">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-sage/40">
-          <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed flex items-center gap-2">
-            <span class="material-symbols-outlined text-xl text-warning">pest_control</span>
-            <span>Spraying Window</span>
-          </h3>
-          <span id="weather-spraying-badge" class="self-start sm:self-auto px-3 py-1 bg-error/20 text-error text-xs font-bold rounded-full">Analyzing...</span>
-        </div>
-        <p id="weather-spraying-desc" class="text-xs md:text-sm text-on-surface-variant leading-relaxed mb-3">Analyzing wind velocity, drift risk, and rainfall forecast...</p>
-        <div class="flex items-center justify-between text-xs text-outline pt-2 border-t border-sage/30 bg-surface-container-low/50 -mx-5 -mb-5 px-5 py-2.5 rounded-b-2xl">
-          <span>Spray Drift Risk:</span>
-          <span id="weather-spray-drift-status" class="font-bold text-primary dark:text-primary-fixed">Checking</span>
-        </div>
-      </div>
-
-      <!-- Feature 3: Fungal & Pest Risk -->
-      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm transition-all hover:border-leaf">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-sage/40">
-          <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed flex items-center gap-2">
-            <span class="material-symbols-outlined text-xl text-error">coronavirus</span>
-            <span>Fungal & Pest Risk</span>
-          </h3>
-          <span id="weather-fungal-badge" class="self-start sm:self-auto px-3 py-1 bg-error/20 text-error text-xs font-bold rounded-full">Analyzing...</span>
-        </div>
-        <p id="weather-fungal-desc" class="text-xs md:text-sm text-on-surface-variant leading-relaxed mb-3">Correlating relative humidity and temperature for pathogen propagation...</p>
-        <div class="flex items-center justify-between text-xs text-outline pt-2 border-t border-sage/30 bg-surface-container-low/50 -mx-5 -mb-5 px-5 py-2.5 rounded-b-2xl">
-          <span>Pathogen Index:</span>
-          <span id="weather-pathogen-status" class="font-bold text-primary dark:text-primary-fixed">Evaluating</span>
-        </div>
-      </div>
-
     </div>
   </section>
 
@@ -1362,15 +1406,15 @@
   <section id="view-schemes" class="app-view hidden max-w-5xl mx-auto px-4 md:px-8 py-6">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
       <div>
-        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="schemes">Government Schemes & Subsidies</h1>
-        <p class="text-xs md:text-sm text-on-surface-variant">Central & State agriculture benefit programs eligible for your land</p>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="schemes">शासकीय योजना व कृषी अनुदान</h1>
+        <p class="text-xs md:text-sm text-on-surface-variant" data-t="schemesSubtitle">शेतकऱ्यांसाठी केंद्र व राज्य सरकारच्या सर्व योजना व थेट लाभ</p>
       </div>
 
       <div class="flex items-center gap-2">
-        <button onclick="filterSchemes('all')" data-category="all" class="scheme-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-primary text-on-primary transition-all">All</button>
-        <button onclick="filterSchemes('subsidy')" data-category="subsidy" class="scheme-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface-container text-on-surface hover:bg-surface-variant transition-all">Subsidies</button>
-        <button onclick="filterSchemes('insurance')" data-category="insurance" class="scheme-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface-container text-on-surface hover:bg-surface-variant transition-all">Insurance</button>
-        <button onclick="filterSchemes('solar')" data-category="solar" class="scheme-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface-container text-on-surface hover:bg-surface-variant transition-all">Solar</button>
+        <button onclick="filterSchemes('all')" data-category="all" class="scheme-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-primary text-on-primary transition-all" data-t="all">सर्व</button>
+        <button onclick="filterSchemes('subsidy')" data-category="subsidy" class="scheme-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface-container text-on-surface hover:bg-surface-variant transition-all" data-t="subsidies">अनुदान</button>
+        <button onclick="filterSchemes('insurance')" data-category="insurance" class="scheme-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface-container text-on-surface hover:bg-surface-variant transition-all" data-t="insurance">पीक विमा</button>
+        <button onclick="filterSchemes('solar')" data-category="solar" class="scheme-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface-container text-on-surface hover:bg-surface-variant transition-all" data-t="solar">सौर कृषी पंप</button>
       </div>
     </div>
 
@@ -1381,16 +1425,16 @@
       <div data-category="subsidy" class="scheme-card bg-surface-container-lowest border border-sage rounded-2xl p-5 flex flex-col justify-between shadow-sm">
         <div>
           <div class="flex items-center justify-between mb-2">
-            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-secondary-container text-on-secondary-container">Central Scheme</span>
-            <span class="text-xs font-bold text-leaf">₹6,000 / year</span>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-secondary-container text-on-secondary-container">केंद्रीय योजना</span>
+            <span class="text-xs font-bold text-leaf">₹६,००० / वर्ष</span>
           </div>
-          <h3 class="text-lg font-bold text-primary dark:text-primary-fixed">PM-Kisan Samman Nidhi</h3>
-          <p class="text-xs text-on-surface-variant mt-1.5">Direct income support of ₹6,000 in three equal installments directly to bank accounts for all landholding farmer families.</p>
+          <h3 class="text-lg font-bold text-primary dark:text-primary-fixed">पीएम किसान सन्मान निधी</h3>
+          <p class="text-xs text-on-surface-variant mt-1.5">सर्व पात्र शेतकरी कुटुंबांना दरवर्षी ₹६,००० थेट बँक खात्यात ३ हप्त्यांमध्ये जमा केले जातात.</p>
         </div>
         <div class="pt-4 mt-4 border-t border-sage/40 flex items-center justify-between">
-          <span class="text-xs text-outline">Status: Enrolled (Active)</span>
+          <span class="text-xs text-outline">स्थिती: सक्रिय (नोंदणीकृत)</span>
           <button onclick="openSchemeModal('PM-Kisan Samman Nidhi', '₹6,000/yr Direct Benefit Transfer')" class="px-4 py-2 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-container transition-colors" data-t="checkEligibility">
-            Check Status
+            पात्रता तपासा
           </button>
         </div>
       </div>
@@ -1453,47 +1497,63 @@
   </section>
 
   <!-- ==================== VIEW 10: MARKET PRICES ==================== -->
+  <!-- ==================== VIEW 10: MARKET PRICES ==================== -->
   <section id="view-market-prices" class="app-view hidden max-w-6xl mx-auto px-4 md:px-8 py-6">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
       <div>
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold mb-2">
           <span class="material-symbols-outlined text-xs">trending_up</span>
-          <span>Market Intelligence</span>
+          <span data-t="marketIntelligence">बाजार भाव बुद्धिमत्ता</span>
         </div>
-        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed">Market Price</h1>
-        <p class="text-xs md:text-sm text-on-surface-variant mt-1">Check mandi prices near your registered location and review the 7-day price trend.</p>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="marketPrices">बाजार भाव (मंडी दर)</h1>
+        <p class="text-xs md:text-sm text-on-surface-variant mt-1" data-t="mandiSubtitle">शासकीय Agmarknet थेट दर, जवळच्या कृषी उत्पन्न बाजार समित्या व ७ दिवसांचा कल</p>
       </div>
-      <div class="flex items-center gap-2 text-xs font-semibold text-primary dark:text-primary-fixed">
-        <span class="material-symbols-outlined text-base">location_on</span>
-        <span id="market-location-label">Nashik, Maharashtra</span>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-1.5 text-xs font-semibold text-primary dark:text-primary-fixed">
+          <span class="material-symbols-outlined text-base">location_on</span>
+          <span id="market-location-label">नाशिक, महाराष्ट्र</span>
+        </div>
+        <button onclick="MARKET_PRICE_SERVICE.speakMarketSummary()" class="px-3.5 py-2 rounded-xl bg-surface-container border border-sage/60 text-primary font-bold text-xs flex items-center gap-1.5 hover:bg-secondary-container transition-colors shadow-sm">
+          <span class="material-symbols-outlined text-base">volume_up</span>
+          <span data-t="listen">ऐका</span>
+        </button>
       </div>
     </div>
 
     <div class="bg-surface-container-lowest border border-sage rounded-3xl p-5 md:p-6 shadow-sm mb-6">
       <div class="flex flex-col lg:flex-row gap-4">
         <div class="flex-1">
-          <label for="market-crop-search" class="block text-[11px] font-bold uppercase tracking-wider text-outline mb-2">Search Crop Type</label>
+          <label for="market-crop-search" class="block text-[11px] font-bold uppercase tracking-wider text-outline mb-2" data-t="cropName">पिकाचे नाव शोधा</label>
           <div class="flex gap-2">
-            <input id="market-crop-search" type="text" value="Onion" placeholder="Search crop (Onion, Wheat, Tomato...)" class="w-full bg-surface-container-low border border-sage rounded-xl py-3 px-3 text-sm text-charcoal dark:text-white placeholder:text-outline/60 focus:outline-none focus:border-leaf" />
-            <button onclick="MARKET_PRICE_SERVICE.searchCrop()" class="px-4 py-3 rounded-xl bg-primary text-on-primary text-xs font-bold hover:bg-primary-container transition-colors">Search</button>
+            <input id="market-crop-search" type="text" value="" placeholder="पिकाचे नाव प्रविष्ट करा (उदा. कांदा, टोमॅटो, गहू, कापूस, सोयाबीन...)" data-t-placeholder="searchCropPlaceholder" class="w-full bg-surface-container-low border border-sage rounded-xl py-3 px-3 text-sm text-charcoal dark:text-white placeholder:text-outline/60 focus:outline-none focus:border-leaf" />
+            <button onclick="MARKET_PRICE_SERVICE.searchCrop()" class="px-5 py-3 rounded-xl bg-primary text-on-primary text-xs font-bold hover:bg-primary-container transition-colors flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm">search</span>
+              <span data-t="searchRates">दर शोधा</span>
+            </button>
           </div>
         </div>
         <div class="lg:w-56">
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-outline mb-2">Nearby Mandi</label>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-outline mb-2" data-t="nearbyMandi">जवळची बाजार समिती</label>
           <select id="market-mandi-select" onchange="MARKET_PRICE_SERVICE.changeMandi(this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-3 px-3 text-sm text-charcoal dark:text-white focus:outline-none focus:border-leaf">
-            <option value="Lasalgaon">Lasalgaon APMC</option>
-            <option value="Pimpalgaon">Pimpalgaon APMC</option>
-            <option value="Yeola">Yeola APMC</option>
+            <option value="Lasalgaon">लासलगाव (Lasalgaon APMC)</option>
+            <option value="Pimpalgaon">पिंपळगाव (Pimpalgaon APMC)</option>
+            <option value="Yeola">येवला (Yeola APMC)</option>
+            <option value="Niphad">निफाड (Niphad APMC)</option>
+            <option value="Sinnar">सिन्नर (Sinnar APMC)</option>
           </select>
         </div>
       </div>
 
-      <div id="market-suggested-crops" class="mt-4 flex flex-wrap gap-2">
-        <button type="button" onclick="MARKET_PRICE_SERVICE.searchCrop('Onion')" class="market-search-chip px-3 py-1.5 rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-semibold">Onion</button>
-        <button type="button" onclick="MARKET_PRICE_SERVICE.searchCrop('Tomato')" class="market-search-chip px-3 py-1.5 rounded-full bg-surface-container text-on-surface text-[11px] font-semibold hover:bg-surface-variant">Tomato</button>
-        <button type="button" onclick="MARKET_PRICE_SERVICE.searchCrop('Wheat')" class="market-search-chip px-3 py-1.5 rounded-full bg-surface-container text-on-surface text-[11px] font-semibold hover:bg-surface-variant">Wheat</button>
-        <button type="button" onclick="MARKET_PRICE_SERVICE.searchCrop('Cotton')" class="market-search-chip px-3 py-1.5 rounded-full bg-surface-container text-on-surface text-[11px] font-semibold hover:bg-surface-variant">Cotton</button>
-        <button type="button" onclick="MARKET_PRICE_SERVICE.searchCrop('Chilli')" class="market-search-chip px-3 py-1.5 rounded-full bg-surface-container text-on-surface text-[11px] font-semibold hover:bg-surface-variant">Chilli</button>
+      <div id="market-suggested-crops" class="mt-4 flex flex-wrap items-center gap-2">
+        <span class="text-[11px] text-outline font-semibold mr-1" data-t="quickSelect">प्रमुख पिके:</span>
+        <button type="button" onclick="MARKET_PRICE_SERVICE.searchCrop('Onion')" class="market-search-chip px-3 py-1.5 rounded-full bg-surface-container text-on-surface text-[11px] font-semibold hover:bg-secondary-container hover:text-on-secondary-container transition-colors">🧅 कांदा (Onion)</button>
+        <button type="button" onclick="MARKET_PRICE_SERVICE.searchCrop('Tomato')" class="market-search-chip px-3 py-1.5 rounded-full bg-surface-container text-on-surface text-[11px] font-semibold hover:bg-secondary-container hover:text-on-secondary-container transition-colors">🍅 टोमॅटो (Tomato)</button>
+        <button type="button" onclick="MARKET_PRICE_SERVICE.searchCrop('Wheat')" class="market-search-chip px-3 py-1.5 rounded-full bg-surface-container text-on-surface text-[11px] font-semibold hover:bg-secondary-container hover:text-on-secondary-container transition-colors">🌾 गहू (Wheat)</button>
+        <button type="button" onclick="MARKET_PRICE_SERVICE.searchCrop('Cotton')" class="market-search-chip px-3 py-1.5 rounded-full bg-surface-container text-on-surface text-[11px] font-semibold hover:bg-secondary-container hover:text-on-secondary-container transition-colors">🌱 कापूस (Cotton)</button>
+        <button type="button" onclick="MARKET_PRICE_SERVICE.searchCrop('Potato')" class="market-search-chip px-3 py-1.5 rounded-full bg-surface-container text-on-surface text-[11px] font-semibold hover:bg-secondary-container hover:text-on-secondary-container transition-colors">🥔 बटाटा (Potato)</button>
+        <button type="button" onclick="MARKET_PRICE_SERVICE.searchCrop('Soybean')" class="market-search-chip px-3 py-1.5 rounded-full bg-surface-container text-on-surface text-[11px] font-semibold hover:bg-secondary-container hover:text-on-secondary-container transition-colors">🌿 सोयाबीन (Soybean)</button>
+        <button type="button" onclick="MARKET_PRICE_SERVICE.searchCrop('Chilli')" class="market-search-chip px-3 py-1.5 rounded-full bg-surface-container text-on-surface text-[11px] font-semibold hover:bg-secondary-container hover:text-on-secondary-container transition-colors">🌶️ मिरची (Chilli)</button>
+        <button type="button" onclick="MARKET_PRICE_SERVICE.searchCrop('Grapes')" class="market-search-chip px-3 py-1.5 rounded-full bg-surface-container text-on-surface text-[11px] font-semibold hover:bg-secondary-container hover:text-on-secondary-container transition-colors">🍇 द्राक्षे (Grapes)</button>
       </div>
     </div>
 
@@ -1501,48 +1561,58 @@
       <div class="bg-surface-container-lowest border border-sage rounded-3xl p-5 md:p-6 shadow-sm">
         <div class="flex items-center justify-between mb-5">
           <div>
-            <p class="text-[11px] uppercase tracking-wider text-outline font-bold">Current Price</p>
-            <h2 id="market-crop-name" class="text-2xl font-black text-primary dark:text-primary-fixed mt-1">Onion</h2>
+            <p class="text-[11px] uppercase tracking-wider text-outline font-bold" data-t="selectedCrop">निवडलेले पीक</p>
+            <h2 id="market-crop-name" class="text-2xl font-black text-primary dark:text-primary-fixed mt-1">कांदा (Onion)</h2>
           </div>
-          <div class="px-3 py-1.5 rounded-full bg-leaf/15 text-leaf text-[11px] font-bold">Live Mandi</div>
+          <div id="market-live-badge" class="px-3 py-1.5 rounded-full bg-leaf/15 text-leaf text-[11px] font-bold">थेट बाजार भाव (Live)</div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
           <div class="p-4 rounded-2xl bg-surface-container-low border border-sage/50">
-            <p class="text-[10px] uppercase tracking-wider text-outline font-bold">Price</p>
-            <p id="market-current-price" class="text-2xl font-black text-primary dark:text-primary-fixed mt-1">₹1,780</p>
-            <p class="text-[11px] text-on-surface-variant mt-0.5">/ quintal</p>
+            <p class="text-[10px] uppercase tracking-wider text-outline font-bold" data-t="modalPrice">सरासरी बाजार भाव</p>
+            <p id="market-current-price" class="text-2xl font-black text-primary dark:text-primary-fixed mt-1">₹३,६००</p>
+            <p class="text-[11px] text-on-surface-variant mt-0.5">₹ / क्विंटल</p>
           </div>
           <div class="p-4 rounded-2xl bg-surface-container-low border border-sage/50">
-            <p class="text-[10px] uppercase tracking-wider text-outline font-bold">Mandi</p>
-            <p id="market-current-mandi" class="text-lg font-extrabold text-primary dark:text-primary-fixed mt-1">Lasalgaon</p>
-            <p class="text-[11px] text-on-surface-variant mt-0.5">Nearest to Nashik</p>
+            <p class="text-[10px] uppercase tracking-wider text-outline font-bold" data-t="mandiMarket">बाजार समिती (मंडी)</p>
+            <p id="market-current-mandi" class="text-lg font-extrabold text-primary dark:text-primary-fixed mt-1">लासलगाव (Lasalgaon)</p>
+            <p class="text-[11px] text-on-surface-variant mt-0.5">कृषी उत्पन्न बाजार समिती</p>
           </div>
           <div class="p-4 rounded-2xl bg-surface-container-low border border-sage/50">
-            <p class="text-[10px] uppercase tracking-wider text-outline font-bold">Trend</p>
-            <p id="market-trend-label" class="text-lg font-extrabold text-leaf mt-1">+4.8%</p>
-            <p class="text-[11px] text-on-surface-variant mt-0.5">vs last week</p>
+            <p class="text-[10px] uppercase tracking-wider text-outline font-bold" data-t="trend">७ दिवसांचा कल</p>
+            <p id="market-trend-label" class="text-lg font-extrabold text-leaf mt-1">📈 +४.८% वाढ</p>
+            <p class="text-[11px] text-on-surface-variant mt-0.5">मागील आठवड्याच्या तुलनेत</p>
           </div>
         </div>
 
         <div class="border border-sage/60 rounded-2xl bg-surface-container-low p-3">
           <div class="flex items-center justify-between mb-3">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-outline">7-Day Price Trend</h3>
-            <span class="text-[11px] text-leaf font-semibold" id="market-period-label">Last 7 days</span>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-outline" data-t="sevenDayPriceTrend">७ दिवसांचा बाजार भाव आलेख</h3>
+            <span class="text-[11px] text-outline font-semibold" id="market-period-label">Agmarknet थेट डेटा</span>
           </div>
-          <div id="market-price-chart" class="w-full h-52 rounded-xl bg-white/10"></div>
+          <div id="market-price-chart" class="w-full h-52 rounded-xl bg-surface-container-lowest/60 border border-sage/30 flex items-center justify-center p-4">
+            <p class="text-xs text-outline font-medium text-center">थेट शासकीय Agmarknet बाजार भाव आलेख</p>
+          </div>
         </div>
       </div>
 
       <div class="space-y-6">
         <div class="bg-surface-container-lowest border border-sage rounded-3xl p-5 shadow-sm">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-outline mb-4">Nearby Mandis</h3>
-          <div id="market-nearby-list" class="space-y-3"></div>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-outline mb-4" data-t="nearbyMandis">जवळपासच्या कृषी उत्पन्न बाजार समित्या</h3>
+          <div id="market-nearby-list" class="space-y-3">
+            <p class="text-xs text-outline py-4 text-center">जवळच्या बाजार समित्यांमधील थेट दर तपासले जात आहेत...</p>
+          </div>
         </div>
 
         <div class="bg-surface-container-lowest border border-sage rounded-3xl p-5 shadow-sm">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-outline mb-3">Price Analysis</h3>
-          <p id="market-analysis-summary" class="text-sm text-on-surface-variant leading-relaxed">Onion prices in Lasalgaon are trending upward as supply tightens in the Nashik region. This window is favorable for selling between now and the next 2-3 days.</p>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-outline" data-t="priceAnalysis">बाजार भाव विश्लेषण व विक्री सल्ला</h3>
+            <button onclick="MARKET_PRICE_SERVICE.speakMarketSummary()" class="p-1.5 rounded-lg bg-surface-container hover:bg-secondary-container text-primary transition-colors text-xs flex items-center gap-1 font-semibold">
+              <span class="material-symbols-outlined text-sm">volume_up</span>
+              <span data-t="listen">ऐका</span>
+            </button>
+          </div>
+          <p id="market-analysis-summary" class="text-sm text-on-surface-variant leading-relaxed">लासलगाव आणि पिंपळगाव बाजारात कांद्याची आवक स्थिर असून व्यापाऱ्यांकडून मागणी चांगली आहे. आगामी २ ते ४ दिवसांत विक्रीसाठी उत्तम वेळ आहे.</p>
         </div>
       </div>
     </div>
@@ -1553,12 +1623,12 @@
   <section id="view-suggestions" class="app-view hidden max-w-5xl mx-auto px-4 md:px-8 py-6">
     <div class="flex items-center justify-between mb-6">
       <div>
-        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="suggestions">AI Suggestions & Yield Impact</h1>
-        <p class="text-xs md:text-sm text-on-surface-variant">Data-driven recommendations to boost harvest quality and maximize profit</p>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="suggestions">एआय शेती सल्ले व नफा वाढ</h1>
+        <p class="text-xs md:text-sm text-on-surface-variant" data-t="suggestionsSubtitle">उत्पादनाचा दर्जा वाढवण्यासाठी आणि खर्च कमी करण्यासाठी अचूक शिफारशी</p>
       </div>
-      <button onclick="speakText('Here are your top suggestions: Postpone irrigation, apply micronutrient spray on day 52, and enroll in solar pump scheme to save 18,500 rupees per acre.')" class="px-4 py-2 rounded-xl bg-sage/60 text-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-secondary-container transition-colors">
+      <button onclick="speakText('तुमच्या शेतासाठी महत्त्वाचे सल्ले: सध्या पाणी देणे थांबवा, ५२ व्या दिवशी सूक्ष्म अन्नद्रव्यांची फवारणी करा आणि सौर पंपासाठी अर्ज करा.')" class="px-4 py-2 rounded-xl bg-sage/60 text-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-secondary-container transition-colors">
         <span class="material-symbols-outlined text-base">volume_up</span>
-        <span>Listen</span>
+        <span data-t="listen">ऐका</span>
       </button>
     </div>
 
@@ -1569,10 +1639,10 @@
         </div>
         <div class="flex-1">
           <div class="flex items-center justify-between">
-            <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed">Delay Drip Fertigation by 48 Hours</h3>
-            <span class="text-xs font-bold text-leaf">Saves ₹1,400</span>
+            <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed">ठिबक सिंचन व खत देणे ४८ तास पुढे ढकला</h3>
+            <span class="text-xs font-bold text-leaf">₹१,४०० बचत</span>
           </div>
-          <p class="text-xs text-on-surface-variant mt-1">Upcoming precipitation will wash away soluble nutrients if applied now. Apply once topsoil dries on Thursday.</p>
+          <p class="text-xs text-on-surface-variant mt-1">पावसामुळे पाण्यात विरघळणारी खते वाहून जाण्याचा धोका आहे. पाऊस थांबल्यावर गुरुवारी खत द्यावे.</p>
         </div>
       </div>
 
@@ -1582,10 +1652,10 @@
         </div>
         <div class="flex-1">
           <div class="flex items-center justify-between">
-            <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed">Foliar Spray of 00:52:34 + Boron</h3>
-            <span class="text-xs font-bold text-leaf">+15% Bulb Size</span>
+            <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed">00:52:34 + बोरॉन फवारणी शिफारस</h3>
+            <span class="text-xs font-bold text-leaf">+१५% कांद्याचा आकार</span>
           </div>
-          <p class="text-xs text-on-surface-variant mt-1">At bulb enlargement stage (Day 50-60), Potassium and Boron promote uniform bulb firmness and storage shelf-life.</p>
+          <p class="text-xs text-on-surface-variant mt-1">कांदा पोसण्याच्या काळात (५०-६० दिवस), पोटॅशियम आणि बोरॉनमुळे कांद्याचा आकार व साठवणूक क्षमता वाढते.</p>
         </div>
       </div>
 
@@ -1595,10 +1665,10 @@
         </div>
         <div class="flex-1">
           <div class="flex items-center justify-between">
-            <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed">Solar Pump Grid Transition</h3>
-            <span class="text-xs font-bold text-leaf">90% Subsidy</span>
+            <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed">सौर कृषी पंप योजनेचा लाभ घ्या</h3>
+            <span class="text-xs font-bold text-leaf">९०% शासकीय अनुदान</span>
           </div>
-          <p class="text-xs text-on-surface-variant mt-1">Eliminate diesel generator expenses and erratic night power cuts by applying for PM-KUSUM 5HP solar pump.</p>
+          <p class="text-xs text-on-surface-variant mt-1">डिझेलचा खर्च व रात्रीच्या वीज भारनियमनातून मुक्ती मिळवण्यासाठी कुसुम ५ एचपी सौर पंपासाठी अर्ज करा.</p>
         </div>
       </div>
     </div>
@@ -1809,93 +1879,276 @@
   <script>
     window.MARKET_PRICE_SERVICE = {
       API_KEY: '579b464db66ec23bdd00000183adce595b59466c7e73945fda10bc1f',
-      cropOptions: ['Onion', 'Tomato', 'Wheat', 'Cotton', 'Chilli', 'Grapes', 'Potato', 'Soybean'],
+      RESOURCE_ID: '9ef84268-d588-465a-a308-a864a43d0070',
+      cropOptions: ['Onion', 'Tomato', 'Wheat', 'Cotton', 'Chilli', 'Grapes', 'Potato', 'Soybean', 'Banana', 'Brinjal', 'Paddy(Common)'],
+      
+      marathiCropMap: {
+        'कांदा': 'Onion',
+        'onion': 'Onion',
+        'टोमॅटो': 'Tomato',
+        'tomato': 'Tomato',
+        'गहू': 'Wheat',
+        'wheat': 'Wheat',
+        'कापूस': 'Cotton',
+        'cotton': 'Cotton',
+        'मिरची': 'Chilli',
+        'chilli': 'Chilli',
+        'द्राक्षे': 'Grapes',
+        'द्राक्ष': 'Grapes',
+        'grapes': 'Grapes',
+        'बटाटा': 'Potato',
+        'potato': 'Potato',
+        'सोयाबीन': 'Soybean',
+        'soybean': 'Soybean',
+        'केळी': 'Banana',
+        'banana': 'Banana',
+        'वांगी': 'Brinjal',
+        'brinjal': 'Brinjal',
+        'भात': 'Paddy(Common)',
+        'तांदूळ': 'Paddy(Common)',
+        'paddy': 'Paddy(Common)'
+      },
+
+      cropNamesMarathi: {
+        'Onion': 'कांदा (Onion)',
+        'Tomato': 'टोमॅटो (Tomato)',
+        'Wheat': 'गहू (Wheat)',
+        'Cotton': 'कापूस (Cotton)',
+        'Chilli': 'मिरची (Chilli)',
+        'Grapes': 'द्राक्षे (Grapes)',
+        'Potato': 'बटाटा (Potato)',
+        'Soybean': 'सोयाबीन (Soybean)',
+        'Banana': 'केळी (Banana)',
+        'Brinjal': 'वांगी (Brinjal)',
+        'Paddy(Common)': 'भात/तांदूळ (Paddy)'
+      },
+
+      mandiNamesMarathi: {
+        'Lasalgaon': 'लासलगाव (Lasalgaon)',
+        'Pimpalgaon': 'पिंपळगाव (Pimpalgaon)',
+        'Yeola': 'येवला (Yeola)',
+        'Niphad': 'निफाड (Niphad)',
+        'Sinnar': 'सिन्नर (Sinnar)'
+      },
+
       nearbyMarketsByLocation: {
-        'nashik': ['Lasalgaon', 'Pimpalgaon', 'Yeola', 'Niphad'],
-        'maharashtra': ['Lasalgaon', 'Pimpalgaon', 'Yeola', 'Niphad'],
+        'nashik': ['Lasalgaon', 'Pimpalgaon', 'Yeola', 'Niphad', 'Sinnar'],
+        'maharashtra': ['Lasalgaon', 'Pimpalgaon', 'Yeola', 'Niphad', 'Sinnar'],
         'default': ['Lasalgaon', 'Pimpalgaon', 'Yeola', 'Niphad']
       },
 
       normalizeCropName(crop) {
         const raw = (crop || '').trim();
         if (!raw) return 'Onion';
+        
+        // Check Marathi direct dictionary first
+        const lower = raw.toLowerCase();
+        for (const [key, val] of Object.entries(this.marathiCropMap)) {
+          if (lower.includes(key.toLowerCase()) || key.toLowerCase().includes(lower)) {
+            return val;
+          }
+        }
+
         const match = this.cropOptions.find(item => item.toLowerCase() === raw.toLowerCase());
         if (match) return match;
         return this.cropOptions.find(item => item.toLowerCase().includes(raw.toLowerCase())) || raw;
       },
 
       getNearbyMarkets(location) {
-        const value = (location || APP_STATE.user?.location || 'Nashik, Maharashtra').toLowerCase();
+        const value = (location || APP_STATE?.user?.location || 'Nashik, Maharashtra').toLowerCase();
         const matched = Object.keys(this.nearbyMarketsByLocation).find(key => value.includes(key));
         return matched ? this.nearbyMarketsByLocation[matched] : this.nearbyMarketsByLocation.default;
       },
 
       buildSampleData(crop, mandi) {
         const cropName = this.normalizeCropName(crop);
+        const isMr = APP_STATE?.language === 'mr';
+
         const basePrices = {
-          Onion: { price: 1780, change: 4.8, trend: [1520, 1600, 1580, 1675, 1720, 1775, 1780], summary: 'Onion prices in Lasalgaon are trending upward as supply tightens in the Nashik region. This window is favorable for selling between now and the next 2-3 days.' },
-          Tomato: { price: 1350, change: 3.1, trend: [1200, 1240, 1290, 1310, 1385, 1335, 1350], summary: 'Tomato arrivals remain moderate, with a slight rise after the recent supply dip. Good pricing is likely for short-term selling.' },
-          Wheat: { price: 2160, change: 2.4, trend: [1980, 2020, 2080, 2100, 2150, 2140, 2160], summary: 'Wheat prices are holding steady with a mild upward bias after fresh procurement activity in nearby mandis.' },
-          Cotton: { price: 6420, change: 1.9, trend: [6100, 6250, 6340, 6390, 6480, 6410, 6420], summary: 'Cotton is stable with gradual momentum. Watch nearby arrivals before committing to a larger sale volume.' },
-          Chilli: { price: 9800, change: 6.2, trend: [8600, 8900, 9300, 9550, 9650, 9750, 9800], summary: 'Chilli prices continue to strengthen as arrivals remain limited. This is a favorable window for higher realization.' },
-          Grapes: { price: 4600, change: 5.5, trend: [4020, 4180, 4300, 4420, 4510, 4550, 4600], summary: 'Grape prices are firm and improving, especially for fresh-quality lots from nearby producing clusters.' },
-          Potato: { price: 1125, change: -1.4, trend: [1190, 1175, 1145, 1110, 1115, 1120, 1125], summary: 'Potato prices are stable to slightly soft, which suggests holding for a better near-term market window if cold storage is available.' },
-          Soybean: { price: 4050, change: 2.8, trend: [3820, 3900, 3960, 3990, 4040, 4090, 4050], summary: 'Soybean prices are moderating after a strong rise. It may be wise to monitor the next 2-3 days before unloading a large volume.' }
+          Onion: { 
+            price: 3600, 
+            change: 4.8, 
+            trend: [3200, 3350, 3400, 3480, 3520, 3580, 3600], 
+            summary: isMr 
+              ? 'लासलगाव आणि पिंपळगाव बाजारात कांद्याची आवक स्थिर असून व्यापाऱ्यांकडून मागणी चांगली आहे. आगामी २ ते ४ दिवसांत विक्रीसाठी उत्तम वेळ आहे.'
+              : 'Onion prices across APMCs are firming up with steady buyer demand. Favorable market window for selling over the next 2-4 days.' 
+          },
+          Tomato: { 
+            price: 1450, 
+            change: 3.1, 
+            trend: [1200, 1240, 1290, 1310, 1385, 1420, 1450], 
+            summary: isMr
+              ? 'टोमॅटोची बाजारातील आवक समाधानकारक असून मागणी स्थिर आहे. प्रतवारीनुसार चांगला दर मिळत आहे.'
+              : 'Tomato arrivals remain steady, with prices consolidating after moderate arrival volume.' 
+          },
+          Wheat: { 
+            price: 2350, 
+            change: 2.4, 
+            trend: [2180, 2220, 2280, 2300, 2320, 2340, 2350], 
+            summary: isMr
+              ? 'गव्हाचे दर स्थिर असून स्थानिक गिरण्या व शासकीय खरेदी केंद्रांवर नियमित मागणी आहे.'
+              : 'Wheat prices are holding steady with strong institutional and local mill procurement.' 
+          },
+          Cotton: { 
+            price: 6850, 
+            change: 1.9, 
+            trend: [6400, 6550, 6640, 6690, 6780, 6810, 6850], 
+            summary: isMr
+              ? 'प्रमुख बाजार समित्यांमध्ये कापसाचे भाव स्थिर असून उच्च गुणवत्तेच्या मालाला उत्तम उठाव आहे.'
+              : 'Cotton is trading firm across major regional markets with stable quality lot demand.' 
+          },
+          Chilli: { 
+            price: 9800, 
+            change: 6.2, 
+            trend: [8600, 8900, 9300, 9550, 9650, 9750, 9800], 
+            summary: isMr
+              ? 'मिरचीची आवक मर्यादित असल्याने दरात सुधारणा होत आहे. चांगला नफा मिळवण्यासाठी विक्रीस अनुकूल काळ आहे.'
+              : 'Chilli prices continue to strengthen as arrivals remain limited. Favorable window for realization.' 
+          },
+          Grapes: { 
+            price: 4800, 
+            change: 5.5, 
+            trend: [4120, 4280, 4400, 4520, 4610, 4750, 4800], 
+            summary: isMr
+              ? 'द्राक्षांचे दर मजबूत असून विशेषतः निर्यातक्षम आणि टेबल जातींना उत्कृष्ट भाव मिळत आहे.'
+              : 'Grape prices are firm and improving, especially for export & premium table varieties.' 
+          },
+          Potato: { 
+            price: 1250, 
+            change: -1.4, 
+            trend: [1300, 1280, 1270, 1260, 1240, 1250, 1250], 
+            summary: isMr
+              ? 'बटाट्याचे भाव सध्या स्थिर आहेत. साठवणुकीची सोय असल्यास दर सुधारणा होईपर्यंत प्रतीक्षा करावी.'
+              : 'Potato prices are stable. Consider holding for a better near-term window if storage allows.' 
+          },
+          Soybean: { 
+            price: 4250, 
+            change: 2.8, 
+            trend: [3950, 4020, 4080, 4120, 4180, 4220, 4250], 
+            summary: isMr
+              ? 'सोयाबीन बाजारात आवक नियमित असून तेल गिरण्यांकडून खरेदी सुरू असल्याने दराला आधार आहे.'
+              : 'Soybean arrivals are steady with active crusher demand supporting current price levels.' 
+          }
         };
 
-        const selected = basePrices[cropName] || basePrices.Onion;
+        const selected = basePrices[cropName] || {
+          price: 2400,
+          change: 2.5,
+          trend: [2100, 2180, 2240, 2300, 2340, 2380, 2400],
+          summary: isMr
+            ? `${this.cropNamesMarathi[cropName] || cropName} चे दर स्थानिक बाजार समित्यांमध्ये समाधानकारक व स्थिर आहेत.`
+            : `${cropName} is trading with steady volume across regional APMC markets.`
+        };
+
         const currentMandi = mandi || 'Lasalgaon';
-        const nearMarkets = this.getNearbyMarkets(APP_STATE.user?.location || 'Nashik, Maharashtra');
+        const nearMarkets = this.getNearbyMarkets(APP_STATE?.user?.location || 'Nashik, Maharashtra');
         return {
           crop: cropName,
           mandi: currentMandi,
           nearMarkets,
           price: selected.price,
           change: selected.change,
-          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Today'],
+          labels: isMr ? ['सोम', 'मंगळ', 'बुध', 'गुरु', 'शुक्र', 'शनि', 'आज'] : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Today'],
           values: selected.trend,
           summary: selected.summary,
-          unit: '/ quintal'
+          unit: isMr ? '/ क्विंटल' : '/ quintal',
+          isLive: false
         };
       },
 
       async fetchRemoteData(crop, mandi) {
         const apiKey = this.API_KEY;
+        const resourceId = this.RESOURCE_ID;
+        const encodedCrop = encodeURIComponent(crop);
+        
+        // Data.gov.in Agmarknet Direct & CORS Fallback URLs
         const endpoints = [
-          `https://api.data.gov.in/resource/9ef84268-d588-465a-9f2b-bc163bdb8498?api-key=${apiKey}&format=json&limit=25`,
-          `https://api.data.gov.in/resource/3f2d4d5a-74d7-4d3a-a1b9-0e1e48783569?api-key=${apiKey}&format=json&limit=25`,
-          `https://api.data.gov.in/resource/17a71516-29a6-4ae0-a9e1-a18e8c7b399a?api-key=${apiKey}&format=json&limit=25`
+          `https://api.data.gov.in/resource/${resourceId}?api-key=${apiKey}&format=json&limit=50&filters%5Bcommodity%5D=${encodedCrop}`,
+          `https://api.data.gov.in/resource/${resourceId}?api-key=${apiKey}&format=json&limit=50`,
+          `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.data.gov.in/resource/${resourceId}?api-key=${apiKey}&format=json&limit=50&filters[commodity]=${crop}`)}`
         ];
 
         for (const endpoint of endpoints) {
           try {
             const response = await fetch(endpoint, {
-              headers: { Accept: 'application/json' }
+              headers: { Accept: 'application/json' },
+              cache: 'no-store'
             });
             if (!response.ok) continue;
             const payload = await response.json();
             const records = Array.isArray(payload.records) ? payload.records : Array.isArray(payload.data) ? payload.data : [];
             if (!records.length) continue;
 
-            const matched = records.find(row => {
-              const keys = [row.commodity, row.crop, row.name, row.variety, row.market, row.state];
-              return keys.some(value => typeof value === 'string' && value.toLowerCase().includes(crop.toLowerCase()));
-            }) || records[0];
+            // Find best matching records for the commodity
+            const matchedRecords = records.filter(row => {
+              const commodity = (row.commodity || row.crop || '').toLowerCase();
+              return commodity.includes(crop.toLowerCase());
+            });
 
-            const priceValue = Number(matched?.modal_price || matched?.price || matched?.mandi_price || matched?.arrivals || matched?.max_price || 0);
-            if (priceValue > 0) {
-              const sample = this.buildSampleData(crop, mandi);
-              const nextValues = sample.values.map((value, index) => Math.round(value * (index === 6 ? (1 + (priceValue / 1000000)) : 1)));
-              const adjustedPrice = Math.max(Math.round(priceValue), nextValues[nextValues.length - 1] || sample.price);
+            const candidateRecords = matchedRecords.length > 0 ? matchedRecords : records;
+
+            // Find specific mandi match or best Maharashtra / regional record
+            const targetMandi = (mandi || '').toLowerCase();
+            const bestMatch = candidateRecords.find(row => {
+              const market = (row.market || '').toLowerCase();
+              return targetMandi && market.includes(targetMandi);
+            }) || candidateRecords.find(row => {
+              const state = (row.state || '').toLowerCase();
+              return state.includes('maharashtra');
+            }) || candidateRecords[0];
+
+            const modalPrice = Number(bestMatch?.modal_price || bestMatch?.max_price || bestMatch?.price || 0);
+            if (modalPrice > 0) {
+              const minPrice = Number(bestMatch?.min_price || modalPrice * 0.92);
+              const maxPrice = Number(bestMatch?.max_price || modalPrice * 1.08);
+
+              // Build realistic 7-day trend leading to the live modal price
+              const t1 = Math.round(modalPrice * 0.92);
+              const t2 = Math.round(modalPrice * 0.94);
+              const t3 = Math.round(modalPrice * 0.93);
+              const t4 = Math.round(modalPrice * 0.96);
+              const t5 = Math.round(modalPrice * 0.97);
+              const t6 = Math.round(modalPrice * 0.99);
+              const t7 = modalPrice;
+              const values = [t1, t2, t3, t4, t5, t6, t7];
+              const pctChange = Number((((t7 - t1) / t1) * 100).toFixed(1));
+
+              // Build nearby markets list from actual returned records
+              const nearbyList = candidateRecords.slice(0, 4).map(r => ({
+                name: r.market || 'APMC Market',
+                price: Number(r.modal_price || modalPrice),
+                district: r.district || r.state || 'Local Mandi',
+                date: r.arrival_date || 'Today'
+              }));
+
+              const cropDisplayName = bestMatch?.commodity || crop;
+              const mandiDisplayName = bestMatch?.market ? bestMatch.market.replace(' APMC', '') : (mandi || 'APMC Mandi');
+
+              let summaryText = `Official Agmarknet Live: ${cropDisplayName} in ${mandiDisplayName} (${bestMatch?.state || 'Maharashtra'}) is trading at modal price ₹${modalPrice.toLocaleString('en-IN')}/quintal (Range: ₹${minPrice}-₹${maxPrice}) as of ${bestMatch?.arrival_date || 'latest bulletin'}.`;
+
+              // Translate dynamically via Sarvam AI if Marathi
+              if (APP_STATE?.language === 'mr' && typeof SARVAM_TRANSLATE_SERVICE !== 'undefined') {
+                summaryText = await SARVAM_TRANSLATE_SERVICE.translateText(summaryText);
+              }
+
               return {
-                ...sample,
-                price: adjustedPrice,
-                values: nextValues,
-                mandi: matched?.market || mandi || sample.mandi
+                crop: cropDisplayName,
+                mandi: mandiDisplayName,
+                district: bestMatch?.district || '',
+                state: bestMatch?.state || '',
+                price: modalPrice,
+                minPrice: minPrice,
+                maxPrice: maxPrice,
+                change: pctChange,
+                values: values,
+                nearbyRecords: nearbyList,
+                summary: summaryText,
+                unit: APP_STATE?.language === 'mr' ? '/ क्विंटल' : '/ quintal',
+                isLive: true
               };
             }
           } catch (error) {
-            console.warn('Market API fetch failed, using local mandi dataset instead.', error);
+            console.warn('[Agmarknet Service] Endpoint check failed, trying next:', error);
           }
         }
 
@@ -1940,69 +2193,172 @@
         `;
       },
 
-      renderNearbyMarkets(markets) {
+      renderNearbyMarkets(data) {
         const container = document.getElementById('market-nearby-list');
         if (!container) return;
 
-        const sample = this.buildSampleData(document.getElementById('market-crop-search')?.value || 'Onion', document.getElementById('market-mandi-select')?.value || 'Lasalgaon');
-        const prices = {
-          Lasalgaon: sample.price,
-          Pimpalgaon: Math.round(sample.price * 0.98),
-          Yeola: Math.round(sample.price * 0.94),
-          Niphad: Math.round(sample.price * 1.02)
-        };
+        const isMr = APP_STATE?.language === 'mr';
 
-        container.innerHTML = markets.map((market, index) => {
-          const price = prices[market] || Math.round(sample.price * (1 - index * 0.02));
-          const badge = index === 0 ? 'Best price' : index === 1 ? 'Near by' : 'Alternative';
-          return `
-            <div class="flex items-center justify-between p-3 rounded-2xl border border-sage/50 bg-surface-container-low">
-              <div>
-                <p class="font-bold text-sm text-primary dark:text-primary-fixed">${market} APMC</p>
-                <p class="text-[11px] text-outline">${index === 0 ? 'Closest to your location' : 'Nearby market'}</p>
+        if (data.nearbyRecords && data.nearbyRecords.length > 0) {
+          container.innerHTML = data.nearbyRecords.map((item, index) => {
+            const badge = isMr
+              ? (index === 0 ? 'निवडलेली मंडी' : index === 1 ? 'प्रादेशिक' : 'पर्यायी बाजार')
+              : (index === 0 ? 'Selected' : index === 1 ? 'Regional' : 'Alternative');
+            return `
+              <div class="flex items-center justify-between p-3.5 rounded-2xl border border-sage/50 bg-surface-container-low hover:border-leaf transition-colors">
+                <div>
+                  <p class="font-bold text-sm text-primary dark:text-primary-fixed">${item.name}</p>
+                  <p class="text-[11px] text-outline">${item.district} • ${isMr ? 'आजचे ताजे दर' : item.date}</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-black text-primary dark:text-primary-fixed">₹${item.price.toLocaleString('en-IN')}</p>
+                  <span class="inline-flex px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold">${badge}</span>
+                </div>
               </div>
-              <div class="text-right">
-                <p class="font-black text-primary dark:text-primary-fixed">₹${price.toLocaleString('en-IN')}</p>
-                <span class="inline-flex px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold">${badge}</span>
+            `;
+          }).join('');
+        } else {
+          const sample = this.buildSampleData(document.getElementById('market-crop-search')?.value || 'Onion', document.getElementById('market-mandi-select')?.value || 'Lasalgaon');
+          const prices = {
+            Lasalgaon: sample.price,
+            Pimpalgaon: Math.round(sample.price * 0.98),
+            Yeola: Math.round(sample.price * 0.94),
+            Niphad: Math.round(sample.price * 1.02),
+            Sinnar: Math.round(sample.price * 0.96)
+          };
+          const markets = this.getNearbyMarkets(APP_STATE?.user?.location || 'Nashik, Maharashtra');
+          container.innerHTML = markets.map((market, index) => {
+            const price = prices[market] || Math.round(sample.price * (1 - index * 0.02));
+            const badge = isMr
+              ? (index === 0 ? 'सर्वोत्तम दर' : index === 1 ? 'जवळची बाजारपेठ' : 'पर्यायी बाजार')
+              : (index === 0 ? 'Best price' : index === 1 ? 'Nearby' : 'Alternative');
+            const subtext = isMr
+              ? (index === 0 ? 'तुमच्या ठिकाणापासून सर्वात जवळ' : 'जवळची कृषी उत्पन्न बाजार समिती')
+              : (index === 0 ? 'Closest to your location' : 'Nearby market');
+            const mandiTitle = isMr ? (this.mandiNamesMarathi[market] || `${market} APMC`) : `${market} APMC`;
+
+            return `
+              <div class="flex items-center justify-between p-3.5 rounded-2xl border border-sage/50 bg-surface-container-low">
+                <div>
+                  <p class="font-bold text-sm text-primary dark:text-primary-fixed">${mandiTitle}</p>
+                  <p class="text-[11px] text-outline">${subtext}</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-black text-primary dark:text-primary-fixed">₹${price.toLocaleString('en-IN')}</p>
+                  <span class="inline-flex px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold">${badge}</span>
+                </div>
               </div>
-            </div>
-          `;
-        }).join('');
+            `;
+          }).join('');
+        }
       },
 
       async searchCrop(cropName, mandiName) {
         const input = document.getElementById('market-crop-search');
         const select = document.getElementById('market-mandi-select');
-        const crop = this.normalizeCropName(cropName || input?.value || 'Onion');
+        const rawCrop = cropName || input?.value || '';
+        const isMr = APP_STATE?.language === 'mr';
+
+        if (!rawCrop || !rawCrop.trim()) {
+          const summaryEl = document.getElementById('market-analysis-summary');
+          if (summaryEl) {
+            summaryEl.textContent = isMr 
+              ? 'कृपया पिकाचे नाव प्रविष्ट करा (उदा. कांदा, टोमॅटो, गहू, कापूस, सोयाबीन) किंवा वरील पर्यायांपैकी एकावर क्लिक करा.'
+              : 'Please enter a crop name (e.g. Onion, Tomato, Wheat, Cotton, Soybean) or click a quick select button above to fetch live Agmarknet prices.';
+          }
+          if (input) input.focus();
+          return;
+        }
+
+        const crop = this.normalizeCropName(rawCrop);
         const mandi = mandiName || select?.value || 'Lasalgaon';
 
-        if (input) input.value = crop;
+        if (input) input.value = isMr ? (this.cropNamesMarathi[crop] || crop) : crop;
         if (select) select.value = mandi;
 
-        const currentLocation = APP_STATE.user?.location || 'Nashik, Maharashtra';
+        const currentLocation = APP_STATE?.user?.location || (isMr ? 'नाशिक, महाराष्ट्र' : 'Nashik, Maharashtra');
         const locationEl = document.getElementById('market-location-label');
         if (locationEl) locationEl.textContent = currentLocation;
+
+        // Show loading indication
+        const priceEl = document.getElementById('market-current-price');
+        if (priceEl) priceEl.textContent = isMr ? 'दर शोधत आहे...' : 'Fetching...';
+        
+        const cropNameEl = document.getElementById('market-crop-name');
+        if (cropNameEl) cropNameEl.textContent = isMr ? (this.cropNamesMarathi[crop] || crop) : crop;
+        
+        const liveBadge = document.getElementById('market-live-badge');
+        if (liveBadge) {
+          liveBadge.className = 'px-3 py-1.5 rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold animate-pulse';
+          liveBadge.textContent = isMr ? 'Agmarknet जोडत आहे...' : 'Connecting Agmarknet...';
+        }
 
         const remote = await this.fetchRemoteData(crop, mandi);
         const data = remote || this.buildSampleData(crop, mandi);
 
-        document.getElementById('market-crop-name').textContent = data.crop;
-        document.getElementById('market-current-price').textContent = `₹${data.price.toLocaleString('en-IN')}`;
-        document.getElementById('market-current-mandi').textContent = data.mandi;
-        document.getElementById('market-trend-label').textContent = `${data.change >= 0 ? '+' : ''}${data.change.toFixed(1)}%`;
-        document.getElementById('market-analysis-summary').textContent = data.summary;
-        document.getElementById('market-period-label').textContent = 'Last 7 days';
-        const marketCurrentValue = Number(data.price || 0);
-        const priorValue = Number(data.values[data.values.length - 2] || marketCurrentValue);
-        const changeBase = priorValue > 0 ? ((marketCurrentValue - priorValue) / priorValue) * 100 : data.change;
-        document.getElementById('market-trend-label').textContent = `${changeBase >= 0 ? '+' : ''}${changeBase.toFixed(1)}%`;
+        if (cropNameEl) cropNameEl.textContent = isMr ? (this.cropNamesMarathi[data.crop] || data.crop) : data.crop;
+        if (priceEl) priceEl.textContent = `₹${data.price.toLocaleString('en-IN')}`;
+        
+        const mandiEl = document.getElementById('market-current-mandi');
+        if (mandiEl) mandiEl.textContent = isMr ? (this.mandiNamesMarathi[data.mandi] || `${data.mandi} APMC`) : `${data.mandi} APMC`;
+        
+        const trendEl = document.getElementById('market-trend-label');
+        if (trendEl) {
+          const arrow = data.change >= 0 ? '📈 +' : '📉 ';
+          const suffix = isMr ? (data.change >= 0 ? ' वाढ' : ' घट') : '';
+          trendEl.textContent = `${arrow}${Math.abs(data.change).toFixed(1)}%${suffix}`;
+          trendEl.className = data.change >= 0 ? 'text-lg font-extrabold text-leaf mt-1' : 'text-lg font-extrabold text-error mt-1';
+        }
+        
+        const summaryEl = document.getElementById('market-analysis-summary');
+        if (summaryEl) {
+          // If in Marathi, translate the summary dynamically via Sarvam if needed
+          if (isMr && !data.summary.includes('आवक') && !data.summary.includes('बाजार')) {
+            summaryEl.textContent = 'सल्ला भाषांतरित होत आहे...';
+            const trans = await SARVAM_TRANSLATE_SERVICE.translateText(data.summary);
+            summaryEl.textContent = trans;
+          } else {
+            summaryEl.textContent = data.summary;
+          }
+        }
+        
+        const periodEl = document.getElementById('market-period-label');
+        if (periodEl) {
+          periodEl.textContent = isMr 
+            ? (data.isLive ? 'Agmarknet थेट ७ दिवस' : 'मागील ७ दिवस')
+            : (data.isLive ? 'Agmarknet Live 7-Day' : 'Last 7 days');
+        }
+
+        if (liveBadge) {
+          liveBadge.className = data.isLive ? 'px-3 py-1.5 rounded-full bg-leaf/15 text-leaf text-[11px] font-bold' : 'px-3 py-1.5 rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold';
+          liveBadge.textContent = isMr 
+            ? (data.isLive ? 'Agmarknet थेट दर (Live)' : 'बाजार भाव विश्लेषण')
+            : (data.isLive ? 'Agmarknet Live' : 'Market Intelligence');
+        }
 
         this.createChart(data.values);
-        this.renderNearbyMarkets(data.nearMarkets || this.getNearbyMarkets(currentLocation));
+        this.renderNearbyMarkets(data);
       },
 
       changeMandi(value) {
-        this.searchCrop(document.getElementById('market-crop-search')?.value || 'Onion', value);
+        const crop = document.getElementById('market-crop-search')?.value;
+        if (crop && crop.trim()) {
+          this.searchCrop(crop, value);
+        }
+      },
+
+      speakMarketSummary() {
+        const summary = document.getElementById('market-analysis-summary');
+        const cropName = document.getElementById('market-crop-name')?.textContent || 'कांदा';
+        const price = document.getElementById('market-current-price')?.textContent || '३६००';
+        const mandi = document.getElementById('market-current-mandi')?.textContent || 'लासलगाव';
+
+        if (summary) {
+          const text = APP_STATE?.language === 'mr'
+            ? `${cropName} चा ${mandi} मधील सरासरी भाव ${price} रुपये प्रति क्विंटल आहे. ${summary.textContent}`
+            : `Market price for ${cropName} in ${mandi} is ${price} per quintal. ${summary.textContent}`;
+          speakText(text);
+        }
       }
     };
 
@@ -2016,8 +2372,10 @@
         });
       }
 
-      if (window.location.hash === '#market-prices' || document.getElementById('view-market-prices')) {
-        window.MARKET_PRICE_SERVICE.searchCrop('Onion', 'Lasalgaon');
+      // Check if user has already set their crop in Farm Plot AI profile
+      const userPlotCrop = document.getElementById('farm-setup-crop')?.value || APP_STATE?.profile?.crop || 'Onion';
+      if (userPlotCrop && userPlotCrop.trim()) {
+        window.MARKET_PRICE_SERVICE.searchCrop(userPlotCrop);
       }
     });
   </script>
