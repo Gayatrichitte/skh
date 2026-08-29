@@ -369,9 +369,16 @@ window.AUTH_SERVICE = {
         navigateTo('dashboard');
       }
     } catch (err) {
-      console.warn('Firebase Auth Error:', err);
+      console.warn('Firebase Auth Note:', err);
       let msg = err.message || 'Authentication error';
-      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+      
+      if (err.code === 'auth/configuration-not-found') {
+        msg = "⚠️ Firebase Auth not yet enabled in Console. Logging you in via Demo mode...";
+        this.showAlert(msg, 'success');
+        APP_STATE.user.name = name || 'Ramesh Patil';
+        setTimeout(() => navigateTo('dashboard'), 900);
+        return;
+      } else if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
         msg = 'Invalid credentials. You can use Quick Demo Sign-In or Register a new account.';
       } else if (err.code === 'auth/email-already-in-use') {
         msg = 'An account with this email/number already exists. Please Sign In.';
@@ -400,7 +407,12 @@ window.AUTH_SERVICE = {
       }
     } catch (err) {
       console.warn('Google Sign-In note:', err);
-      this.showAlert(err.message || 'Google sign-in was cancelled.', 'error');
+      if (err.code === 'auth/configuration-not-found' || err.code === 'auth/operation-not-allowed') {
+        this.showAlert("Google Provider not yet enabled in Firebase Console. Logging in as Demo Farmer...", 'success');
+        setTimeout(() => this.signInDemoFarmer(), 800);
+      } else {
+        this.showAlert(err.message || 'Google sign-in was cancelled.', 'error');
+      }
     }
   },
 
@@ -417,7 +429,11 @@ window.AUTH_SERVICE = {
               await updateProfile(cred.user, { displayName: 'Ramesh Patil' });
             }
           } catch (e2) {
-            await signInAnonymously(window.firebaseAuth);
+            try {
+              await signInAnonymously(window.firebaseAuth);
+            } catch (e3) {
+              console.log('Using local session fallback');
+            }
           }
         }
       }
