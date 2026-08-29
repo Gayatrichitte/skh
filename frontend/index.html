@@ -53,6 +53,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
   
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  
   <!-- Custom Styles -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -412,7 +415,16 @@
             </div>
             <div>
               <label class="block text-xs font-semibold mb-1">Location / District</label>
-              <input id="onboarding-location" type="text" value="Nashik, Maharashtra" required class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm" />
+              <div class="relative">
+                <input id="onboarding-location" type="text" value="Nashik, Maharashtra" required class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 pl-3 pr-10 text-sm" />
+                <button type="button" onclick="WEATHER_SERVICE.toggleOnboardingMap()" title="Pick Location on Map" class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-leaf hover:bg-sage/30 rounded-lg transition-colors flex items-center justify-center">
+                  <span class="material-symbols-outlined text-base">map</span>
+                </button>
+              </div>
+              <div id="onboarding-map-wrap" class="hidden mt-2">
+                <div id="onboarding-leaflet-map" style="height: 190px; width: 100%;" class="rounded-xl border border-sage/60 shadow-inner"></div>
+                <p class="text-[10px] text-outline mt-1">📍 Click map or drag marker to set exact farm location.</p>
+              </div>
             </div>
           </div>
 
@@ -919,6 +931,42 @@
       </div>
     </div>
 
+    <!-- Interactive Leaflet Agro-GIS & Satellite Map -->
+    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-4 md:p-5 mb-6 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-leaf/15 text-leaf flex items-center justify-center">
+            <span class="material-symbols-outlined text-lg">map</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-primary dark:text-primary-fixed">Interactive Agro-GIS & Satellite Map</h3>
+            <p class="text-[11px] text-on-surface-variant">Click or drag pin anywhere in India to inspect farm microclimate & weather risk</p>
+          </div>
+        </div>
+        
+        <!-- Map Layer Switcher & Pin Stats -->
+        <div class="flex items-center gap-2">
+          <div class="inline-flex bg-surface-container-low p-1 rounded-xl border border-sage/40 text-xs">
+            <button type="button" id="map-layer-street" onclick="WEATHER_SERVICE.switchMapLayer('street')" class="px-2.5 py-1 rounded-lg font-semibold bg-primary text-on-primary transition-all">Map</button>
+            <button type="button" id="map-layer-satellite" onclick="WEATHER_SERVICE.switchMapLayer('satellite')" class="px-2.5 py-1 rounded-lg font-medium text-outline hover:text-primary transition-all">Satellite</button>
+            <button type="button" id="map-layer-topo" onclick="WEATHER_SERVICE.switchMapLayer('topo')" class="px-2.5 py-1 rounded-lg font-medium text-outline hover:text-primary transition-all">Terrain</button>
+          </div>
+          <button type="button" onclick="WEATHER_SERVICE.locateFarmerOnMap()" title="Center to Selected Farm" class="p-2 rounded-xl bg-surface-container-low hover:bg-secondary-container text-primary border border-sage/40 transition-colors flex items-center justify-center">
+            <span class="material-symbols-outlined text-base">center_focus_strong</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Leaflet Map Container -->
+      <div class="relative w-full rounded-xl overflow-hidden border border-sage/60 shadow-inner">
+        <div id="weather-leaflet-map" style="height: 320px; width: 100%;" class="z-0"></div>
+        <div class="absolute bottom-3 left-3 z-[400] bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-sage/60 text-[11px] shadow-md flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-leaf animate-ping"></span>
+          <span id="map-coords-badge" class="font-semibold text-primary dark:text-primary-fixed">Lat: 19.997°N, Lon: 73.791°E</span>
+        </div>
+      </div>
+    </div>
+
     <!-- Live Weather Hero Card -->
     <div class="bg-surface-container-lowest border border-sage rounded-2xl p-6 mb-6 shadow-sm relative overflow-hidden">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
@@ -1316,6 +1364,9 @@
     </div>
   </div>
 
+
+  <!-- Leaflet Map Library -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <!-- Application Scripts -->
   <script src="js/app.js"></script>

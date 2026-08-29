@@ -1,5 +1,5 @@
 /**
- * KisanSathi - Core Application Logic, Router & Real-Time Open-Meteo Weather Service
+ * KisanSathi - Core Application Logic, Router & Real-Time Open-Meteo Weather Service with Interactive Leaflet Map
  */
 
 const APP_STATE = {
@@ -109,7 +109,7 @@ const TRANSLATIONS = {
     why: "कारण पाहा",
     delayIrrigation: "पाणी देणे पुढे ढकला",
     rainExpected: "पुढील २४ तासांत पाऊस पडण्याची शक्यता आहे.",
-    scanTitle: "एआय पीक रोग स्कॅनर",
+    scanTitle: "एआई पीक रोग स्कॅनर",
     scanSubtitle: "रोगाची तत्काळ तपासणी करण्यासाठी पानाचा फोटो काढा किंवा निवडा",
     startScan: "तपासणी सुरू करा",
     chatPlaceholder: "पीक, खते, कीड अथवा हवामानाबद्दल काहीही विचारा...",
@@ -230,6 +230,14 @@ function handleRouting() {
     }
   });
 
+  // Invalidate Leaflet maps on route change to ensure smooth tiles rendering
+  if (cleanRoute === 'weather') {
+    setTimeout(() => {
+      WEATHER_SERVICE.initWeatherMap();
+      WEATHER_SERVICE.refreshMapSize();
+    }, 150);
+  }
+
   // Close mobile drawer on route change
   closeDrawer();
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -255,7 +263,7 @@ function closeDrawer() {
 }
 
 // ==========================================
-// OPEN-METEO REAL-TIME WEATHER & AGROMET ENGINE
+// OPEN-METEO & LEAFLET AGRO-GIS MAP SERVICE
 // ==========================================
 
 const WEATHER_SERVICE = {
@@ -265,6 +273,14 @@ const WEATHER_SERVICE = {
   rawData: null,
   analysis: null,
   isFetching: false,
+
+  // Leaflet Map Properties
+  weatherMap: null,
+  weatherMarker: null,
+  onboardingMap: null,
+  onboardingMarker: null,
+  activeLayerType: 'street',
+  tileLayers: {},
 
   // WMO Weather interpretation codes
   decodeWMO(code, isDay = 1) {
@@ -312,7 +328,7 @@ const WEATHER_SERVICE = {
         };
       }
       
-      // Fallback without country code filter if search term is specific
+      // Fallback without country code filter
       const fallbackUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cleanQuery)}&count=1`;
       const fbResp = await fetch(fallbackUrl);
       const fbJson = await fbResp.json();
@@ -330,7 +346,6 @@ const WEATHER_SERVICE = {
       console.warn('Geocoding request failed:', err);
     }
     
-    // Default fallback
     return {
       name: query,
       lat: 19.9973,
@@ -347,7 +362,7 @@ const WEATHER_SERVICE = {
     return await resp.json();
   },
 
-  // Agro-meteorological risk and advisory algorithm
+  // Agro-meteorological risk algorithm
   analyzeAgroRisk(current, daily, cropType = APP_STATE.user.crop) {
     const curTemp = current.temperature_2m || 26;
     const humidity = current.relative_humidity_2m || 70;
@@ -364,7 +379,7 @@ const WEATHER_SERVICE = {
         badgeText: 'Postpone Irrigation',
         badgeClass: 'bg-warning/20 text-warning',
         taskTitle: 'Delay Irrigation',
-        taskDesc: `Rain is expected in ${this.activeLocationName} (${maxRainProb24h}% probability, ~${precipSum24h.toFixed(1)}mm). Delay flood/drip irrigation by 24-48 hours to avoid root rot & waterlogging.`,
+        taskDesc: `Rain expected in ${this.activeLocationName} (${maxRainProb24h}% prob, ~${precipSum24h.toFixed(1)}mm). Delay irrigation 24-48 hrs to prevent root asphyxiation.`,
         actionLabel: 'Postpone Drip Cycle',
         soilNeed: 'Sufficient / Rain Inbound'
       };
@@ -382,7 +397,7 @@ const WEATHER_SERVICE = {
         badgeText: 'Normal Routine',
         badgeClass: 'bg-primary/20 text-primary',
         taskTitle: 'Maintain Regular Schedule',
-        taskDesc: `Balanced weather conditions (${curTemp}°C, ${humidity}% humidity). Maintain standard drip fertigation schedule for ${cropType}.`,
+        taskDesc: `Balanced weather (${curTemp}°C, ${humidity}% humidity). Maintain standard drip fertigation schedule for ${cropType}.`,
         actionLabel: 'Standard Schedule',
         soilNeed: 'Optimal Moisture'
       };
@@ -394,28 +409,28 @@ const WEATHER_SERVICE = {
       spraying = {
         badgeText: 'Unfavorable',
         badgeClass: 'bg-error/20 text-error',
-        desc: `High wind speed of ${windSpeed} km/h risks severe spray drift and chemical loss. Postpone foliar spraying until wind drops below 14 km/h.`,
+        desc: `High wind speed of ${windSpeed} km/h risks severe pesticide drift. Postpone foliar spraying until wind drops below 14 km/h.`,
         driftRisk: 'High Wind Drift Risk'
       };
     } else if (maxRainProb24h >= 60) {
       spraying = {
         badgeText: 'Rain Wash-off Risk',
         badgeClass: 'bg-error/20 text-error',
-        desc: `Rain chance is ${maxRainProb24h}%. Fungicide and nutrient sprays may wash off before absorption. Wait for a 6-hour dry weather window.`,
+        desc: `Rain chance is ${maxRainProb24h}%. Fungicide sprays may wash off before absorption. Wait for a 6-hour dry window.`,
         driftRisk: 'Wash-off Threat'
       };
     } else if (windSpeed <= 14 && maxRainProb24h < 30) {
       spraying = {
         badgeText: 'Ideal Spray Window',
         badgeClass: 'bg-leaf/20 text-leaf',
-        desc: `Calm wind (${windSpeed} km/h) and dry weather. Excellent window for preventative fungicide and micro-nutrient foliar application.`,
+        desc: `Calm wind (${windSpeed} km/h) and clear canopy. Excellent window for preventative fungicide and micro-nutrient foliar spray.`,
         driftRisk: 'Calm & Safe (< 14 km/h)'
       };
     } else {
       spraying = {
         badgeText: 'Moderate Caution',
         badgeClass: 'bg-warning/20 text-warning',
-        desc: `Moderate conditions (${windSpeed} km/h wind, ${maxRainProb24h}% rain prob). Use proper spreader/sticker adjuvant if spraying is urgent.`,
+        desc: `Moderate conditions (${windSpeed} km/h wind, ${maxRainProb24h}% rain). Use spreader/sticker adjuvant if spraying is urgent.`,
         driftRisk: 'Moderate Drift'
       };
     }
@@ -426,14 +441,14 @@ const WEATHER_SERVICE = {
       fungal = {
         badgeText: 'High Fungal Alert',
         badgeClass: 'bg-error/20 text-error',
-        desc: `Elevated humidity (${humidity}%) and warm temperatures (${curTemp}°C) accelerate Purple Blotch, Downy Mildew, and Thrips infestation in ${cropType}.`,
+        desc: `High humidity (${humidity}%) and warm temperatures (${curTemp}°C) accelerate Purple Blotch, Downy Mildew, and Thrips in ${cropType}.`,
         pathogenIndex: 'Critical Spore Propagation'
       };
     } else if (humidity >= 60) {
       fungal = {
         badgeText: 'Moderate Risk',
         badgeClass: 'bg-warning/20 text-warning',
-        desc: `Relative humidity is ${humidity}%. Scout field boundaries and lower canopy for early pathogen lesions or leaf curling.`,
+        desc: `Relative humidity is ${humidity}%. Scout field boundaries and lower canopy for early pathogen lesions.`,
         pathogenIndex: 'Elevated Spore Activity'
       };
     } else {
@@ -445,10 +460,10 @@ const WEATHER_SERVICE = {
       };
     }
 
-    // Spoken advisory string
+    // Spoken strings
     const spokenEn = `Real-time agro weather for ${this.activeLocationName}: Currently ${curTemp}°C, ${weatherInfo.label} with ${humidity}% humidity and ${windSpeed} km/h wind. Rain probability is ${maxRainProb24h}%. Agro-Advisory: ${irrigation.taskTitle} - ${irrigation.taskDesc}`;
-    const spokenHi = `मौसम सलाह ${this.activeLocationName}: वर्तमान तापमान ${curTemp}°C, नमी ${humidity}% और हवा की गति ${windSpeed} किमी/घंटा है। बारिश की संभावना ${maxRainProb24h}% है। सलाह: ${irrigation.taskTitle}।`;
-    const spokenMr = `हवामान सल्ला ${this.activeLocationName}: सध्याचे तापमान ${curTemp}°C, आर्द्रता ${humidity}% आणि वाऱ्याचा वेग ${windSpeed} किमी/तास आहे. पाऊस पडण्याची शक्यता ${maxRainProb24h}% आहे. सल्ला: ${irrigation.taskTitle}।`;
+    const spokenHi = `मौसम सलाह ${this.activeLocationName}: तापमान ${curTemp}°C, नमी ${humidity}% और हवा की गति ${windSpeed} किमी/घंटा है। बारिश की संभावना ${maxRainProb24h}% है। सलाह: ${irrigation.taskTitle}।`;
+    const spokenMr = `हवामान सल्ला ${this.activeLocationName}: तापमान ${curTemp}°C, आर्द्रता ${humidity}% आणि वाऱ्याचा वेग ${windSpeed} किमी/तास आहे. पाऊस पडण्याची शक्यता ${maxRainProb24h}% आहे. सल्ला: ${irrigation.taskTitle}।`;
 
     return {
       curTemp,
@@ -468,7 +483,259 @@ const WEATHER_SERVICE = {
     };
   },
 
-  // Fetch and apply weather across the entire app
+  // ==========================================
+  // LEAFLET MAP INTEGRATION & EVENT HANDLERS
+  // ==========================================
+
+  // Create custom HTML Leaflet Icon
+  createCustomMarkerIcon(label = 'Farm Pin') {
+    if (typeof L === 'undefined') return null;
+    return L.divIcon({
+      className: 'custom-farm-marker',
+      html: `
+        <div class="relative flex items-center justify-center">
+          <div class="w-10 h-10 rounded-full bg-primary border-2 border-white shadow-xl flex items-center justify-center text-white text-base animate-bounce">
+            <span class="material-symbols-outlined text-lg text-secondary-container">agriculture</span>
+          </div>
+          <div class="absolute -bottom-1 w-3 h-1 bg-charcoal/40 rounded-full blur-[1px]"></div>
+        </div>
+      `,
+      iconSize: [40, 40],
+      iconAnchor: [20, 38],
+      popupAnchor: [0, -38]
+    });
+  },
+
+  // Initialize Weather Leaflet Map
+  initWeatherMap() {
+    const mapContainer = document.getElementById('weather-leaflet-map');
+    if (!mapContainer || typeof L === 'undefined') return;
+
+    if (this.weatherMap) {
+      this.weatherMap.invalidateSize();
+      return;
+    }
+
+    // Initialize Leaflet Map
+    this.weatherMap = L.map('weather-leaflet-map', {
+      center: [this.latitude, this.longitude],
+      zoom: 11,
+      zoomControl: true
+    });
+
+    // Define Tile Layers
+    this.tileLayers = {
+      street: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+      }),
+      satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19,
+        attribution: '&copy; Esri & NASA Earth'
+      }),
+      topo: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        maxZoom: 17,
+        attribution: '&copy; OpenTopoMap'
+      })
+    };
+
+    // Add default street layer
+    this.tileLayers.street.addTo(this.weatherMap);
+
+    // Add draggable marker
+    const icon = this.createCustomMarkerIcon();
+    this.weatherMarker = L.marker([this.latitude, this.longitude], {
+      draggable: true,
+      icon: icon || undefined
+    }).addTo(this.weatherMap);
+
+    // Marker drag event
+    this.weatherMarker.on('dragend', (e) => {
+      const pos = e.target.getLatLng();
+      this.handleMapLocationSelect(pos.lat, pos.lng);
+    });
+
+    // Map click event
+    this.weatherMap.on('click', (e) => {
+      const lat = e.latlng.lat;
+      const lng = e.latlng.lng;
+      this.handleMapLocationSelect(lat, lng);
+    });
+
+    this.updateMarkerPopup();
+  },
+
+  // Switch Tile Layers (Map, Satellite, Terrain)
+  switchMapLayer(layerType) {
+    if (!this.weatherMap || !this.tileLayers[layerType]) return;
+
+    // Remove existing layers
+    Object.values(this.tileLayers).forEach(layer => {
+      if (this.weatherMap.hasLayer(layer)) {
+        this.weatherMap.removeLayer(layer);
+      }
+    });
+
+    // Add selected layer
+    this.tileLayers[layerType].addTo(this.weatherMap);
+    this.activeLayerType = layerType;
+
+    // Update button styling
+    ['street', 'satellite', 'topo'].forEach(type => {
+      const btn = document.getElementById(`map-layer-${type}`);
+      if (btn) {
+        if (type === layerType) {
+          btn.className = 'px-2.5 py-1 rounded-lg font-semibold bg-primary text-on-primary transition-all';
+        } else {
+          btn.className = 'px-2.5 py-1 rounded-lg font-medium text-outline hover:text-primary transition-all';
+        }
+      }
+    });
+  },
+
+  // Center & fly to active farm location on map
+  locateFarmerOnMap() {
+    if (this.weatherMap) {
+      this.weatherMap.flyTo([this.latitude, this.longitude], 12, { animate: true, duration: 1.2 });
+    }
+  },
+
+  // Handle map click or drag event
+  async handleMapLocationSelect(lat, lon) {
+    this.latitude = lat;
+    this.longitude = lon;
+
+    // Move marker smoothly
+    if (this.weatherMarker) {
+      this.weatherMarker.setLatLng([lat, lon]);
+    }
+
+    // Update Coordinates Badge
+    const coordsBadge = document.getElementById('map-coords-badge');
+    if (coordsBadge) {
+      coordsBadge.textContent = `Lat: ${lat.toFixed(4)}°N, Lon: ${lon.toFixed(4)}°E`;
+    }
+
+    // Fetch and analyze weather for exact selected coordinates
+    try {
+      const forecast = await this.fetchForecast(lat, lon);
+      this.rawData = forecast;
+      this.activeLocationName = `Sector (${lat.toFixed(2)}°N, ${lon.toFixed(2)}°E)`;
+      APP_STATE.user.location = this.activeLocationName;
+
+      this.analysis = this.analyzeAgroRisk(forecast.current, forecast.daily, APP_STATE.user.crop);
+      APP_STATE.weather = {
+        location: this.activeLocationName,
+        lat,
+        lon,
+        current: forecast.current,
+        daily: forecast.daily,
+        analysis: this.analysis
+      };
+
+      this.renderWeatherView();
+      this.renderDashboardWeather();
+      this.renderProfileLocations();
+      this.updateMarkerPopup();
+    } catch (err) {
+      console.error('Error fetching weather on map select:', err);
+    }
+  },
+
+  // Update animated Leaflet Marker Popup
+  updateMarkerPopup() {
+    if (!this.weatherMarker || !this.analysis) return;
+    const a = this.analysis;
+    const popupContent = `
+      <div class="p-2 text-center text-charcoal font-sans">
+        <div class="flex items-center justify-center gap-1 text-xs font-bold text-primary mb-1">
+          <span class="material-symbols-outlined text-sm text-leaf">eco</span>
+          <span>${this.activeLocationName}</span>
+        </div>
+        <p class="text-xl font-black text-primary">${Math.round(a.curTemp)}°C</p>
+        <p class="text-[11px] text-outline">${a.weatherInfo.label}</p>
+        <div class="mt-2 pt-1 border-t border-sage/60 text-[10px] font-semibold text-leaf">
+          💧 Rain Prob: ${a.maxRainProb24h}%
+        </div>
+      </div>
+    `;
+    this.weatherMarker.bindPopup(popupContent).openPopup();
+  },
+
+  // Refresh Leaflet size
+  refreshMapSize() {
+    if (this.weatherMap) {
+      this.weatherMap.invalidateSize();
+    }
+    if (this.onboardingMap) {
+      this.onboardingMap.invalidateSize();
+    }
+  },
+
+  // Toggle mini-map on Onboarding
+  toggleOnboardingMap() {
+    const wrap = document.getElementById('onboarding-map-wrap');
+    if (!wrap) return;
+
+    if (wrap.classList.contains('hidden')) {
+      wrap.classList.remove('hidden');
+      setTimeout(() => {
+        this.initOnboardingMap();
+        if (this.onboardingMap) this.onboardingMap.invalidateSize();
+      }, 100);
+    } else {
+      wrap.classList.add('hidden');
+    }
+  },
+
+  // Initialize Onboarding mini-map
+  initOnboardingMap() {
+    const container = document.getElementById('onboarding-leaflet-map');
+    if (!container || typeof L === 'undefined') return;
+
+    if (this.onboardingMap) {
+      this.onboardingMap.invalidateSize();
+      return;
+    }
+
+    this.onboardingMap = L.map('onboarding-leaflet-map', {
+      center: [this.latitude, this.longitude],
+      zoom: 9,
+      zoomControl: false
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; OSM'
+    }).addTo(this.onboardingMap);
+
+    const icon = this.createCustomMarkerIcon();
+    this.onboardingMarker = L.marker([this.latitude, this.longitude], {
+      draggable: true,
+      icon: icon || undefined
+    }).addTo(this.onboardingMap);
+
+    const updateOnboardingPos = (lat, lng) => {
+      this.latitude = lat;
+      this.longitude = lng;
+      this.onboardingMarker.setLatLng([lat, lng]);
+      const locInput = document.getElementById('onboarding-location');
+      if (locInput) {
+        locInput.value = `Farm Plot (${lat.toFixed(3)}°N, ${lng.toFixed(3)}°E)`;
+      }
+    };
+
+    this.onboardingMap.on('click', (e) => {
+      updateOnboardingPos(e.latlng.lat, e.latlng.lng);
+    });
+
+    this.onboardingMarker.on('dragend', (e) => {
+      const pos = e.target.getLatLng();
+      updateOnboardingPos(pos.lat, pos.lng);
+    });
+  },
+
+  // Search & Load Weather across views and map
   async searchAndLoadWeather(locationQuery) {
     if (this.isFetching) return;
     this.isFetching = true;
@@ -500,6 +767,21 @@ const WEATHER_SERVICE = {
       this.renderWeatherView();
       this.renderDashboardWeather();
       this.renderProfileLocations();
+
+      // Pan & Zoom Leaflet Map to searched location
+      if (this.weatherMap) {
+        this.weatherMap.flyTo([geo.lat, geo.lon], 11, { animate: true, duration: 1.0 });
+        if (this.weatherMarker) {
+          this.weatherMarker.setLatLng([geo.lat, geo.lon]);
+          this.updateMarkerPopup();
+        }
+      }
+
+      // Update Coordinates Badge
+      const coordsBadge = document.getElementById('map-coords-badge');
+      if (coordsBadge) {
+        coordsBadge.textContent = `Lat: ${geo.lat.toFixed(3)}°N, Lon: ${geo.lon.toFixed(3)}°E`;
+      }
     } catch (err) {
       console.error('Failed to load real-time weather:', err);
     } finally {
@@ -529,31 +811,9 @@ const WEATHER_SERVICE = {
       async (pos) => {
         const lat = pos.coords.latitude;
         const lon = pos.coords.longitude;
-        try {
-          // Reverse geocoding or direct forecast fetch
-          const revUrl = `https://geocoding-api.open-meteo.com/v1/search?name=Maharashtra&count=1`;
-          this.latitude = lat;
-          this.longitude = lon;
-          this.activeLocationName = `Current Farm (${lat.toFixed(2)}°N, ${lon.toFixed(2)}°E)`;
-          APP_STATE.user.location = this.activeLocationName;
-
-          const forecast = await this.fetchForecast(lat, lon);
-          this.rawData = forecast;
-          this.analysis = this.analyzeAgroRisk(forecast.current, forecast.daily, APP_STATE.user.crop);
-          APP_STATE.weather = {
-            location: this.activeLocationName,
-            lat,
-            lon,
-            current: forecast.current,
-            daily: forecast.daily,
-            analysis: this.analysis
-          };
-
-          this.renderWeatherView();
-          this.renderDashboardWeather();
-          this.renderProfileLocations();
-        } catch (e) {
-          console.error(e);
+        this.handleMapLocationSelect(lat, lon);
+        if (this.weatherMap) {
+          this.weatherMap.flyTo([lat, lon], 13);
         }
       },
       (err) => {
