@@ -1,38 +1,12 @@
 /**
  * KisanSathi - Intelligent Agritech Platform
  * Features:
- * 1. Firebase Authentication (Google, Email/Phone, Demo Guest Auth)
+ * 1. Firebase v12.18.0 Modular SDK (Analytics, Auth, Google Sign-In, Email/Phone, Demo Guest Auth)
  * 2. Open-Meteo High-Resolution Real-Time Weather & Agromet Engine
  * 3. Interactive Leaflet GIS & Satellite Maps with Pin Pointing
  * 4. Multi-language Support (Marathi, Hindi, English)
  * 5. Conversational AI Mentor & Leaf Scanner Diagnostics
  */
-
-// ==========================================
-// FIREBASE AUTHENTICATION CONFIGURATION & SERVICE
-// ==========================================
-const firebaseConfig = {
-  apiKey: "AIzaSyBNPnbgN2ZoS1fUJ4bYXJ4wz0RMSV3b1tg",
-  authDomain: "skhwinners.firebaseapp.com",
-  projectId: "skhwinners",
-  storageBucket: "skhwinners.firebasestorage.app",
-  messagingSenderId: "301326625767",
-  appId: "1:301326625767:web:31af8b74e173375aa36b42",
-  measurementId: "G-LHHTFXF6M7"
-};
-
-// Initialize Firebase
-let firebaseAuth = null;
-if (typeof firebase !== 'undefined') {
-  try {
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
-    firebaseAuth = firebase.auth();
-  } catch (e) {
-    console.warn('Firebase init warning:', e);
-  }
-}
 
 const APP_STATE = {
   language: localStorage.getItem('kisansathi_lang') || 'en', // 'mr', 'hi', 'en'
@@ -296,31 +270,35 @@ function closeDrawer() {
 }
 
 // ==========================================
-// FIREBASE AUTHENTICATION SERVICE
+// FIREBASE MODULAR AUTHENTICATION SERVICE (v12.18.0)
 // ==========================================
-const AUTH_SERVICE = {
+window.AUTH_SERVICE = {
   authMode: 'signin', // 'signin' or 'signup'
 
   initAuth() {
-    if (!firebaseAuth) return;
+    this.bindModularAuth();
+  },
 
-    firebaseAuth.onAuthStateChanged(user => {
-      if (user) {
-        APP_STATE.currentUser = user;
-        const name = user.displayName || (user.email ? user.email.split('@')[0] : 'Ramesh Patil');
-        APP_STATE.user.name = name;
-        APP_STATE.user.phone = user.phoneNumber || user.email || '+91 98234 56789';
+  bindModularAuth() {
+    if (window.firebaseAuth && window.firebaseAuthMethods) {
+      const { onAuthStateChanged } = window.firebaseAuthMethods;
+      onAuthStateChanged(window.firebaseAuth, (user) => {
+        if (user) {
+          APP_STATE.currentUser = user;
+          const name = user.displayName || (user.email ? user.email.split('@')[0] : 'Ramesh Patil');
+          APP_STATE.user.name = name;
+          APP_STATE.user.phone = user.phoneNumber || user.email || '+91 98234 56789';
 
-        WEATHER_SERVICE.renderProfileLocations();
+          WEATHER_SERVICE.renderProfileLocations();
 
-        // If on login or welcome, navigate to dashboard
-        if (['login', 'welcome'].includes(APP_STATE.currentRoute)) {
-          navigateTo('dashboard');
+          if (['login', 'welcome'].includes(APP_STATE.currentRoute)) {
+            navigateTo('dashboard');
+          }
+        } else {
+          APP_STATE.currentUser = null;
         }
-      } else {
-        APP_STATE.currentUser = null;
-      }
-    });
+      });
+    }
   },
 
   switchTab(mode) {
@@ -351,7 +329,6 @@ const AUTH_SERVICE = {
   normalizeEmail(input) {
     const trimmed = input.trim();
     if (trimmed.includes('@')) return trimmed;
-    // Format numeric phone into valid email domain for Firebase auth
     const digits = trimmed.replace(/\D/g, '');
     return `${digits || 'farmer'}@kisansathi.agri`;
   },
@@ -371,25 +348,25 @@ const AUTH_SERVICE = {
     if (submitBtn) submitBtn.disabled = true;
 
     try {
-      if (!firebaseAuth) {
-        // Offline demo fallback
+      if (window.firebaseAuth && window.firebaseAuthMethods) {
+        const { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } = window.firebaseAuthMethods;
+
+        if (this.authMode === 'signup') {
+          const cred = await createUserWithEmailAndPassword(window.firebaseAuth, email, password);
+          if (cred.user && name) {
+            await updateProfile(cred.user, { displayName: name });
+          }
+          APP_STATE.user.name = name;
+          this.showAlert('Account created successfully! Welcome to KisanSathi.', 'success');
+          setTimeout(() => navigateTo('onboarding'), 600);
+        } else {
+          await signInWithEmailAndPassword(window.firebaseAuth, email, password);
+          this.showAlert('Login successful! Loading your farm dashboard...', 'success');
+          setTimeout(() => navigateTo('dashboard'), 500);
+        }
+      } else {
         APP_STATE.user.name = name || 'Ramesh Patil';
         navigateTo('dashboard');
-        return;
-      }
-
-      if (this.authMode === 'signup') {
-        const cred = await firebaseAuth.createUserWithEmailAndPassword(email, password);
-        if (cred.user && name) {
-          await cred.user.updateProfile({ displayName: name });
-        }
-        APP_STATE.user.name = name;
-        this.showAlert('Account created successfully! Welcome to KisanSathi.', 'success');
-        setTimeout(() => navigateTo('onboarding'), 600);
-      } else {
-        await firebaseAuth.signInWithEmailAndPassword(email, password);
-        this.showAlert('Login successful! Loading your farm dashboard...', 'success');
-        setTimeout(() => navigateTo('dashboard'), 500);
       }
     } catch (err) {
       console.warn('Firebase Auth Error:', err);
@@ -408,39 +385,39 @@ const AUTH_SERVICE = {
   },
 
   async signInWithGoogle() {
-    if (!firebaseAuth) {
-      this.signInDemoFarmer();
-      return;
-    }
-
     try {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      const result = await firebaseAuth.signInWithPopup(provider);
-      if (result.user) {
-        APP_STATE.user.name = result.user.displayName || 'Farmer';
-        this.showAlert(`Welcome ${APP_STATE.user.name}!`, 'success');
-        setTimeout(() => navigateTo('dashboard'), 500);
+      if (window.firebaseAuth && window.firebaseAuthMethods) {
+        const { signInWithPopup, GoogleAuthProvider } = window.firebaseAuthMethods;
+        const provider = new GoogleAuthProvider();
+        const result = await signInWithPopup(window.firebaseAuth, provider);
+        if (result.user) {
+          APP_STATE.user.name = result.user.displayName || 'Farmer';
+          this.showAlert(`Welcome ${APP_STATE.user.name}!`, 'success');
+          setTimeout(() => navigateTo('dashboard'), 500);
+        }
+      } else {
+        this.signInDemoFarmer();
       }
     } catch (err) {
-      console.warn('Google Sign-In Popup failed, trying demo login:', err);
-      this.showAlert(err.message || 'Google sign in was cancelled or not supported.', 'error');
+      console.warn('Google Sign-In note:', err);
+      this.showAlert(err.message || 'Google sign-in was cancelled.', 'error');
     }
   },
 
   async signInDemoFarmer() {
     try {
-      if (firebaseAuth) {
+      if (window.firebaseAuth && window.firebaseAuthMethods) {
+        const { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, signInAnonymously } = window.firebaseAuthMethods;
         try {
-          await firebaseAuth.signInWithEmailAndPassword('ramesh.patil@kisansathi.agri', 'kisan1234');
+          await signInWithEmailAndPassword(window.firebaseAuth, 'ramesh.patil@kisansathi.agri', 'kisan1234');
         } catch (e) {
-          // If demo user doesn't exist, create it or sign in anonymously
           try {
-            await firebaseAuth.createUserWithEmailAndPassword('ramesh.patil@kisansathi.agri', 'kisan1234');
-            if (firebaseAuth.currentUser) {
-              await firebaseAuth.currentUser.updateProfile({ displayName: 'Ramesh Patil' });
+            const cred = await createUserWithEmailAndPassword(window.firebaseAuth, 'ramesh.patil@kisansathi.agri', 'kisan1234');
+            if (cred.user) {
+              await updateProfile(cred.user, { displayName: 'Ramesh Patil' });
             }
           } catch (e2) {
-            await firebaseAuth.signInAnonymously();
+            await signInAnonymously(window.firebaseAuth);
           }
         }
       }
@@ -461,8 +438,9 @@ const AUTH_SERVICE = {
     if (!email) return;
 
     try {
-      if (firebaseAuth) {
-        await firebaseAuth.sendPasswordResetEmail(email.trim());
+      if (window.firebaseAuth && window.firebaseAuthMethods) {
+        const { sendPasswordResetEmail } = window.firebaseAuthMethods;
+        await sendPasswordResetEmail(window.firebaseAuth, email.trim());
         alert(`Password reset link sent to ${email}. Please check your inbox.`);
       } else {
         alert('Password reset link simulated for ' + email);
@@ -474,8 +452,9 @@ const AUTH_SERVICE = {
 
   async logout() {
     try {
-      if (firebaseAuth) {
-        await firebaseAuth.signOut();
+      if (window.firebaseAuth && window.firebaseAuthMethods) {
+        const { signOut } = window.firebaseAuthMethods;
+        await signOut(window.firebaseAuth);
       }
     } catch (e) {
       console.warn(e);
@@ -729,7 +708,6 @@ const WEATHER_SERVICE = {
   // LEAFLET MAP INTEGRATION & EVENT HANDLERS
   // ==========================================
 
-  // Create custom HTML Leaflet Icon
   createCustomMarkerIcon(label = 'Farm Pin') {
     if (typeof L === 'undefined') return null;
     return L.divIcon({
@@ -748,7 +726,6 @@ const WEATHER_SERVICE = {
     });
   },
 
-  // Initialize Weather Leaflet Map
   initWeatherMap() {
     const mapContainer = document.getElementById('weather-leaflet-map');
     if (!mapContainer || typeof L === 'undefined') return;
@@ -758,14 +735,12 @@ const WEATHER_SERVICE = {
       return;
     }
 
-    // Initialize Leaflet Map
     this.weatherMap = L.map('weather-leaflet-map', {
       center: [this.latitude, this.longitude],
       zoom: 11,
       zoomControl: true
     });
 
-    // Define Tile Layers
     this.tileLayers = {
       street: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -781,23 +756,19 @@ const WEATHER_SERVICE = {
       })
     };
 
-    // Add default street layer
     this.tileLayers.street.addTo(this.weatherMap);
 
-    // Add draggable marker
     const icon = this.createCustomMarkerIcon();
     this.weatherMarker = L.marker([this.latitude, this.longitude], {
       draggable: true,
       icon: icon || undefined
     }).addTo(this.weatherMap);
 
-    // Marker drag event
     this.weatherMarker.on('dragend', (e) => {
       const pos = e.target.getLatLng();
       this.handleMapLocationSelect(pos.lat, pos.lng);
     });
 
-    // Map click event
     this.weatherMap.on('click', (e) => {
       const lat = e.latlng.lat;
       const lng = e.latlng.lng;
@@ -807,22 +778,18 @@ const WEATHER_SERVICE = {
     this.updateMarkerPopup();
   },
 
-  // Switch Tile Layers (Map, Satellite, Terrain)
   switchMapLayer(layerType) {
     if (!this.weatherMap || !this.tileLayers[layerType]) return;
 
-    // Remove existing layers
     Object.values(this.tileLayers).forEach(layer => {
       if (this.weatherMap.hasLayer(layer)) {
         this.weatherMap.removeLayer(layer);
       }
     });
 
-    // Add selected layer
     this.tileLayers[layerType].addTo(this.weatherMap);
     this.activeLayerType = layerType;
 
-    // Update button styling
     ['street', 'satellite', 'topo'].forEach(type => {
       const btn = document.getElementById(`map-layer-${type}`);
       if (btn) {
@@ -835,30 +802,25 @@ const WEATHER_SERVICE = {
     });
   },
 
-  // Center & fly to active farm location on map
   locateFarmerOnMap() {
     if (this.weatherMap) {
       this.weatherMap.flyTo([this.latitude, this.longitude], 12, { animate: true, duration: 1.2 });
     }
   },
 
-  // Handle map click or drag event
   async handleMapLocationSelect(lat, lon) {
     this.latitude = lat;
     this.longitude = lon;
 
-    // Move marker smoothly
     if (this.weatherMarker) {
       this.weatherMarker.setLatLng([lat, lon]);
     }
 
-    // Update Coordinates Badge
     const coordsBadge = document.getElementById('map-coords-badge');
     if (coordsBadge) {
       coordsBadge.textContent = `Lat: ${lat.toFixed(4)}°N, Lon: ${lon.toFixed(4)}°E`;
     }
 
-    // Fetch and analyze weather for exact selected coordinates
     try {
       const forecast = await this.fetchForecast(lat, lon);
       this.rawData = forecast;
@@ -884,7 +846,6 @@ const WEATHER_SERVICE = {
     }
   },
 
-  // Update animated Leaflet Marker Popup
   updateMarkerPopup() {
     if (!this.weatherMarker || !this.analysis) return;
     const a = this.analysis;
@@ -904,7 +865,6 @@ const WEATHER_SERVICE = {
     this.weatherMarker.bindPopup(popupContent).openPopup();
   },
 
-  // Refresh Leaflet size
   refreshMapSize() {
     if (this.weatherMap) {
       this.weatherMap.invalidateSize();
@@ -914,7 +874,6 @@ const WEATHER_SERVICE = {
     }
   },
 
-  // Toggle mini-map on Onboarding
   toggleOnboardingMap() {
     const wrap = document.getElementById('onboarding-map-wrap');
     if (!wrap) return;
@@ -930,7 +889,6 @@ const WEATHER_SERVICE = {
     }
   },
 
-  // Initialize Onboarding mini-map
   initOnboardingMap() {
     const container = document.getElementById('onboarding-leaflet-map');
     if (!container || typeof L === 'undefined') return;
@@ -977,7 +935,6 @@ const WEATHER_SERVICE = {
     });
   },
 
-  // Search & Load Weather across views and map
   async searchAndLoadWeather(locationQuery) {
     if (this.isFetching) return;
     this.isFetching = true;
@@ -991,7 +948,6 @@ const WEATHER_SERVICE = {
       this.latitude = geo.lat;
       this.longitude = geo.lon;
 
-      // Update farmer state location
       APP_STATE.user.location = geo.name;
 
       const forecast = await this.fetchForecast(geo.lat, geo.lon, geo.timezone);
@@ -1010,7 +966,6 @@ const WEATHER_SERVICE = {
       this.renderDashboardWeather();
       this.renderProfileLocations();
 
-      // Pan & Zoom Leaflet Map to searched location
       if (this.weatherMap) {
         this.weatherMap.flyTo([geo.lat, geo.lon], 11, { animate: true, duration: 1.0 });
         if (this.weatherMarker) {
@@ -1019,7 +974,6 @@ const WEATHER_SERVICE = {
         }
       }
 
-      // Update Coordinates Badge
       const coordsBadge = document.getElementById('map-coords-badge');
       if (coordsBadge) {
         coordsBadge.textContent = `Lat: ${geo.lat.toFixed(3)}°N, Lon: ${geo.lon.toFixed(3)}°E`;
@@ -1031,7 +985,6 @@ const WEATHER_SERVICE = {
     }
   },
 
-  // Form submit handler on search input
   handleSearchSubmit() {
     const input = document.getElementById('weather-search-input');
     if (input && input.value.trim()) {
@@ -1039,7 +992,6 @@ const WEATHER_SERVICE = {
     }
   },
 
-  // GPS Geolocation Handler
   loadUserGPSWeather() {
     if (!('geolocation' in navigator)) {
       alert('Geolocation is not supported by your browser.');
@@ -1065,7 +1017,6 @@ const WEATHER_SERVICE = {
     );
   },
 
-  // Render `#view-weather` DOM elements
   renderWeatherView() {
     if (!this.analysis || !this.rawData) return;
     const a = this.analysis;
@@ -1073,7 +1024,6 @@ const WEATHER_SERVICE = {
     const current = raw.current;
     const daily = raw.daily;
 
-    // Subtitle & Last Updated
     const sub = document.getElementById('weather-view-subtitle');
     if (sub) sub.textContent = `Real-time satellite & agro-meteorological analysis for ${this.activeLocationName}`;
 
@@ -1083,7 +1033,6 @@ const WEATHER_SERVICE = {
       lastUp.textContent = `Live Synced at ${timeStr}`;
     }
 
-    // Hero Card
     const elTemp = document.getElementById('weather-current-temp');
     const elLoc = document.getElementById('weather-current-location');
     const elCond = document.getElementById('weather-current-condition');
@@ -1105,7 +1054,6 @@ const WEATHER_SERVICE = {
     if (elHum) elHum.textContent = `${a.humidity}%`;
     if (elPrecip) elPrecip.textContent = `${a.precipSum24h.toFixed(1)} mm`;
 
-    // 3 Smart Agromet Bento Cards
     const elIrrBadge = document.getElementById('weather-irrigation-badge');
     const elIrrDesc = document.getElementById('weather-irrigation-desc');
     const elSoilStatus = document.getElementById('weather-soil-status');
@@ -1136,7 +1084,6 @@ const WEATHER_SERVICE = {
     if (elFungDesc) elFungDesc.textContent = a.fungal.desc;
     if (elPathogen) elPathogen.textContent = a.fungal.pathogenIndex;
 
-    // 7-Day Live Agromet Forecast Grid
     const container7Day = document.getElementById('weather-7day-container');
     if (container7Day && daily && daily.time) {
       container7Day.innerHTML = '';
@@ -1178,16 +1125,13 @@ const WEATHER_SERVICE = {
     }
   },
 
-  // Render Dashboard widgets
   renderDashboardWeather() {
     if (!this.analysis) return;
     const a = this.analysis;
 
-    // Header greetings & location
     const dLoc = document.getElementById('dashboard-location-text');
     if (dLoc) dLoc.textContent = this.activeLocationName;
 
-    // Critical Task Banner
     const dTitle = document.getElementById('dashboard-task-title');
     const dDesc = document.getElementById('dashboard-task-desc');
     const dBadge = document.getElementById('dashboard-task-badge');
@@ -1197,7 +1141,6 @@ const WEATHER_SERVICE = {
       dBadge.className = `px-2.5 py-0.5 rounded-full text-xs font-bold flex items-center gap-1 ${a.irrigation.badgeClass}`;
     }
 
-    // Weather Risk Bento Card
     const wTemp = document.getElementById('dashboard-weather-temp');
     const wCond = document.getElementById('dashboard-weather-condition');
     const wRain = document.getElementById('dashboard-weather-rain-prob');
@@ -1212,7 +1155,6 @@ const WEATHER_SERVICE = {
     }
   },
 
-  // Update profile labels in sidebar and top header
   renderProfileLocations() {
     const sLoc = document.getElementById('sidebar-location-text');
     const hProf = document.getElementById('header-profile-text');
@@ -1233,7 +1175,6 @@ const WEATHER_SERVICE = {
     if (hAvatar) hAvatar.textContent = (APP_STATE.user.name || 'R').charAt(0).toUpperCase();
   },
 
-  // Voice narration of current live analysis
   speakCurrentAdvisory() {
     if (!this.analysis) {
       speakText('Loading live weather intelligence for your farm.');
@@ -1288,7 +1229,6 @@ function selectSampleLeaf(sampleType) {
 
   APP_STATE.activeScanResult = sampleMap[sampleType] || sampleMap.onion;
 
-  // Highlight selected sample leaf
   document.querySelectorAll('.sample-leaf-btn').forEach(btn => {
     if (btn.getAttribute('data-sample') === sampleType) {
       btn.classList.add('ring-2', 'ring-primary', 'scale-105');
@@ -1390,7 +1330,6 @@ function sendChatMessage(text) {
   if (document.getElementById('chat-input')) document.getElementById('chat-input').value = '';
   renderChatMessages();
 
-  // Show typing indicator & AI response
   setTimeout(() => {
     const answer = generateAIResponse(query);
     const replyTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
