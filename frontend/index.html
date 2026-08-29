@@ -659,205 +659,550 @@
   </section>
 
 
-  <!-- ==================== VIEW 5: AI CROP SCANNER ==================== -->
-  <section id="view-scanner" class="app-view hidden max-w-4xl mx-auto px-4 md:px-8 py-6">
-    <div class="flex items-center justify-between mb-6">
-      <div>
-        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="scanTitle">AI Crop Health Scanner</h1>
-        <p class="text-xs md:text-sm text-on-surface-variant" data-t="scanSubtitle">Capture or upload leaf photo for instant pathogen detection</p>
+  <!-- ==================== VIEW 5: CROP SCANNER (IMAGE-ONLY VISUAL SCANNER) ==================== -->
+  <section id="view-scanner" class="app-view hidden max-w-3xl mx-auto px-4 md:px-6 py-6">
+    <div class="text-center max-w-xl mx-auto mb-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-leaf/15 border border-leaf/30 text-leaf text-xs font-bold mb-2">
+        <span class="w-2 h-2 rounded-full bg-leaf animate-pulse"></span>
+        <span>Visual Image Scanner • "What do I see in this image?"</span>
       </div>
-      <a href="#crop-analysis" class="text-xs font-semibold text-leaf hover:underline flex items-center gap-1">
-        <span>Previous Reports</span>
-        <span class="material-symbols-outlined text-sm">history</span>
-      </a>
+      <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="cropScanner">
+        AI Crop Leaf Scanner
+      </h1>
+      <p class="text-xs md:text-sm text-on-surface-variant mt-1">
+        Upload or capture an affected leaf or plant image for immediate visual symptom detection.
+      </p>
     </div>
 
-    <!-- Scanner Camera Viewfinder Simulation -->
-    <div class="relative w-full max-w-md mx-auto aspect-[4/3] bg-charcoal rounded-3xl overflow-hidden border-4 border-sage/60 shadow-2xl flex flex-col justify-between p-4 mb-6">
-      <!-- Target Corner Overlays -->
-      <div class="absolute top-4 left-4 w-8 h-8 border-t-4 border-l-4 border-leaf rounded-tl-lg pointer-events-none"></div>
-      <div class="absolute top-4 right-4 w-8 h-8 border-t-4 border-r-4 border-leaf rounded-tr-lg pointer-events-none"></div>
-      <div class="absolute bottom-4 left-4 w-8 h-8 border-b-4 border-l-4 border-leaf rounded-bl-lg pointer-events-none"></div>
-      <div class="absolute bottom-4 right-4 w-8 h-8 border-b-4 border-r-4 border-leaf rounded-br-lg pointer-events-none"></div>
-
-      <!-- Animated Laser Line -->
-      <div class="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-leaf to-transparent laser-scan-line shadow-[0_0_12px_#40916C]"></div>
-
-      <!-- Viewfinder Center Graphic -->
-      <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 bg-gradient-to-t from-black/60 via-transparent to-black/40">
-        <div class="w-20 h-20 rounded-full border-2 border-dashed border-leaf/60 flex items-center justify-center mb-3">
-          <span class="material-symbols-outlined text-4xl text-leaf">center_focus_strong</span>
+    <!-- Clean White Square Image Upload Dropzone -->
+    <div class="w-full max-w-lg mx-auto mb-6">
+      <div id="scanner-dropzone" onclick="document.getElementById('scanner-file-input').click()" class="cursor-pointer group relative bg-surface-container-lowest dark:bg-surface-container-low border-2 border-dashed border-sage hover:border-leaf rounded-3xl p-8 text-center transition-all duration-200 hover:shadow-lg shadow-sm">
+        <input type="file" id="scanner-file-input" accept="image/*" class="hidden" onchange="GEMINI_SCANNER_SERVICE.handleImageUpload(event)" />
+        
+        <!-- Default State (No image selected yet) -->
+        <div id="scanner-upload-placeholder" class="py-8 flex flex-col items-center justify-center">
+          <div class="w-20 h-20 rounded-2xl bg-secondary-container text-on-secondary-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-inner">
+            <span class="material-symbols-outlined text-4xl text-leaf">photo_camera</span>
+          </div>
+          <h2 class="text-lg md:text-xl font-bold text-primary dark:text-primary-fixed mb-1">
+            Capture or Upload Leaf Photo
+          </h2>
+          <p class="text-xs text-on-surface-variant max-w-xs mb-4">
+            Click here or drop your crop photo to analyze visual foliar symptoms
+          </p>
+          <span class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-on-primary font-semibold text-xs shadow-sm group-hover:bg-primary-container transition-colors">
+            <span class="material-symbols-outlined text-base">cloud_upload</span>
+            <span>Select Image to Scan</span>
+          </span>
+          <p class="text-[11px] text-outline mt-3">Supports JPG, PNG, WEBP • Max 15MB</p>
         </div>
-        <p class="text-white text-xs font-medium max-w-xs">Align infected leaf inside targeting reticle</p>
-        <span class="text-[11px] text-gray-300 mt-1">Resolution: 4K Neural Optical Sensor (Ready)</span>
-      </div>
 
-      <!-- Scanner Overlay Controls -->
-      <div class="relative z-10 flex justify-between items-center text-white">
-        <span class="px-2.5 py-1 bg-black/50 rounded-full text-xs font-semibold flex items-center gap-1 backdrop-blur-sm">
-          <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span> Live Vision
-        </span>
-        <button onclick="alert('Camera flash toggled.')" class="p-2 rounded-full bg-black/50 hover:bg-black/80 transition-colors">
-          <span class="material-symbols-outlined text-sm">flash_on</span>
-        </button>
+        <!-- Selected Image Preview State -->
+        <div id="scanner-image-preview-container" class="hidden flex flex-col items-center">
+          <div class="relative w-full max-w-xs aspect-square rounded-2xl overflow-hidden border-2 border-leaf shadow-md mb-4">
+            <img id="scanner-selected-image" src="" alt="Selected Crop Leaf" class="w-full h-full object-cover" />
+            <span class="absolute top-2 right-2 px-2.5 py-1 rounded-md bg-black/70 text-white text-[10px] font-bold backdrop-blur-sm">
+              Ready for Visual Scan
+            </span>
+          </div>
+          <div class="flex gap-3">
+            <button type="button" onclick="event.stopPropagation(); document.getElementById('scanner-file-input').click();" class="px-4 py-2 rounded-xl bg-surface-container-low border border-sage text-xs font-semibold text-charcoal dark:text-gray-200 hover:bg-surface-variant transition-colors">
+              Change Image
+            </button>
+            <button type="button" onclick="event.stopPropagation(); GEMINI_SCANNER_SERVICE.triggerScan();" class="px-5 py-2 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-container shadow-sm flex items-center gap-1.5 transition-all active:scale-95">
+              <span class="material-symbols-outlined text-sm">search</span>
+              <span>Scan Crop Image</span>
+            </button>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <!-- Bottom Capture Trigger -->
-      <div class="relative z-10 flex justify-center items-center gap-6">
-        <label class="p-3 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white cursor-pointer transition-transform active:scale-95">
-          <input type="file" accept="image/*" class="hidden" onchange="runCropScan()" />
-          <span class="material-symbols-outlined text-xl">photo_library</span>
-        </label>
-        <button onclick="runCropScan()" class="w-16 h-16 rounded-full bg-leaf text-white flex items-center justify-center shadow-lg border-4 border-white hover:scale-105 active:scale-95 transition-all">
-          <span class="material-symbols-outlined text-3xl">photo_camera</span>
+    <!-- Quick Sample Leaves for Instant Visual Testing -->
+    <div class="w-full max-w-lg mx-auto mb-6 bg-surface-container-lowest border border-sage rounded-2xl p-4 shadow-sm">
+      <div class="flex items-center justify-between mb-2.5">
+        <span class="text-xs font-bold uppercase tracking-wider text-outline">Quick Sample Tests</span>
+        <span class="text-[11px] text-leaf font-medium">Click to Test Visual Scanner</span>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <button onclick="selectSampleLeaf('onion'); runCropScan();" data-sample="onion" class="sample-leaf-btn text-left p-2.5 rounded-xl bg-surface-container-low border border-sage hover:border-leaf transition-all">
+          <p class="font-bold text-xs text-primary dark:text-primary-fixed">🧅 Onion</p>
+          <p class="text-[10px] text-leaf font-medium mt-0.5">Purple Blotch</p>
         </button>
-        <button onclick="speakText('Position the affected leaf clearly in good lighting and tap scan.')" class="p-3 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white transition-transform active:scale-95">
-          <span class="material-symbols-outlined text-xl">volume_up</span>
+
+        <button onclick="selectSampleLeaf('tomato'); runCropScan();" data-sample="tomato" class="sample-leaf-btn text-left p-2.5 rounded-xl bg-surface-container-low border border-sage hover:border-leaf transition-all">
+          <p class="font-bold text-xs text-primary dark:text-primary-fixed">🍅 Tomato</p>
+          <p class="text-[10px] text-leaf font-medium mt-0.5">Early Blight</p>
+        </button>
+
+        <button onclick="selectSampleLeaf('wheat'); runCropScan();" data-sample="wheat" class="sample-leaf-btn text-left p-2.5 rounded-xl bg-surface-container-low border border-sage hover:border-leaf transition-all">
+          <p class="font-bold text-xs text-primary dark:text-primary-fixed">🌾 Wheat</p>
+          <p class="text-[10px] text-error font-medium mt-0.5">Yellow Rust</p>
+        </button>
+
+        <button onclick="selectSampleLeaf('healthy'); runCropScan();" data-sample="healthy" class="sample-leaf-btn text-left p-2.5 rounded-xl bg-surface-container-low border border-sage hover:border-leaf transition-all">
+          <p class="font-bold text-xs text-primary dark:text-primary-fixed">🌱 Healthy</p>
+          <p class="text-[10px] text-leaf font-medium mt-0.5">Normal Plant</p>
         </button>
       </div>
     </div>
 
-    <!-- Sample Leaves for Instant Testing -->
-    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm">
-      <h2 class="text-xs font-bold uppercase tracking-wider text-outline mb-3">Or Select Sample Test Case (Instant AI Simulation)</h2>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <button onclick="selectSampleLeaf('onion'); runCropScan();" data-sample="onion" class="sample-leaf-btn text-left p-3 rounded-xl bg-surface-container-low border border-sage hover:border-leaf transition-all">
-          <p class="font-bold text-xs text-primary dark:text-primary-fixed">🧅 Onion</p>
-          <p class="text-[11px] text-leaf font-medium mt-0.5">Purple Blotch</p>
-          <span class="text-[10px] text-outline">Moderate (28%)</span>
-        </button>
+    <!-- ==================== CROP SCANNER VISUAL RESULT BOX (Hidden until image is scanned) ==================== -->
+    <div id="scanner-inline-results" class="hidden w-full max-w-lg mx-auto space-y-4 fade-in-up">
+      <div class="bg-surface-container-lowest border border-sage rounded-3xl p-6 shadow-sm">
+        
+        <!-- Status Header Badge -->
+        <div class="flex items-center justify-between pb-4 border-b border-sage/40 mb-4">
+          <div>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-outline">Visual Scan Result</span>
+            <div class="flex items-center gap-2 mt-0.5">
+              <span id="scan-result-status-dot" class="w-3 h-3 rounded-full bg-warning animate-pulse"></span>
+              <h2 id="scan-result-status-title" class="text-lg font-extrabold text-primary dark:text-primary-fixed">
+                🟡 Possible Issue Detected
+              </h2>
+            </div>
+          </div>
+          <span id="scan-result-confidence-badge" class="px-3 py-1 rounded-full text-xs font-extrabold bg-secondary-container text-on-secondary-container">
+            --% Confidence
+          </span>
+        </div>
 
-        <button onclick="selectSampleLeaf('tomato'); runCropScan();" data-sample="tomato" class="sample-leaf-btn text-left p-3 rounded-xl bg-surface-container-low border border-sage hover:border-leaf transition-all">
-          <p class="font-bold text-xs text-primary dark:text-primary-fixed">🍅 Tomato</p>
-          <p class="text-[11px] text-leaf font-medium mt-0.5">Early Blight</p>
-          <span class="text-[10px] text-outline">Mild (12%)</span>
-        </button>
+        <!-- Visual Finding Summary -->
+        <div class="space-y-3.5 text-xs">
+          <div class="p-3.5 rounded-xl bg-surface-container-low border border-sage/50">
+            <p class="font-bold text-primary dark:text-primary-fixed mb-1 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm text-leaf">visibility</span>
+              <span>Visual Finding:</span>
+            </p>
+            <p id="scan-result-finding" class="text-on-surface-variant leading-relaxed">
+              Analyzing visual leaf characteristics...
+            </p>
+          </div>
 
-        <button onclick="selectSampleLeaf('wheat'); runCropScan();" data-sample="wheat" class="sample-leaf-btn text-left p-3 rounded-xl bg-surface-container-low border border-sage hover:border-leaf transition-all">
-          <p class="font-bold text-xs text-primary dark:text-primary-fixed">🌾 Wheat</p>
-          <p class="text-[11px] text-error font-medium mt-0.5">Yellow Rust</p>
-          <span class="text-[10px] text-outline">Critical (42%)</span>
-        </button>
+          <!-- Possible Problem / Pathogen -->
+          <div class="flex items-start justify-between p-3.5 rounded-xl bg-surface-container-low border border-sage/50">
+            <div>
+              <p class="font-bold text-primary dark:text-primary-fixed">Possible Issue:</p>
+              <p id="scan-result-issue-name" class="text-sm font-bold text-error mt-0.5">--</p>
+            </div>
+            <div class="text-right">
+              <p class="text-[10px] text-outline font-semibold">Image Quality</p>
+              <p id="scan-result-quality" class="font-bold text-leaf">Good</p>
+            </div>
+          </div>
 
-        <button onclick="selectSampleLeaf('healthy'); runCropScan();" data-sample="healthy" class="sample-leaf-btn text-left p-3 rounded-xl bg-surface-container-low border border-sage hover:border-leaf transition-all">
-          <p class="font-bold text-xs text-primary dark:text-primary-fixed">🌱 Healthy Crop</p>
-          <p class="text-[11px] text-leaf font-medium mt-0.5">No Infection</p>
-          <span class="text-[10px] text-outline">99.4% Clean</span>
-        </button>
+          <!-- Observed Symptoms -->
+          <div>
+            <p class="font-bold text-primary dark:text-primary-fixed mb-1.5">Observed Foliar Symptoms:</p>
+            <div id="scan-result-symptoms-chips" class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 rounded-lg bg-surface-container-low border border-sage/50 text-[11px] text-charcoal dark:text-gray-200">Processing...</span>
+            </div>
+          </div>
+
+          <!-- Short Farmer Observation Note -->
+          <div class="p-3.5 rounded-xl bg-leaf/10 border border-leaf/30">
+            <p class="font-bold text-leaf text-[11px] uppercase tracking-wider mb-0.5">Farmer Summary</p>
+            <p id="scan-result-farmer-msg" class="text-charcoal dark:text-gray-200 text-xs leading-relaxed">
+              --
+            </p>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="pt-5 mt-5 border-t border-sage/40 flex flex-col sm:flex-row gap-3">
+          <button onclick="document.getElementById('scanner-file-input').click()" class="flex-1 py-2.5 px-4 rounded-xl bg-surface-container-low border border-sage text-xs font-semibold text-charcoal dark:text-gray-200 hover:bg-surface-variant flex items-center justify-center gap-1.5 transition-colors">
+            <span class="material-symbols-outlined text-base">photo_camera</span>
+            <span>Scan Another Image</span>
+          </button>
+          
+          <button onclick="CROP_ANALYSIS_SERVICE.importScanAndNavigate()" class="flex-1 py-2.5 px-4 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-container shadow-sm flex items-center justify-center gap-1.5 transition-all">
+            <span>Send to Crop Analysis</span>
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+          </button>
+        </div>
       </div>
     </div>
   </section>
 
 
-  <!-- ==================== VIEW 6: CROP ANALYSIS REPORT ==================== -->
+  <!-- ==================== VIEW 6: CROP ANALYSIS (FULL FARM DECISION INTELLIGENCE) ==================== -->
   <section id="view-crop-analysis" class="app-view hidden max-w-5xl mx-auto px-4 md:px-8 py-6">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
       <div>
         <div class="flex items-center gap-2 mb-1">
-          <a href="#scanner" class="text-xs text-leaf hover:underline flex items-center gap-1 font-semibold">
-            <span class="material-symbols-outlined text-sm">arrow_back</span>
-            <span>New Scan</span>
-          </a>
+          <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold">
+            <span class="material-symbols-outlined text-xs text-leaf">neurology</span>
+            <span>Farm Intelligence & Decision Engine</span>
+          </span>
           <span class="text-xs text-outline">•</span>
-          <span class="text-xs text-outline">Diagnosis ID: #KSA-88492</span>
+          <span class="text-xs text-outline">"What should I do on my farm?"</span>
         </div>
-        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed">Diagnosis & Treatment Plan</h1>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="cropAnalysis">
+          Crop Analysis & Farm Decisions
+        </h1>
+        <p class="text-xs md:text-sm text-on-surface-variant mt-0.5">
+          Combines your Farm Profile + Live Weather Data + Foliar Scan into actionable farming decisions.
+        </p>
       </div>
 
       <div class="flex items-center gap-2">
-        <button onclick="speakText('Diagnosis for your crop: ' + document.getElementById('analysis-disease-name').textContent + '. Severity level is ' + document.getElementById('analysis-severity').textContent + '. Action required: ' + document.getElementById('analysis-action').textContent)" class="px-4 py-2 rounded-xl bg-sage/60 text-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-secondary-container transition-colors">
+        <button onclick="CROP_ANALYSIS_SERVICE.speakDecisionSummary()" class="px-3.5 py-2 rounded-xl bg-sage/60 text-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-secondary-container transition-colors">
           <span class="material-symbols-outlined text-base">volume_up</span>
           <span>Listen</span>
         </button>
-        <button onclick="alert('Analysis report shared to WhatsApp (+91 98234 56789)')" class="px-4 py-2 rounded-xl bg-primary text-on-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-primary-container transition-colors">
+        <button onclick="alert('Farm Analysis & Decision Plan shared to WhatsApp (+91 98234 56789)')" class="px-3.5 py-2 rounded-xl bg-primary text-on-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-primary-container transition-colors">
           <span class="material-symbols-outlined text-base">share</span>
-          <span>Share PDF</span>
+          <span>Share Plan</span>
         </button>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-      
-      <!-- Primary Disease Diagnosis Card -->
-      <div class="md:col-span-8 bg-surface-container-lowest border border-sage rounded-2xl p-6 shadow-sm">
-        <div class="flex items-start justify-between mb-4">
-          <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-outline">TARGET CROP: <span id="analysis-crop-name" class="text-primary dark:text-primary-fixed">Onion (कांदा)</span></span>
-            <h2 id="analysis-disease-name" class="text-2xl font-bold text-primary dark:text-primary-fixed mt-1">Purple Blotch (Stemphylium vesicarium)</h2>
+    <!-- 1. FARM PLOT AI SETUP CARD -->
+    <div class="w-full bg-surface-container-lowest border border-sage rounded-3xl p-5 md:p-6 shadow-sm mb-6">
+      <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-sage/40">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-leaf/15 text-leaf text-[11px] font-bold mb-1">
+            <span class="material-symbols-outlined text-xs">tune</span>
+            <span>Plot Intelligence</span>
           </div>
-          <span id="analysis-confidence" class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold">98% Match</span>
+          <h2 class="text-base md:text-lg font-extrabold text-primary dark:text-primary-fixed">Farm Plot AI</h2>
+          <p class="text-xs text-on-surface-variant">Enter your farm plot specifications to generate personalized agronomic AI decisions</p>
         </div>
-
-        <div class="p-4 rounded-xl bg-surface-container-low border border-sage/60 mb-6">
-          <div class="flex items-center justify-between text-xs font-semibold mb-2">
-            <span>Infection Severity</span>
-            <span id="analysis-severity" class="text-warning font-bold">Moderate (28% affected leaf area)</span>
-          </div>
-          <div class="w-full h-3 bg-surface-container-high rounded-full overflow-hidden">
-            <div class="h-full bg-gradient-to-r from-leaf via-warning to-error rounded-full w-[28%]"></div>
-          </div>
-        </div>
-
-        <!-- Treatment Recommendations -->
-        <h3 class="text-sm font-bold uppercase tracking-wider text-charcoal dark:text-gray-200 mb-3">Recommended Treatment & Dosage</h3>
-        <div class="space-y-3 mb-6">
-          <div class="p-4 rounded-xl border border-leaf/40 bg-leaf/5 flex items-start gap-3">
-            <span class="material-symbols-outlined text-leaf text-xl mt-0.5">medication</span>
-            <div>
-              <p class="font-bold text-sm text-primary dark:text-primary-fixed">Chemical Control (Standard):</p>
-              <p id="analysis-recommendation" class="text-xs text-on-surface-variant mt-1">Spray Mancozeb 75% WP @ 2.5g/L or Hexaconazole 5% EC @ 1ml/L with wetting agent.</p>
-            </div>
-          </div>
-
-          <div class="p-4 rounded-xl border border-sage bg-surface-container-low flex items-start gap-3">
-            <span class="material-symbols-outlined text-leaf text-xl mt-0.5">eco</span>
-            <div>
-              <p class="font-bold text-sm text-primary dark:text-primary-fixed">Organic / Bio-Fungicide Alternative:</p>
-              <p class="text-xs text-on-surface-variant mt-1">Neem Oil (1500 ppm) @ 5ml/L or Trichoderma viride @ 5g/L during early vegetative stages.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Urgency Callout -->
-        <div class="p-4 rounded-xl bg-warning/10 border-l-4 border-warning flex items-start gap-3">
-          <span class="material-symbols-outlined text-warning text-xl mt-0.5">schedule</span>
-          <div>
-            <p class="font-bold text-xs text-primary dark:text-primary-fixed">Timing & Weather Advisory:</p>
-            <p id="analysis-action" class="text-xs text-on-surface-variant mt-0.5">Apply within 48 hours before impending rainfall to prevent spore dispersal.</p>
-          </div>
+        <div class="w-9 h-9 rounded-xl bg-leaf/15 text-leaf flex items-center justify-center">
+          <span class="material-symbols-outlined text-xl">psychology</span>
         </div>
       </div>
 
-      <!-- Side Actions & AI Mentor Trigger -->
-      <div class="md:col-span-4 space-y-5">
-        <!-- Direct AI Mentor Card -->
-        <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm text-center">
-          <div class="w-14 h-14 mx-auto mb-3 bg-secondary-container text-on-secondary-container rounded-2xl flex items-center justify-center">
-            <span class="material-symbols-outlined text-3xl text-leaf">smart_toy</span>
+      <div class="space-y-4">
+        <!-- Row 1: Crop Name & Crop Variety -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed mb-1.5">
+              <span class="material-symbols-outlined text-sm text-leaf">potted_plant</span>
+              <span>Crop Name</span>
+            </label>
+            <input type="text" id="farm-setup-crop" value="" placeholder="e.g. Onion, Tomato, Wheat, Cotton, Soybean..." onchange="CROP_ANALYSIS_SERVICE.updateProfileField('crop', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white placeholder:text-outline/60 focus:outline-none focus:border-leaf" />
           </div>
-          <h3 class="font-bold text-base text-primary dark:text-primary-fixed">Have Questions on Dosage?</h3>
-          <p class="text-xs text-on-surface-variant mt-1 mb-4">Ask Kisan AI how to mix sprays or find local agro-dealer subsidies in Nashik.</p>
-          <a href="#ai-mentor" onclick="sendChatMessage('What is the exact spray schedule for Purple Blotch on my 2-acre onion plot?')" class="w-full block bg-primary text-on-primary font-semibold py-2.5 rounded-xl text-xs hover:bg-primary-container transition-colors">
-            Ask AI Mentor Now
-          </a>
+
+          <div>
+            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed mb-1.5">
+              <span class="material-symbols-outlined text-sm text-leaf">sell</span>
+              <span>Crop Variety</span>
+            </label>
+            <input type="text" id="farm-setup-variety" value="" placeholder="e.g. Kharif Red, Hybrid 64, Desi..." onchange="CROP_ANALYSIS_SERVICE.updateProfileField('variety', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white placeholder:text-outline/60 focus:outline-none focus:border-leaf" />
+          </div>
         </div>
 
-        <!-- Impact Forecast -->
-        <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm">
-          <h3 class="font-bold text-xs uppercase tracking-wider text-outline mb-2">Yield Protection ROI</h3>
-          <div class="flex items-center justify-between py-2 border-b border-sage/40 text-xs">
-            <span class="text-on-surface-variant">Estimated Yield Loss if untreated</span>
-            <span class="font-bold text-error">-25% (4.5 quintals)</span>
+        <!-- Row 2: Growth Stage & Planting Date -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed mb-1.5">
+              <span class="material-symbols-outlined text-sm text-leaf">bar_chart</span>
+              <span>Growth Stage</span>
+            </label>
+            <select id="farm-setup-stage" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('stage', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white focus:outline-none focus:border-leaf">
+              <option value="" disabled selected>Select current growth stage...</option>
+              <option value="🌱 Sowing / Seedling">🌱 Sowing / Seedling</option>
+              <option value="🌿 Vegetative Stage">🌿 Vegetative Stage</option>
+              <option value="🌸 Flowering / Fruiting">🌸 Flowering / Fruiting</option>
+              <option value="🧅 Bulb / Tuber / Grain Formation">🧅 Bulb / Tuber / Grain Formation</option>
+              <option value="🌾 Maturity / Harvesting">🌾 Maturity / Harvesting</option>
+            </select>
           </div>
-          <div class="flex items-center justify-between py-2 border-b border-sage/40 text-xs">
-            <span class="text-on-surface-variant">Treatment Cost (2 acres)</span>
-            <span class="font-bold text-charcoal dark:text-white">₹850</span>
-          </div>
-          <div class="flex items-center justify-between pt-2 text-xs">
-            <span class="text-on-surface-variant font-bold">Net Crop Value Saved</span>
-            <span class="font-bold text-leaf">+₹14,200</span>
+
+          <div>
+            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed mb-1.5">
+              <span class="material-symbols-outlined text-sm text-leaf">calendar_today</span>
+              <span>Planting Date</span>
+            </label>
+            <input type="date" id="farm-setup-planting-date" value="" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('plantingDate', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white focus:outline-none focus:border-leaf" />
           </div>
         </div>
+
+        <!-- Row 3: Farm Area Size & Measurement Unit -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed mb-1.5">
+              <span class="material-symbols-outlined text-sm text-leaf">straighten</span>
+              <span>Farm Area Size</span>
+            </label>
+            <input type="number" id="farm-setup-area" value="" placeholder="e.g. 1.5" min="0.1" step="0.1" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('area', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white placeholder:text-outline/60 focus:outline-none focus:border-leaf" />
+          </div>
+
+          <div>
+            <label class="text-xs font-bold text-primary dark:text-primary-fixed mb-1.5 block">
+              Measurement Unit
+            </label>
+            <select id="farm-setup-unit" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('unit', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white focus:outline-none focus:border-leaf">
+              <option value="" disabled selected>Select unit...</option>
+              <option value="Acres (एकड)">Acres (एकड)</option>
+              <option value="Guntha (गुंठा)">Guntha (गुंठा)</option>
+              <option value="Hectares (हेक्टर)">Hectares (हेक्टर)</option>
+              <option value="Bigha (बीघा)">Bigha (बीघा)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Row 4: Soil Type & Irrigation Source -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed mb-1.5">
+              <span class="material-symbols-outlined text-sm text-leaf">layers</span>
+              <span>Soil Type</span>
+            </label>
+            <select id="farm-setup-soil" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('soil', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white focus:outline-none focus:border-leaf">
+              <option value="" disabled selected>Select soil type...</option>
+              <option value="Black Cotton Soil (काळी माती)">Black Cotton Soil (काळी माती)</option>
+              <option value="Red Sandy Loam (तांबडी माती)">Red Sandy Loam (तांबडी माती)</option>
+              <option value="Alluvial Soil (गाळाची माती)">Alluvial Soil (गाळाची माती)</option>
+              <option value="Clayey Loam (चिकण माती)">Clayey Loam (चिकण माती)</option>
+              <option value="Laterite Soil (जांभी माती)">Laterite Soil (जांभी माती)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed mb-1.5">
+              <span class="material-symbols-outlined text-sm text-leaf">water_drop</span>
+              <span>Irrigation Source</span>
+            </label>
+            <select id="farm-setup-irrigation" onchange="CROP_ANALYSIS_SERVICE.updateProfileField('irrigation', this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-xs font-semibold text-charcoal dark:text-white focus:outline-none focus:border-leaf">
+              <option value="" disabled selected>Select irrigation source...</option>
+              <option value="Drip Irrigation (ठिबक)">💦 Drip Irrigation (ठिबक)</option>
+              <option value="Sprinkler (तुषार)">🚿 Sprinkler (तुषार)</option>
+              <option value="Canal / Well Water (विहीर/कालवा)">🚰 Canal / Well Water (विहीर/कालवा)</option>
+              <option value="Rainfed / Monsoon">🌧️ Rainfed / Monsoon</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Row 5: Farm Field Location & Detect Location -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-fixed">
+              <span class="material-symbols-outlined text-sm text-leaf">location_on</span>
+              <span>Farm Field Location</span>
+            </label>
+            <button type="button" onclick="CROP_ANALYSIS_SERVICE.detectLocation()" class="text-xs font-bold text-leaf hover:underline flex items-center gap-1 bg-leaf/10 px-2.5 py-1 rounded-lg">
+              <span class="material-symbols-outlined text-xs">my_location</span>
+              <span>📍 Detect GPS Location</span>
+            </button>
+          </div>
+          <div class="relative">
+            <input type="text" id="farm-setup-location" value="" placeholder="Type village, taluka, city or district..." onchange="CROP_ANALYSIS_SERVICE.handleLocationInputChange(this.value)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 pr-20 text-xs font-semibold text-charcoal dark:text-white placeholder:text-outline/60 focus:outline-none focus:border-leaf" />
+            <button type="button" onclick="CROP_ANALYSIS_SERVICE.handleLocationInputChange(document.getElementById('farm-setup-location').value)" class="absolute right-1 top-1 bottom-1 px-3 rounded-lg bg-primary text-white text-[11px] font-semibold hover:bg-primary-container">
+              Pin Map
+            </button>
+          </div>
+        </div>
+
+        <!-- Row 6: Interactive Leaflet Farm Map Container -->
+        <div class="relative w-full h-60 rounded-2xl border-2 border-sage overflow-hidden shadow-md">
+          <div id="farm-setup-minimap" class="w-full h-full z-0"></div>
+          
+          <!-- Map Overlay Controls -->
+          <div class="absolute top-2 right-2 z-10 flex items-center gap-1 bg-white/90 dark:bg-black/80 backdrop-blur-md p-1 rounded-xl border border-sage/80 shadow-sm">
+            <button type="button" id="minimap-layer-street" onclick="CROP_ANALYSIS_SERVICE.setMapLayer('street')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-primary text-on-primary transition-all">
+              🗺️ Map
+            </button>
+            <button type="button" id="minimap-layer-satellite" onclick="CROP_ANALYSIS_SERVICE.setMapLayer('satellite')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold text-charcoal dark:text-gray-200 hover:bg-surface-variant transition-all">
+              🛰️ Satellite
+            </button>
+          </div>
+
+          <!-- Bottom Coordinates & Instructions Badge -->
+          <div class="absolute bottom-2 left-2 z-10 bg-black/75 backdrop-blur-sm text-white px-3 py-1 rounded-lg text-[10px] font-semibold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-leaf animate-pulse"></span>
+            <span id="minimap-coords-display">Click on map or search location above</span>
+            <span class="text-white/60">| Drag pin</span>
+          </div>
+        </div>
+
+        <!-- Update Decision Button -->
+        <div class="pt-2 text-right">
+          <button type="button" onclick="CROP_ANALYSIS_SERVICE.runAnalysis()" class="px-6 py-2.5 rounded-xl bg-primary text-on-primary text-xs font-bold hover:bg-primary-container shadow-sm flex items-center gap-2 ml-auto transition-all active:scale-95">
+            <span class="material-symbols-outlined text-base">neurology</span>
+            <span>Run Farm Plot AI Analysis</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. DATA SYNTHESIS STATUS BAR -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-6">
+      <div class="p-3 rounded-2xl bg-surface-container-lowest border border-sage/60 flex items-center gap-2">
+        <span class="material-symbols-outlined text-leaf text-lg">check_circle</span>
+        <div>
+          <p class="text-[10px] text-outline font-semibold uppercase">Plot Crop</p>
+          <p id="analysis-sync-crop" class="text-xs font-bold text-primary dark:text-primary-fixed">Not Set</p>
+        </div>
+      </div>
+
+      <div class="p-3 rounded-2xl bg-surface-container-lowest border border-sage/60 flex items-center gap-2">
+        <span class="material-symbols-outlined text-leaf text-lg">thunderstorm</span>
+        <div>
+          <p class="text-[10px] text-outline font-semibold uppercase">Weather Engine</p>
+          <p id="analysis-sync-weather" class="text-xs font-bold text-primary dark:text-primary-fixed">Live Open-Meteo</p>
+        </div>
+      </div>
+
+      <div class="p-3 rounded-2xl bg-surface-container-lowest border border-sage/60 flex items-center gap-2">
+        <span id="analysis-sync-scan-icon" class="material-symbols-outlined text-outline text-lg">camera</span>
+        <div>
+          <p class="text-[10px] text-outline font-semibold uppercase">Crop Scan</p>
+          <p id="analysis-sync-scan-text" class="text-xs font-bold text-primary dark:text-primary-fixed">Optional (None)</p>
+        </div>
+      </div>
+
+      <div class="p-3 rounded-2xl bg-surface-container-lowest border border-sage/60 flex items-center gap-2">
+        <span class="material-symbols-outlined text-leaf text-lg">psychology</span>
+        <div>
+          <p class="text-[10px] text-outline font-semibold uppercase">Decision Model</p>
+          <p class="text-xs font-bold text-leaf">Gemini 1.5 Reasoner</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. INITIAL EMPTY STATE PLACEHOLDER (Before Analysis is Run) -->
+    <div id="crop-analysis-placeholder" class="bg-surface-container-lowest border border-dashed border-sage rounded-3xl p-8 text-center my-6">
+      <div class="w-16 h-16 rounded-2xl bg-secondary-container text-on-secondary-container flex items-center justify-center mx-auto mb-3">
+        <span class="material-symbols-outlined text-3xl text-leaf">description</span>
+      </div>
+      <h3 class="text-lg font-bold text-primary dark:text-primary-fixed mb-1">Generate Official Agromet Advisory Bulletin</h3>
+      <p class="text-xs text-on-surface-variant max-w-md mx-auto mb-4">
+        Click below to generate a tailored Government Agromet Advisory Bulletin based on your Crop, Growth Stage, Soil, and Real-Time Weather.
+      </p>
+      <button type="button" onclick="CROP_ANALYSIS_SERVICE.runAnalysis()" class="px-6 py-2.5 rounded-xl bg-primary text-on-primary text-xs font-bold hover:bg-primary-container shadow-sm inline-flex items-center gap-2 transition-all active:scale-95">
+        <span class="material-symbols-outlined text-base">neurology</span>
+        <span>Generate Official Advisory</span>
+      </button>
+    </div>
+
+    <!-- 4. MINIMAL & SIMPLE GOVERNMENT AGROMET ADVISORY (Revealed dynamically via API) -->
+    <div id="crop-analysis-results-container" class="hidden space-y-4 fade-in-up">
+      
+      <!-- Top Summary Header Bar -->
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-leaf/15 text-leaf flex items-center justify-center flex-shrink-0 text-xl font-bold">
+            🇮🇳
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-leaf">Govt. Agromet Advisory (GKMS)</span>
+              <span id="gkms-bulletin-no" class="px-2 py-0.5 rounded bg-surface-container text-[10px] font-bold text-outline">GKMS/2026/MH/482</span>
+            </div>
+            <p id="gkms-crop-stage" class="text-xs sm:text-sm font-bold text-primary dark:text-primary-fixed mt-0.5">
+              --
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="window.print()" class="px-3 py-1.5 rounded-xl bg-surface-container-low border border-sage text-charcoal dark:text-gray-200 text-xs font-semibold hover:bg-surface-variant flex items-center gap-1.5 transition-colors">
+            <span class="material-symbols-outlined text-sm">print</span>
+            <span>Print</span>
+          </button>
+          <button onclick="alert('Advisory shared to WhatsApp')" class="px-3.5 py-1.5 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-container flex items-center gap-1.5 transition-colors">
+            <span class="material-symbols-outlined text-sm">share</span>
+            <span>WhatsApp</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 1. Top Key Directive (Big & Clear) -->
+      <div class="bg-surface-container-lowest border-l-4 border-leaf border-y border-r border-sage rounded-2xl p-4 sm:p-5 shadow-sm">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-leaf block mb-1">🎯 Today's Main Farm Action / आजचा मुख्य सल्ला</span>
+        <p id="decision-farmer-action-summary" class="text-sm sm:text-base font-extrabold text-charcoal dark:text-gray-100 leading-relaxed">
+          Loading official advisory...
+        </p>
+      </div>
+
+      <!-- 2. Weather & Spray Timing (3 Simple Metric Cards) -->
+      <div class="grid grid-cols-3 gap-2 sm:gap-3">
+        <div class="p-3.5 rounded-2xl bg-surface-container-lowest border border-sage text-center shadow-sm">
+          <span class="material-symbols-outlined text-leaf text-xl mb-0.5">rainy</span>
+          <span class="text-[10px] text-outline font-semibold block uppercase">Rain Chance</span>
+          <span id="decision-weather-rain-val" class="text-sm sm:text-base font-extrabold text-primary dark:text-primary-fixed">--%</span>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-surface-container-lowest border border-sage text-center shadow-sm">
+          <span class="material-symbols-outlined text-warning text-xl mb-0.5">thermostat</span>
+          <span class="text-[10px] text-outline font-semibold block uppercase">Temperature</span>
+          <span id="decision-weather-temp-val" class="text-sm sm:text-base font-extrabold text-primary dark:text-primary-fixed">--°C</span>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-surface-container-lowest border border-sage text-center shadow-sm">
+          <span class="material-symbols-outlined text-leaf text-xl mb-0.5">schedule</span>
+          <span class="text-[10px] text-outline font-semibold block uppercase">Best Spray Time</span>
+          <span id="decision-weather-spray-window" class="text-xs sm:text-sm font-extrabold text-leaf">--</span>
+        </div>
+      </div>
+
+      <!-- 3. What to Spray & Water Advice (Simple 2-Column Grid) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- Spray & Disease Protection -->
+        <div class="bg-surface-container-lowest border border-sage rounded-2xl p-4 sm:p-5 shadow-sm space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-sage/40">
+            <h3 class="text-xs font-bold text-primary dark:text-primary-fixed uppercase tracking-wider flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-base text-leaf">medication</span>
+              <span>Crop Spray & Medicine / फवारणी सल्ला</span>
+            </h3>
+            <span id="decision-weather-risk-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-warning/20 text-warning uppercase">
+              --
+            </span>
+          </div>
+
+          <div class="space-y-2.5">
+            <div class="p-3 rounded-xl bg-leaf/5 border border-leaf/30 text-xs">
+              <span class="font-bold text-primary dark:text-primary-fixed block mb-0.5">💊 Recommended Spray:</span>
+              <p id="decision-chemical-rec" class="text-on-surface-variant font-medium">--</p>
+            </div>
+
+            <div class="p-3 rounded-xl bg-surface-container-low border border-sage/50 text-xs">
+              <span class="font-bold text-leaf block mb-0.5">🌿 Bio / Organic Option:</span>
+              <p id="decision-bio-rec" class="text-on-surface-variant font-medium">--</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Irrigation & Water Management -->
+        <div class="bg-surface-container-lowest border border-sage rounded-2xl p-4 sm:p-5 shadow-sm space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-sage/40">
+            <h3 class="text-xs font-bold text-primary dark:text-primary-fixed uppercase tracking-wider flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-base text-leaf">water_drop</span>
+              <span>Water & Irrigation / पाणी व्यवस्थापन</span>
+            </h3>
+            <span id="decision-irrigation-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-leaf/20 text-leaf uppercase">
+              --
+            </span>
+          </div>
+
+          <p id="decision-irrigation-action" class="text-xs text-on-surface-variant leading-relaxed p-3 rounded-xl bg-surface-container-low border border-sage/50">
+            --
+          </p>
+
+          <p id="decision-weather-precautions" class="text-xs text-outline leading-relaxed pt-1">
+            --
+          </p>
+        </div>
+      </div>
+
+      <!-- 4. Next Steps (Simple Checklist) -->
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-4 sm:p-5 shadow-sm">
+        <h3 class="text-xs font-bold text-primary dark:text-primary-fixed uppercase tracking-wider mb-3 flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-base text-leaf">checklist</span>
+          <span>Next Steps for Farmers / पुढील कृती (Next 7 Days)</span>
+        </h3>
+        <ul id="decision-priorities-list" class="space-y-2 text-xs text-charcoal dark:text-gray-200">
+          <li class="flex items-start gap-2">
+            <span class="material-symbols-outlined text-leaf text-base">check_circle</span>
+            <span>Loading actionable steps...</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Footer Note -->
+      <div class="text-center text-[11px] text-outline pt-1">
+        Govt. Kisan Call Centre Toll-Free: <b class="text-primary dark:text-white">1800-180-1551</b> | ICAR - GKMS Agromet Advisory
       </div>
     </div>
   </section>
