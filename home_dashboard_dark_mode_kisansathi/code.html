@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Agritech - Farmer Dashboard (Dark Mode)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error-container": "#93000a",
+                      "outline-variant": "#c1c8c2",
+                      "error-container": "#ffdad6",
+                      "on-surface-variant": "#414844",
+                      "on-tertiary-fixed": "#271900",
+                      "tertiary-fixed": "#ffdea9",
+                      "primary-fixed": "#c1ecd4",
+                      "on-background": "#191c1d",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed-dim": "#ffba27",
+                      "charcoal": "#212529",
+                      "primary-fixed-dim": "#a5d0b9",
+                      "leaf": "#40916C",
+                      "on-surface": "#191c1d",
+                      "surface-variant": "#e1e3e4",
+                      "secondary-container": "#aeeecb",
+                      "surface-container-highest": "#e1e3e4",
+                      "surface-container": "#edeeef",
+                      "on-tertiary-fixed-variant": "#5e4100",
+                      "on-error": "#ffffff",
+                      "surface-container-low": "#f3f4f5",
+                      "on-primary-fixed": "#002114",
+                      "error": "#ba1a1a",
+                      "inverse-on-surface": "#f0f1f2",
+                      "sage": "#D8E2DC",
+                      "secondary-fixed": "#b1f0ce",
+                      "on-primary": "#ffffff",
+                      "surface-bright": "#f8f9fa",
+                      "on-secondary-container": "#316e52",
+                      "on-primary-fixed-variant": "#274e3d",
+                      "on-secondary-fixed": "#002114",
+                      "surface-tint": "#3f6653",
+                      "outline": "#717973",
+                      "tertiary-container": "#503700",
+                      "secondary-fixed-dim": "#95d4b3",
+                      "on-primary-container": "#86af99",
+                      "beige": "#F1E3D3",
+                      "inverse-primary": "#a5d0b9",
+                      "primary-container": "#1b4332",
+                      "surface-container-high": "#e7e8e9",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-dim": "#d9dadb",
+                      "inverse-surface": "#2e3132",
+                      "tertiary": "#342300",
+                      "primary": "#012d1d",
+                      "on-tertiary-container": "#d89b00",
+                      "on-secondary-fixed-variant": "#0e5138",
+                      "on-secondary": "#ffffff",
+                      "surface": "#f8f9fa",
+                      "secondary": "#2c694e",
+                      "background": "#f8f9fa"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "lg": "40px",
+                      "base": "4px",
+                      "margin-mobile": "16px",
+                      "xs": "8px",
+                      "sm": "16px",
+                      "xl": "64px",
+                      "margin-desktop": "32px",
+                      "md": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Inter"],
+                      "headline-xl": ["Inter"],
+                      "label-md": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "headline-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05); 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2); 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3); 
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-primary dark:bg-primary-container text-surface min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- TopAppBar (Mobile & Desktop Header) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile py-xs bg-transparent transition-all duration-200 flat no shadows">
+<button aria-label="Menu" class="text-surface dark:text-primary-fixed hover:bg-charcoal/30 rounded-full p-2 transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="menu" style="font-variation-settings: 'FILL' 1;">menu</span>
+</button>
+<div class="font-headline-md text-headline-md font-bold text-surface dark:text-primary-fixed tracking-tight">KisanSathi</div>
+<button aria-label="Language" class="text-surface dark:text-primary-fixed hover:bg-charcoal/30 rounded-full p-2 transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="language" style="font-variation-settings: 'FILL' 1;">language</span>
+</button>
+</header>
+<!-- Navigation Drawer (Desktop SideNav - Hidden on Mobile) -->
+<aside class="hidden md:flex fixed inset-y-0 left-0 z-[60] flex-col p-sm h-full w-80 rounded-r-xl bg-on-background border-r border-on-surface-variant shadow-sm top-[64px]">
+<div class="flex items-center gap-sm mb-lg">
+<img alt="Ramesh" class="w-12 h-12 rounded-full object-cover border-2 border-sage" data-alt="A high-quality, professional headshot of a premium Indian farmer named Ramesh, dressed in a clean, modern agricultural field shirt. The lighting is soft and natural, emphasizing his experienced yet approachable demeanor. The background is a slightly blurred, lush green crop field under a clear blue sky, capturing the essence of modern agritech and premium farming." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGtjMC43cAJy58WextAdxVprUcZwjdfUd2iyoNda8EIJjcEzb14BiAROGelV7AX1j4G-us-17GqyCTM-Z8OYws2jUXcPWFHJmoSGuFknm3dlLP9Es-uu9G8eOaNuDexTlPyt4lIVbmNoY4-lAM45Ub-oxUCZ2ATo-rSExAOHuGmqwZIrW9d1RC4uGpFGq7WVfMp9btSyjBxa6q9lDIG-z4aGr8wVmEzrf6TSx0nsOdfznVENXLTvsj"/>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary-fixed">Ramesh</h2>
+<p class="font-body-md text-body-md text-outline-variant">Premium Farmer</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-sm text-outline-variant px-sm py-xs hover:bg-surface-container-highest transition-colors rounded-lg cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-body-md text-body-md">Crop Analysis</span>
+</a>
+<a class="flex items-center gap-sm text-outline-variant px-sm py-xs hover:bg-surface-container-highest transition-colors rounded-lg cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="center_focus_strong">center_focus_strong</span>
+<span class="font-body-md text-body-md">Crop Scanner</span>
+</a>
+<a class="flex items-center gap-sm text-outline-variant px-sm py-xs hover:bg-surface-container-highest transition-colors rounded-lg cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="thunderstorm">thunderstorm</span>
+<span class="font-body-md text-body-md">Weather Risk</span>
+</a>
+<a class="flex items-center gap-sm text-outline-variant px-sm py-xs hover:bg-surface-container-highest transition-colors rounded-lg cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+<span class="font-body-md text-body-md">Government Schemes</span>
+</a>
+<a class="flex items-center gap-sm bg-secondary text-on-secondary rounded-lg px-sm py-xs hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="lightbulb">lightbulb</span>
+<span class="font-body-md text-body-md">Suggestions</span>
+</a>
+<a class="flex items-center gap-sm text-outline-variant px-sm py-xs hover:bg-surface-container-highest transition-colors rounded-lg cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="font-body-md text-body-md">AI Mentor</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 mt-[72px] mb-[80px] md:mb-0 md:ml-80 p-margin-mobile md:p-margin-desktop max-w-[1200px] mx-auto w-full">
+<!-- Welcome Section -->
+<section class="mb-lg flex justify-between items-end">
+<div>
+<p class="font-label-md text-label-md text-primary-fixed-dim uppercase tracking-wider mb-base">Good Morning, Ramesh</p>
+<h1 class="font-headline-xl text-headline-xl text-surface">Farm Overview</h1>
+</div>
+<button aria-label="Listen to overview" class="w-10 h-10 rounded-full bg-sage flex items-center justify-center shadow-sm hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-primary-container" data-icon="volume_up" style="font-variation-settings: 'FILL' 1;">volume_up</span>
+</button>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter md:gap-md">
+<!-- Primary Action Card: Delay Irrigation (Spans full width mobile, 8 cols desktop) -->
+<article class="col-span-1 md:col-span-8 bg-on-background border border-on-surface-variant rounded-xl p-sm shadow-sm relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-tertiary-fixed-dim/10 to-transparent pointer-events-none"></div>
+<div class="flex justify-between items-start mb-md relative z-10">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-[28px]" data-icon="rainy">rainy</span>
+<h2 class="font-headline-md text-headline-md text-surface">Action Recommended</h2>
+</div>
+<span class="bg-tertiary-container text-tertiary-fixed font-label-sm text-label-sm px-3 py-1 rounded-full border border-tertiary-fixed-dim/30">Weather Alert</span>
+</div>
+<div class="relative z-10">
+<h3 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-tertiary-fixed-dim mb-2">Delay Irrigation Today</h3>
+<p class="font-body-md text-body-md text-outline-variant mb-md max-w-lg">Heavy rainfall (85% probability) is expected in your region over the next 12 hours. Delaying scheduled irrigation for Sector A (Wheat) will save water and prevent root rot.</p>
+<div class="flex flex-wrap gap-sm">
+<button class="bg-tertiary-fixed-dim text-on-tertiary-container font-label-md text-label-md px-6 py-3 rounded-lg hover:bg-tertiary-fixed transition-colors shadow-sm">
+                            Confirm Delay
+                        </button>
+<button class="bg-transparent border-2 border-outline-variant text-surface font-label-md text-label-md px-6 py-3 rounded-lg hover:border-surface transition-colors">
+                            View Forecast Details
+                        </button>
+</div>
+</div>
+</article>
+<!-- Quick Stats: Soil Moisture (Spans 4 cols desktop) -->
+<article class="col-span-1 md:col-span-4 bg-on-background border border-on-surface-variant rounded-xl p-sm shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-label-md text-label-md text-outline-variant">Avg. Soil Moisture</h3>
+<span class="material-symbols-outlined text-primary-fixed" data-icon="water_drop">water_drop</span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-headline-xl text-surface">42</span>
+<span class="font-body-md text-body-md text-outline-variant">%</span>
+</div>
+<p class="font-label-sm text-label-sm text-primary-fixed mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="trending_up">trending_up</span> Optimal range
+                    </p>
+</div>
+<div class="w-full bg-inverse-surface rounded-full h-2 mt-4 overflow-hidden">
+<div class="bg-primary-fixed h-2 rounded-full" style="width: 65%;"></div>
+</div>
+</article>
+<!-- Recent Scan Results (Spans 6 cols desktop) -->
+<article class="col-span-1 md:col-span-6 bg-on-background border border-on-surface-variant rounded-xl p-sm shadow-sm">
+<div class="flex justify-between items-center mb-sm">
+<h3 class="font-headline-md text-headline-md text-surface">Recent Scans</h3>
+<button class="text-primary-fixed font-label-sm text-label-sm hover:underline">View All</button>
+</div>
+<div class="flex flex-col gap-xs">
+<div class="flex items-center gap-sm p-2 rounded-lg hover:bg-surface-container-highest transition-colors cursor-pointer border border-transparent hover:border-on-surface-variant/30">
+<img alt="Wheat Leaf" class="w-12 h-12 rounded-lg object-cover" data-alt="A close-up, high-resolution macro shot of a healthy green wheat leaf showing optimal texture and color. The lighting is bright and natural, highlighting the veins and surface details of the crop, set against a dark, contrasting background to emphasize the plant's vitality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA53flJosdezN5KBl-VytthJQZ3RhOp25sRNTNH_dnsblf1CsMUt26wdE4o0aU7cPbhZrJEZW6m6zvJCy9aAL2hkP4NMstRuRvcvaXA6PqJMgFVGqXFTAaDvi0EXY7P0Fo8OyNDhYgE2TZQ8ir5QbLLn2mre6dH4Nr68XQ7f-VbbxvWw1xQi4r-WbEZ6zc8VyEiUc84RBPFowwxRYIirNpoUG0rn9OIYb2hHTgjfnuXUH9MPuX4Yzen"/>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-surface">Sector B - Wheat</h4>
+<p class="font-label-sm text-label-sm text-outline-variant">Scanned 2 hours ago</p>
+</div>
+<span class="bg-primary-container text-primary-fixed font-label-sm text-label-sm px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle">check_circle</span> Healthy
+                        </span>
+</div>
+<div class="flex items-center gap-sm p-2 rounded-lg hover:bg-surface-container-highest transition-colors cursor-pointer border border-transparent hover:border-on-surface-variant/30">
+<img alt="Tomato Leaf" class="w-12 h-12 rounded-lg object-cover" data-alt="A close-up shot of a tomato plant leaf showing early signs of mild yellowing or nutrient deficiency. The image is taken in a professional agricultural setting with soft, diffused lighting. The focus is sharp on the affected area of the leaf, against a muted dark background, suitable for a crop analysis dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk8j5g73pKSSKkiMzicwIs225yiQrTmhiu4Ig5d1X-QrHRUTNf5pfzpbQxf67aNYX-o-PjprQMyho97IwsP38BF-QO_D906cT1ravMVfffl8sk0gSBV6jEy1971e6N5OIdjsXFRuMaSnIQvAkVeL9mw39WLbab_ITMTMZNB7uSGoh2dXL87T38R9YDUqbiwkXObsDFhjqBTnKMXYqmTbUq6N4qAuyEAxiljHS708JAp4cY1OM94a01"/>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-surface">Sector C - Tomato</h4>
+<p class="font-label-sm text-label-sm text-outline-variant">Scanned yesterday</p>
+</div>
+<span class="bg-tertiary-container text-tertiary-fixed font-label-sm text-label-sm px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="warning">warning</span> Monitor
+                        </span>
+</div>
+</div>
+</article>
+<!-- AI Mentor Quick Chat (Spans 6 cols desktop) -->
+<article class="col-span-1 md:col-span-6 bg-on-background border border-on-surface-variant rounded-xl p-sm shadow-sm flex flex-col">
+<div class="flex justify-between items-center mb-sm">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary-fixed" data-icon="psychology">psychology</span>
+<h3 class="font-headline-md text-headline-md text-surface">AI Mentor</h3>
+</div>
+</div>
+<div class="flex-1 bg-inverse-surface rounded-lg p-sm mb-sm flex flex-col justify-end border border-on-surface-variant/50">
+<p class="font-body-md text-body-md text-outline-variant italic">"Based on the impending rain, I recommend pausing nitrogen application in Sector A until the soil dries."</p>
+</div>
+<div class="relative">
+<input class="w-full bg-inverse-surface border border-on-surface-variant rounded-lg py-2 pl-3 pr-10 text-surface font-body-md text-body-md placeholder:text-outline-variant focus:border-secondary-fixed focus:ring-1 focus:ring-secondary-fixed outline-none" placeholder="Ask about crop health..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-secondary-fixed hover:text-secondary-fixed-dim p-1">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+</div>
+</article>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-on-background rounded-t-xl border-t border-on-surface-variant shadow-lg docked full-width">
+<a class="flex flex-col items-center justify-center text-outline-variant hover:bg-sage/10 rounded-full px-4 py-1 scale-110 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="document_scanner">document_scanner</span>
+<span class="font-label-sm text-label-sm-mobile mt-1">Scan</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline-variant hover:bg-sage/10 rounded-full px-4 py-1 scale-110 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-label-sm text-label-sm-mobile mt-1">AI Mentor</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-on-secondary-fixed-variant text-on-secondary-fixed rounded-full px-4 py-1 scale-110 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="wb_sunny" style="font-variation-settings: 'FILL' 1;">wb_sunny</span>
+<span class="font-label-sm text-label-sm-mobile mt-1">Weather</span>
+</a>
+</nav>
+</body></html>

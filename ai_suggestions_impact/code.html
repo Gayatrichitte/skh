@@ -1,0 +1,315 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Agritech - Suggestions &amp; Decision Intelligence</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c1c8c2",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#414844",
+                        "on-tertiary-fixed": "#271900",
+                        "tertiary-fixed": "#ffdea9",
+                        "primary-fixed": "#c1ecd4",
+                        "on-background": "#191c1d",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffba27",
+                        "charcoal": "#212529",
+                        "primary-fixed-dim": "#a5d0b9",
+                        "leaf": "#40916C",
+                        "on-surface": "#191c1d",
+                        "surface-variant": "#e1e3e4",
+                        "secondary-container": "#aeeecb",
+                        "surface-container-highest": "#e1e3e4",
+                        "surface-container": "#edeeef",
+                        "on-tertiary-fixed-variant": "#5e4100",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f3f4f5",
+                        "on-primary-fixed": "#002114",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#f0f1f2",
+                        "sage": "#D8E2DC",
+                        "secondary-fixed": "#b1f0ce",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f8f9fa",
+                        "on-secondary-container": "#316e52",
+                        "on-primary-fixed-variant": "#274e3d",
+                        "on-secondary-fixed": "#002114",
+                        "surface-tint": "#3f6653",
+                        "outline": "#717973",
+                        "tertiary-container": "#503700",
+                        "secondary-fixed-dim": "#95d4b3",
+                        "on-primary-container": "#86af99",
+                        "beige": "#F1E3D3",
+                        "inverse-primary": "#a5d0b9",
+                        "primary-container": "#1b4332",
+                        "surface-container-high": "#e7e8e9",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d9dadb",
+                        "inverse-surface": "#2e3132",
+                        "tertiary": "#342300",
+                        "primary": "#012d1d",
+                        "on-tertiary-container": "#d89b00",
+                        "on-secondary-fixed-variant": "#0e5138",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f8f9fa",
+                        "secondary": "#2c694e",
+                        "background": "#f8f9fa"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "lg": "40px",
+                        "base": "4px",
+                        "margin-mobile": "16px",
+                        "xs": "8px",
+                        "sm": "16px",
+                        "xl": "64px",
+                        "margin-desktop": "32px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md antialiased min-h-screen">
+<!-- TopAppBar (Mobile & Desktop) -->
+<header class="bg-transparent docked full-width top-0 flat no shadows transition-all duration-200 active:scale-95 fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile py-xs md:pl-[340px]">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed md:hidden cursor-pointer">menu</span>
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">KisanSathi</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center hover:bg-sage/20 dark:hover:bg-charcoal/30 rounded-full transition-colors text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined">language</span>
+</button>
+</header>
+<!-- NavigationDrawer (Desktop Only) -->
+<nav class="hidden md:flex bg-surface dark:bg-on-background h-full w-80 rounded-r-xl border-r border-sage dark:border-on-surface-variant shadow-sm fixed inset-y-0 left-0 z-[60] flex flex-col p-sm">
+<div class="flex items-center gap-sm mb-lg px-sm mt-xs">
+<img alt="Ramesh" class="w-12 h-12 rounded-full object-cover border border-sage" data-alt="A professional, warm, light-mode portrait of a modern agronomist or farmer in a high-tech greenhouse setting, shallow depth of field, premium quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCO6_c1hLkkUFoE3sNQeWQONA9eio971k0wBn46-C_g0O8G8awpUMJ_aaDdzM27kKHH0TTfeMz4Kta2w6SwWlu9lcTirQ8hwSUWHrc12X5pvOibRJzkeIhpp323zr9wEeYha1C0B3_bV5FP8rH9BXv1y0JQd73BtjfQ-07nhZ5CvtjZkik5ZaZO8uoJz-RvjzukToouirznwIpAvvThAsPHU1KjXdaELMRiUQfvoHVBQFAyFrKCCE2">
+<div>
+<div class="font-headline-md text-headline-md text-primary">Ramesh</div>
+<div class="font-body-md text-body-md text-secondary dark:text-secondary-fixed">Premium Farmer</div>
+</div>
+</div>
+<div class="flex flex-col gap-base mt-md">
+<a class="flex items-center gap-sm text-on-surface-variant dark:text-outline-variant px-sm py-xs hover:bg-surface-variant dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80 rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Crop Analysis</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant dark:text-outline-variant px-sm py-xs hover:bg-surface-variant dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80 rounded-lg" href="#">
+<span class="material-symbols-outlined">center_focus_strong</span>
+<span class="font-label-md text-label-md">Crop Scanner</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant dark:text-outline-variant px-sm py-xs hover:bg-surface-variant dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80 rounded-lg" href="#">
+<span class="material-symbols-outlined">thunderstorm</span>
+<span class="font-label-md text-label-md">Weather Risk</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant dark:text-outline-variant px-sm py-xs hover:bg-surface-variant dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80 rounded-lg" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-label-md text-label-md">Government Schemes</span>
+</a>
+<!-- Active Tab -->
+<a class="flex items-center gap-sm bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-lg px-sm py-xs hover:bg-surface-variant dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<span class="font-label-md text-label-md font-bold">Suggestions</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant dark:text-outline-variant px-sm py-xs hover:bg-surface-variant dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80 rounded-lg" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-label-md text-label-md">AI Mentor</span>
+</a>
+</div>
+</nav>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden bg-surface-container-lowest dark:bg-on-background docked full-width bottom-0 rounded-t-xl border-t border-sage dark:border-on-surface-variant shadow-lg fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-sage/10 scale-110 transition-transform rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim">document_scanner</span>
+<span class="font-label-sm text-label-sm-mobile mt-1">Scan</span>
+</a>
+<!-- Active Tab (Intent match for mobile) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-on-secondary-fixed rounded-full px-4 py-1 hover:bg-sage/10 scale-110 transition-transform" href="#">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-label-sm text-label-sm-mobile mt-1 font-bold">AI Mentor</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-sage/10 scale-110 transition-transform rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim">wb_sunny</span>
+<span class="font-label-sm text-label-sm-mobile mt-1">Weather</span>
+</a>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-[80px] pb-[100px] md:pb-lg md:pl-80 px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto min-h-screen flex flex-col gap-lg">
+<!-- Header Area -->
+<div class="flex flex-col gap-xs md:gap-sm mt-sm">
+<div class="flex items-center justify-between">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary flex items-center gap-sm">
+                    Decision Intelligence
+                    <!-- Listen Action -->
+<button aria-label="Listen to page summary" class="w-10 h-10 rounded-full bg-sage flex items-center justify-center text-primary hover:bg-sage/80 transition-colors shadow-sm">
+<span class="material-symbols-outlined">volume_up</span>
+</button>
+</h1>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Synthesizing field data, local weather forecasts, and historical scanning records to optimize your yield.</p>
+</div>
+<!-- Hero Suggestion Card -->
+<div class="bg-surface-container-lowest border border-sage rounded-xl p-sm md:p-md shadow-sm relative overflow-hidden group hover:shadow-[0_4px_12px_rgba(33,37,41,0.05)] transition-shadow duration-300">
+<!-- Subtle atmospheric background -->
+<div class="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-secondary-container/20 to-transparent pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-leaf text-[32px]">auto_awesome</span>
+<span class="font-label-md text-label-md text-leaf uppercase tracking-wider">Top Recommendation for Today</span>
+</div>
+<div>
+<h2 class="font-headline-xl text-headline-xl text-primary mb-xs">Delay Irrigation</h2>
+<div class="flex flex-wrap items-center gap-sm mt-sm">
+<!-- Status Chip (Warning Style) -->
+<span class="inline-flex items-center gap-xs px-3 py-1 rounded-full bg-tertiary-fixed-dim/20 border border-tertiary-fixed-dim/50 text-tertiary-container font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+                            High Saturation Risk
+                        </span>
+<span class="font-body-md text-body-md text-on-surface-variant">Estimated savings: 4,000 Liters</span>
+</div>
+</div>
+<div class="pt-sm border-t border-sage">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Our intelligence engine has determined that current soil moisture levels combined with incoming weather patterns make irrigation today detrimental to crop health.
+                    </p>
+</div>
+</div>
+</div>
+<!-- The "Why?" Breakdown (Bento Grid) -->
+<section class="flex flex-col gap-md">
+<h3 class="font-headline-md text-headline-md text-primary">Why this recommendation?</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-sm md:gap-md">
+<!-- Factor 1: Weather -->
+<div class="bg-surface-container-lowest border border-sage rounded-xl p-sm flex flex-col gap-sm">
+<div class="w-12 h-12 rounded-full bg-secondary-container/30 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">cloud</span>
+</div>
+<div class="font-headline-md text-headline-md text-primary">80% Rain Chance</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Local meteorological data predicts heavy precipitation within the next 48 hours, providing sufficient natural hydration.</p>
+</div>
+<!-- Factor 2: Crop Analysis -->
+<div class="bg-surface-container-lowest border border-sage rounded-xl p-sm flex flex-col gap-sm">
+<div class="w-12 h-12 rounded-full bg-primary-fixed/50 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<div class="font-headline-md text-headline-md text-primary">Optimal Saturation</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Recent drone scans and sensor inputs indicate your field currently maintains a 72% moisture retention rate in the topsoil.</p>
+</div>
+<!-- Factor 3: Scan History -->
+<div class="bg-surface-container-lowest border border-sage rounded-xl p-sm flex flex-col gap-sm">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed/40 flex items-center justify-center text-on-tertiary-fixed-variant">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+</div>
+<div class="font-headline-md text-headline-md text-primary">Recent Activity</div>
+<p class="font-body-md text-body-md text-on-surface-variant">System logs confirm a comprehensive irrigation cycle was completed just 3 days ago, meeting the baseline requirement.</p>
+</div>
+</div>
+</section>
+<!-- Decision Impact Comparison -->
+<section class="flex flex-col gap-md">
+<h3 class="font-headline-md text-headline-md text-primary">Decision Impact</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-sm md:gap-md">
+<!-- Negative Path -->
+<div class="bg-surface-container-lowest border border-sage rounded-xl p-sm md:p-md relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-2 h-full bg-tertiary-fixed-dim"></div>
+<div class="pl-xs flex flex-col gap-sm">
+<div class="flex items-center gap-xs text-on-surface-variant font-label-md text-label-md uppercase tracking-wide">
+<span class="material-symbols-outlined text-tertiary-fixed-dim">close</span>
+                            If you irrigate today
+                        </div>
+<h4 class="font-headline-md text-headline-md text-primary">Inefficient Resource Use</h4>
+<ul class="flex flex-col gap-xs mt-xs">
+<li class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-outline mt-1 text-[16px]">water_drop</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Wastes approximately 4,000L of water.</span>
+</li>
+<li class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-outline mt-1 text-[16px]">grass</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Increases risk of root rot due to over-saturation when combined with predicted rain.</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Positive Path -->
+<div class="bg-surface-container-lowest border border-sage rounded-xl p-sm md:p-md relative overflow-hidden shadow-[0_4px_12px_rgba(33,37,41,0.03)] border-2 border-leaf/30">
+<div class="absolute top-0 left-0 w-2 h-full bg-leaf"></div>
+<div class="pl-xs flex flex-col gap-sm">
+<div class="flex items-center gap-xs text-leaf font-label-md text-label-md uppercase tracking-wide">
+<span class="material-symbols-outlined text-leaf">check</span>
+                            If you delay (Recommended)
+                        </div>
+<h4 class="font-headline-md text-headline-md text-primary">Optimal Growth Conditions</h4>
+<ul class="flex flex-col gap-xs mt-xs">
+<li class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-leaf mt-1 text-[16px]">savings</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Conserves resources and reduces operational costs for the week.</span>
+</li>
+<li class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-leaf mt-1 text-[16px]">psychology</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Leverages natural precipitation for a healthier, more resilient root system.</span>
+</li>
+</ul>
+<button class="mt-sm self-start bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-lg hover:bg-primary-container transition-colors shadow-sm">
+                            Acknowledge &amp; Save Decision
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+
+
+</body></html>
