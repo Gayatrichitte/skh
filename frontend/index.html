@@ -105,12 +105,12 @@
 
         <!-- Profile Quick Chip -->
         <div class="hidden sm:flex items-center gap-2 pl-2 border-l border-sage/50">
-          <div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm">
+          <div id="header-avatar" class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm">
             R
           </div>
           <div class="text-left leading-tight hidden lg:block">
-            <p class="text-xs font-bold text-primary dark:text-primary-fixed">Ramesh</p>
-            <p class="text-[11px] text-outline">Nashik • Onion</p>
+            <p id="header-farmer-name" class="text-xs font-bold text-primary dark:text-primary-fixed">Ramesh</p>
+            <p id="header-profile-text" class="text-[11px] text-outline">Nashik • Onion</p>
           </div>
         </div>
       </div>
@@ -124,9 +124,9 @@
           <span class="material-symbols-outlined text-2xl">person</span>
         </div>
         <div>
-          <h3 class="font-bold text-primary dark:text-primary-fixed text-sm">Ramesh Patil</h3>
-          <p class="text-xs text-leaf font-medium">🌾 2 Acres • Onion</p>
-          <p class="text-[11px] text-outline">Nashik, MH</p>
+          <h3 id="sidebar-farmer-name" class="font-bold text-primary dark:text-primary-fixed text-sm">Ramesh Patil</h3>
+          <p id="sidebar-crop-summary" class="text-xs text-leaf font-medium">🌾 2 Acres • Onion</p>
+          <p id="sidebar-location-text" class="text-[11px] text-outline">Nashik, MH</p>
         </div>
       </div>
 
@@ -408,18 +408,18 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs font-semibold mb-1">Farmer Name</label>
-              <input type="text" value="Ramesh Patil" required class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm" />
+              <input id="onboarding-farmer-name" type="text" value="Ramesh Patil" required class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm" />
             </div>
             <div>
               <label class="block text-xs font-semibold mb-1">Location / District</label>
-              <input type="text" value="Nashik, Maharashtra" required class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm" />
+              <input id="onboarding-location" type="text" value="Nashik, Maharashtra" required class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm" />
             </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs font-semibold mb-1">Primary Crop</label>
-              <select class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm">
+              <select id="onboarding-crop" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm">
                 <option value="Onion" selected>Onion (कांदा / प्याज)</option>
                 <option value="Tomato">Tomato (टोमॅटो / टमाटर)</option>
                 <option value="Wheat">Wheat (गहू / गेहूं)</option>
@@ -429,14 +429,14 @@
             </div>
             <div>
               <label class="block text-xs font-semibold mb-1">Land Holding Size</label>
-              <input type="text" value="2 Acres" required class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm" />
+              <input id="onboarding-land-size" type="text" value="2 Acres" required class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm" />
             </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs font-semibold mb-1">Soil Classification</label>
-              <select class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm">
+              <select id="onboarding-soil" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm">
                 <option selected>Black Clay Loam (काळी माती)</option>
                 <option>Red Sandy Loam (तांबडी माती)</option>
                 <option>Alluvial Soil (गाळाची माती)</option>
@@ -444,7 +444,7 @@
             </div>
             <div>
               <label class="block text-xs font-semibold mb-1">Irrigation Method</label>
-              <select class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm">
+              <select id="onboarding-irrigation" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm">
                 <option selected>Drip Irrigation (ठिबक सिंचन)</option>
                 <option>Sprinkler (तुषार सिंचन)</option>
                 <option>Flood / Canal (पाट पाणी)</option>
@@ -468,11 +468,11 @@
     <!-- Header Greeting -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
       <div>
-        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed tracking-tight">Hi Ramesh 👋</h1>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed tracking-tight"><span id="dashboard-farmer-name">Hi Ramesh</span> 👋</h1>
         <div class="flex flex-wrap items-center gap-3 text-xs md:text-sm text-on-surface-variant mt-1">
-          <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-leaf">location_on</span> Nashik, Maharashtra</span>
+          <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-leaf">location_on</span> <span id="dashboard-location-text">Nashik, Maharashtra</span></span>
           <span>•</span>
-          <span class="flex items-center gap-1 font-medium text-primary dark:text-primary-fixed">🌱 Onion • 2 Acres (Active Stage: Bulb Formation)</span>
+          <span class="flex items-center gap-1 font-medium text-primary dark:text-primary-fixed">🌱 <span id="dashboard-crop-summary">Onion • 2 Acres</span> (Active Stage: Bulb Formation)</span>
         </div>
       </div>
       <div class="flex items-center gap-2">
@@ -490,20 +490,20 @@
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
         <div>
           <div class="flex items-center gap-2 mb-2">
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-warning/20 text-warning flex items-center gap-1">
-              <span class="material-symbols-outlined text-sm">warning</span>
+            <span id="dashboard-task-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-warning/20 text-warning flex items-center gap-1">
+              <span id="dashboard-task-icon" class="material-symbols-outlined text-sm">warning</span>
               <span data-t="todayTasks">Action Recommended Today</span>
             </span>
           </div>
-          <h2 class="text-xl md:text-2xl font-bold text-primary dark:text-primary-fixed" data-t="delayIrrigation">Delay Irrigation</h2>
-          <p class="text-sm md:text-base text-on-surface-variant mt-1" data-t="rainExpected">Rain is expected within 24 hours (72% rain probability, 18-24mm expected).</p>
+          <h2 id="dashboard-task-title" class="text-xl md:text-2xl font-bold text-primary dark:text-primary-fixed" data-t="delayIrrigation">Delay Irrigation</h2>
+          <p id="dashboard-task-desc" class="text-sm md:text-base text-on-surface-variant mt-1" data-t="rainExpected">Rain is expected within 24 hours (72% rain probability, 18-24mm expected).</p>
         </div>
 
         <div class="flex items-center gap-3">
           <a href="#weather" class="bg-primary text-on-primary px-5 py-2.5 rounded-xl text-xs md:text-sm font-semibold hover:bg-primary-container transition-colors" data-t="why">
             Why? Details
           </a>
-          <button onclick="speakText('Attention Ramesh ji. We recommend delaying irrigation today. Rain is expected in Nashik within 24 hours with 72% probability.')" aria-label="Listen to advisory" class="w-11 h-11 rounded-xl bg-sage/60 hover:bg-secondary-container text-primary flex items-center justify-center transition-colors">
+          <button id="dashboard-task-listen-btn" onclick="WEATHER_SERVICE.speakCurrentAdvisory()" aria-label="Listen to advisory" class="w-11 h-11 rounded-xl bg-sage/60 hover:bg-secondary-container text-primary flex items-center justify-center transition-colors">
             <span class="material-symbols-outlined text-xl">volume_up</span>
           </button>
         </div>
@@ -517,16 +517,16 @@
       <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 flex flex-col justify-between shadow-sm">
         <div class="flex items-center justify-between mb-3">
           <span class="text-xs font-bold uppercase tracking-wider text-outline" data-t="weatherRisk">WEATHER RISK</span>
-          <span class="material-symbols-outlined text-leaf">thunderstorm</span>
+          <span id="dashboard-weather-icon" class="material-symbols-outlined text-leaf text-2xl">thunderstorm</span>
         </div>
         <div class="my-2">
           <div class="flex items-baseline gap-2">
-            <span class="text-3xl font-extrabold text-primary dark:text-primary-fixed">28°C</span>
-            <span class="text-xs text-on-surface-variant">Cloudy & Humid</span>
+            <span id="dashboard-weather-temp" class="text-3xl font-extrabold text-primary dark:text-primary-fixed">--°C</span>
+            <span id="dashboard-weather-condition" class="text-xs text-on-surface-variant">Connecting Open-Meteo...</span>
           </div>
           <div class="flex items-center gap-1 text-xs text-leaf font-semibold mt-1">
             <span class="material-symbols-outlined text-sm">water_drop</span>
-            <span>72% Rain Probability (Nashik)</span>
+            <span id="dashboard-weather-rain-prob">Fetching real-time data...</span>
           </div>
         </div>
         <a href="#weather" class="mt-4 text-xs font-semibold text-leaf hover:underline flex items-center justify-between pt-3 border-t border-sage/40">
@@ -864,131 +864,166 @@
 
   <!-- ==================== VIEW 8: WEATHER RISK & ADVISORY ==================== -->
   <section id="view-weather" class="app-view hidden max-w-5xl mx-auto px-4 md:px-8 py-6">
-    <div class="flex items-center justify-between mb-6">
+    <!-- Header with Live Status & Audio -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
       <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-leaf/15 text-leaf">
+            <span class="w-2 h-2 rounded-full bg-leaf animate-pulse"></span>
+            <span>Open-Meteo Live Synced</span>
+          </span>
+          <span id="weather-last-updated" class="text-[11px] text-outline">Real-Time Analysis</span>
+        </div>
         <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="weatherRisk">Agromet Weather Risk Advisory</h1>
-        <p class="text-xs md:text-sm text-on-surface-variant">Actionable weather intelligence for Nashik, Maharashtra</p>
+        <p id="weather-view-subtitle" class="text-xs md:text-sm text-on-surface-variant">Real-time satellite & agro-meteorological analysis for Nashik, Maharashtra</p>
       </div>
-      <button onclick="speakText('Weather advisory: 72% rain probability in the next 24 hours. Wind speed 18 kilometers per hour. Delay pesticide spraying and irrigation.')" class="px-4 py-2 rounded-xl bg-sage/60 text-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-secondary-container transition-colors">
-        <span class="material-symbols-outlined text-base">volume_up</span>
-        <span>Listen</span>
-      </button>
+      <div class="flex items-center gap-2">
+        <button onclick="WEATHER_SERVICE.speakCurrentAdvisory()" class="px-4 py-2.5 rounded-xl bg-sage/60 text-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-secondary-container transition-colors shadow-sm">
+          <span class="material-symbols-outlined text-base">volume_up</span>
+          <span>Listen Advisory</span>
+        </button>
+      </div>
     </div>
 
-    <!-- Top Alert Card -->
-    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-6 mb-6 shadow-sm">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+    <!-- Live Location Search & Geocoding Bar -->
+    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-4 mb-6 shadow-sm">
+      <form id="weather-search-form" onsubmit="event.preventDefault(); WEATHER_SERVICE.handleSearchSubmit();" class="flex flex-col sm:flex-row items-center gap-2">
+        <div class="relative flex-1 w-full">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg">search</span>
+          <input id="weather-search-input" type="text" placeholder="Search any city or district (e.g. Nashik, Pune, Nagpur, Indore)..." class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 pl-10 pr-4 text-sm text-charcoal dark:text-white placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary" />
+        </div>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <button type="submit" class="flex-1 sm:flex-none px-4 py-2.5 bg-primary text-on-primary rounded-xl text-xs font-semibold hover:bg-primary-container transition-colors flex items-center justify-center gap-1">
+            <span class="material-symbols-outlined text-base">near_me</span>
+            <span>Analyze</span>
+          </button>
+          <button type="button" onclick="WEATHER_SERVICE.loadUserGPSWeather()" title="Detect GPS Location" class="px-3.5 py-2.5 bg-surface-container-low border border-sage text-primary rounded-xl text-xs font-semibold hover:bg-secondary-container transition-colors flex items-center justify-center gap-1">
+            <span class="material-symbols-outlined text-base">my_location</span>
+            <span class="hidden md:inline">GPS</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Quick Location Chips -->
+      <div class="flex items-center gap-1.5 mt-3 pt-3 border-t border-sage/40 overflow-x-auto pb-1 text-xs">
+        <span class="text-[11px] font-semibold text-outline shrink-0 mr-1">Quick Select:</span>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Nashik')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Nashik</button>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Pune')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Pune</button>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Chhatrapati Sambhajinagar')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Sambhajinagar</button>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Nagpur')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Nagpur</button>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Kolhapur')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Kolhapur</button>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Solapur')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Solapur</button>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Ahmednagar')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Ahmednagar</button>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Jalgaon')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Jalgaon</button>
+        <button type="button" onclick="WEATHER_SERVICE.searchAndLoadWeather('Indore')" class="weather-chip px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-sage/40 text-primary font-medium transition-colors shrink-0">Indore</button>
+      </div>
+    </div>
+
+    <!-- Live Weather Hero Card -->
+    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-6 mb-6 shadow-sm relative overflow-hidden">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
         <div class="flex items-center gap-4">
-          <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 flex items-center justify-center">
-            <span class="material-symbols-outlined text-4xl fill-1">rainy</span>
+          <div id="weather-current-icon-wrap" class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 flex items-center justify-center shadow-inner">
+            <span id="weather-current-icon" class="material-symbols-outlined text-4xl fill-1">thunderstorm</span>
           </div>
           <div>
             <div class="flex items-baseline gap-2">
-              <span class="text-3xl font-black text-primary dark:text-primary-fixed">28°C</span>
-              <span class="text-sm font-semibold text-leaf">Nashik Farm Zone</span>
+              <span id="weather-current-temp" class="text-3xl md:text-4xl font-black text-primary dark:text-primary-fixed">--°C</span>
+              <span id="weather-current-location" class="text-sm font-semibold text-leaf">Connecting Open-Meteo...</span>
             </div>
-            <p class="text-xs text-on-surface-variant mt-0.5">Heavy overcast with convective rain bands moving from Western Ghats.</p>
+            <p id="weather-current-condition" class="text-xs md:text-sm text-on-surface-variant mt-0.5">Fetching live real-time analysis...</p>
           </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-3 text-center">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
           <div class="p-3 bg-surface-container-low rounded-xl border border-sage/40">
             <span class="material-symbols-outlined text-leaf text-lg">water_drop</span>
-            <p class="font-bold text-sm text-primary dark:text-primary-fixed">72%</p>
+            <p id="weather-rain-prob" class="font-bold text-sm text-primary dark:text-primary-fixed">--%</p>
             <p class="text-[10px] text-outline">Rain Prob.</p>
           </div>
           <div class="p-3 bg-surface-container-low rounded-xl border border-sage/40">
             <span class="material-symbols-outlined text-warning text-lg">air</span>
-            <p class="font-bold text-sm text-primary dark:text-primary-fixed">18 km/h</p>
+            <p id="weather-wind-speed" class="font-bold text-sm text-primary dark:text-primary-fixed">-- km/h</p>
             <p class="text-[10px] text-outline">Wind Speed</p>
           </div>
           <div class="p-3 bg-surface-container-low rounded-xl border border-sage/40">
             <span class="material-symbols-outlined text-blue-500 text-lg">humidity_percentage</span>
-            <p class="font-bold text-sm text-primary dark:text-primary-fixed">84%</p>
+            <p id="weather-humidity" class="font-bold text-sm text-primary dark:text-primary-fixed">--%</p>
             <p class="text-[10px] text-outline">Humidity</p>
+          </div>
+          <div class="p-3 bg-surface-container-low rounded-xl border border-sage/40">
+            <span class="material-symbols-outlined text-purple-500 text-lg">grain</span>
+            <p id="weather-precipitation" class="font-bold text-sm text-primary dark:text-primary-fixed">-- mm</p>
+            <p class="text-[10px] text-outline">24h Precip</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Risk Indices Bento -->
+    <!-- Risk Indices Bento (Calculated Real-Time from Open-Meteo Data) -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm">
-        <div class="flex items-center justify-between mb-2">
-          <h3 class="font-bold text-sm text-primary dark:text-primary-fixed">Irrigation Advisory</h3>
-          <span class="px-2 py-0.5 bg-warning/20 text-warning text-[10px] font-bold rounded-full">Postpone</span>
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-sm text-primary dark:text-primary-fixed flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-base text-leaf">water_drop</span>
+              <span>Irrigation Advisory</span>
+            </h3>
+            <span id="weather-irrigation-badge" class="px-2 py-0.5 bg-warning/20 text-warning text-[10px] font-bold rounded-full">Analyzing...</span>
+          </div>
+          <p id="weather-irrigation-desc" class="text-xs text-on-surface-variant leading-relaxed">Evaluating precipitation probability and evapotranspiration rate...</p>
         </div>
-        <p class="text-xs text-on-surface-variant">Postpone drip irrigation for 48 hours. Soil moisture will remain saturated from natural rainfall.</p>
+        <div id="weather-irrigation-meter" class="mt-4 pt-3 border-t border-sage/40 flex items-center justify-between text-[11px] text-outline">
+          <span>Soil Moisture Need:</span>
+          <span id="weather-soil-status" class="font-semibold text-primary dark:text-primary-fixed">Calculating</span>
+        </div>
       </div>
 
-      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm">
-        <div class="flex items-center justify-between mb-2">
-          <h3 class="font-bold text-sm text-primary dark:text-primary-fixed">Spraying Window</h3>
-          <span class="px-2 py-0.5 bg-error/20 text-error text-[10px] font-bold rounded-full">Unfavorable</span>
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-sm text-primary dark:text-primary-fixed flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-base text-warning">pest_control</span>
+              <span>Spraying Window</span>
+            </h3>
+            <span id="weather-spraying-badge" class="px-2 py-0.5 bg-error/20 text-error text-[10px] font-bold rounded-full">Analyzing...</span>
+          </div>
+          <p id="weather-spraying-desc" class="text-xs text-on-surface-variant leading-relaxed">Analyzing wind velocity, drift risk, and rainfall forecast...</p>
         </div>
-        <p class="text-xs text-on-surface-variant">Winds &gt; 15 km/h will cause pesticide drift. Optimal spraying window opens Thursday morning.</p>
+        <div class="mt-4 pt-3 border-t border-sage/40 flex items-center justify-between text-[11px] text-outline">
+          <span>Spray Drift Risk:</span>
+          <span id="weather-spray-drift-status" class="font-semibold text-primary dark:text-primary-fixed">Checking</span>
+        </div>
       </div>
 
-      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm">
-        <div class="flex items-center justify-between mb-2">
-          <h3 class="font-bold text-sm text-primary dark:text-primary-fixed">Fungal Risk Index</h3>
-          <span class="px-2 py-0.5 bg-error/20 text-error text-[10px] font-bold rounded-full">High</span>
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-sm text-primary dark:text-primary-fixed flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-base text-error">coronavirus</span>
+              <span>Fungal & Pest Risk</span>
+            </h3>
+            <span id="weather-fungal-badge" class="px-2 py-0.5 bg-error/20 text-error text-[10px] font-bold rounded-full">Analyzing...</span>
+          </div>
+          <p id="weather-fungal-desc" class="text-xs text-on-surface-variant leading-relaxed">Correlating relative humidity and temperature for pathogen propagation...</p>
         </div>
-        <p class="text-xs text-on-surface-variant">High relative humidity (84%) creates favorable environment for Purple Blotch and Thrips.</p>
+        <div class="mt-4 pt-3 border-t border-sage/40 flex items-center justify-between text-[11px] text-outline">
+          <span>Pathogen Index:</span>
+          <span id="weather-pathogen-status" class="font-semibold text-primary dark:text-primary-fixed">Evaluating</span>
+        </div>
       </div>
     </div>
 
-    <!-- 7-Day Forecast Row -->
+    <!-- 7-Day Live Agromet Forecast Row -->
     <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm">
-      <h3 class="text-xs font-bold uppercase tracking-wider text-outline mb-4">7-Day Agri-Forecast</h3>
-      <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
-        <div class="p-3 rounded-xl bg-secondary-container/40 border border-leaf/40 text-center">
-          <p class="text-xs font-bold">Today</p>
-          <span class="material-symbols-outlined text-leaf text-2xl my-1">rainy</span>
-          <p class="text-xs font-extrabold">28° / 21°</p>
-          <p class="text-[10px] text-leaf font-semibold">72% Rain</p>
-        </div>
-
-        <div class="p-3 rounded-xl bg-surface-container-low text-center">
-          <p class="text-xs font-bold text-outline">Tomorrow</p>
-          <span class="material-symbols-outlined text-blue-500 text-2xl my-1">thunderstorm</span>
-          <p class="text-xs font-extrabold">27° / 20°</p>
-          <p class="text-[10px] text-outline">65% Rain</p>
-        </div>
-
-        <div class="p-3 rounded-xl bg-surface-container-low text-center">
-          <p class="text-xs font-bold text-outline">Wed</p>
-          <span class="material-symbols-outlined text-yellow-500 text-2xl my-1">partly_cloudy_day</span>
-          <p class="text-xs font-extrabold">29° / 22°</p>
-          <p class="text-[10px] text-outline">20% Rain</p>
-        </div>
-
-        <div class="p-3 rounded-xl bg-surface-container-low text-center">
-          <p class="text-xs font-bold text-outline">Thu</p>
-          <span class="material-symbols-outlined text-amber-500 text-2xl my-1">wb_sunny</span>
-          <p class="text-xs font-extrabold">31° / 21°</p>
-          <p class="text-[10px] text-leaf font-semibold">Spray Ideal</p>
-        </div>
-
-        <div class="p-3 rounded-xl bg-surface-container-low text-center">
-          <p class="text-xs font-bold text-outline">Fri</p>
-          <span class="material-symbols-outlined text-amber-500 text-2xl my-1">wb_sunny</span>
-          <p class="text-xs font-extrabold">32° / 22°</p>
-          <p class="text-[10px] text-outline">Dry</p>
-        </div>
-
-        <div class="p-3 rounded-xl bg-surface-container-low text-center">
-          <p class="text-xs font-bold text-outline">Sat</p>
-          <span class="material-symbols-outlined text-yellow-500 text-2xl my-1">partly_cloudy_day</span>
-          <p class="text-xs font-extrabold">30° / 23°</p>
-          <p class="text-[10px] text-outline">10% Rain</p>
-        </div>
-
-        <div class="p-3 rounded-xl bg-surface-container-low text-center">
-          <p class="text-xs font-bold text-outline">Sun</p>
-          <span class="material-symbols-outlined text-amber-500 text-2xl my-1">wb_sunny</span>
-          <p class="text-xs font-extrabold">31° / 22°</p>
-          <p class="text-[10px] text-outline">Dry</p>
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-outline">7-Day Real-Time Agromet Forecast</h3>
+        <span class="text-[11px] text-leaf font-semibold">Open-Meteo High Precision Forecast</span>
+      </div>
+      <div id="weather-7day-container" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
+        <!-- Dynamically rendered by WEATHER_SERVICE -->
+        <div class="p-3 rounded-xl bg-surface-container-low text-center animate-pulse">
+          <p class="text-xs font-bold text-outline">Loading...</p>
         </div>
       </div>
     </div>
