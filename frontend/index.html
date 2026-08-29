@@ -1362,62 +1362,8 @@
       </div>
     </div>
 
-    <!-- Risk Indices Bento (Calculated Real-Time from Open-Meteo Data) -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="font-bold text-sm text-primary dark:text-primary-fixed flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-base text-leaf">water_drop</span>
-              <span>Irrigation Advisory</span>
-            </h3>
-            <span id="weather-irrigation-badge" class="px-2 py-0.5 bg-warning/20 text-warning text-[10px] font-bold rounded-full">Analyzing...</span>
-          </div>
-          <p id="weather-irrigation-desc" class="text-xs text-on-surface-variant leading-relaxed">Evaluating precipitation probability and evapotranspiration rate...</p>
-        </div>
-        <div id="weather-irrigation-meter" class="mt-4 pt-3 border-t border-sage/40 flex items-center justify-between text-[11px] text-outline">
-          <span>Soil Moisture Need:</span>
-          <span id="weather-soil-status" class="font-semibold text-primary dark:text-primary-fixed">Calculating</span>
-        </div>
-      </div>
-
-      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="font-bold text-sm text-primary dark:text-primary-fixed flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-base text-warning">pest_control</span>
-              <span>Spraying Window</span>
-            </h3>
-            <span id="weather-spraying-badge" class="px-2 py-0.5 bg-error/20 text-error text-[10px] font-bold rounded-full">Analyzing...</span>
-          </div>
-          <p id="weather-spraying-desc" class="text-xs text-on-surface-variant leading-relaxed">Analyzing wind velocity, drift risk, and rainfall forecast...</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-sage/40 flex items-center justify-between text-[11px] text-outline">
-          <span>Spray Drift Risk:</span>
-          <span id="weather-spray-drift-status" class="font-semibold text-primary dark:text-primary-fixed">Checking</span>
-        </div>
-      </div>
-
-      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="font-bold text-sm text-primary dark:text-primary-fixed flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-base text-error">coronavirus</span>
-              <span>Fungal & Pest Risk</span>
-            </h3>
-            <span id="weather-fungal-badge" class="px-2 py-0.5 bg-error/20 text-error text-[10px] font-bold rounded-full">Analyzing...</span>
-          </div>
-          <p id="weather-fungal-desc" class="text-xs text-on-surface-variant leading-relaxed">Correlating relative humidity and temperature for pathogen propagation...</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-sage/40 flex items-center justify-between text-[11px] text-outline">
-          <span>Pathogen Index:</span>
-          <span id="weather-pathogen-status" class="font-semibold text-primary dark:text-primary-fixed">Evaluating</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 7-Day Live Agromet Forecast Row -->
-    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm">
+    <!-- 1. 7-Day Live Agromet Forecast Row (First) -->
+    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 mb-6 shadow-sm">
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-xs font-bold uppercase tracking-wider text-outline">7-Day Real-Time Agromet Forecast</h3>
         <span class="text-[11px] text-leaf font-semibold">Open-Meteo High Precision Forecast</span>
@@ -1428,6 +1374,59 @@
           <p class="text-xs font-bold text-outline">Loading...</p>
         </div>
       </div>
+    </div>
+
+    <!-- 2. Agro-Risk & Decision Directives (Stacked One by One Below 7-Day Forecast) -->
+    <div class="space-y-4 mb-6">
+      
+      <!-- Feature 1: Irrigation Advisory -->
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm transition-all hover:border-leaf">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-sage/40">
+          <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed flex items-center gap-2">
+            <span class="material-symbols-outlined text-xl text-leaf">water_drop</span>
+            <span>Irrigation Advisory</span>
+          </h3>
+          <span id="weather-irrigation-badge" class="self-start sm:self-auto px-3 py-1 bg-warning/20 text-warning text-xs font-bold rounded-full">Analyzing...</span>
+        </div>
+        <p id="weather-irrigation-desc" class="text-xs md:text-sm text-on-surface-variant leading-relaxed mb-3">Evaluating precipitation probability and evapotranspiration rate...</p>
+        <div id="weather-irrigation-meter" class="flex items-center justify-between text-xs text-outline pt-2 border-t border-sage/30 bg-surface-container-low/50 -mx-5 -mb-5 px-5 py-2.5 rounded-b-2xl">
+          <span>Soil Moisture Need:</span>
+          <span id="weather-soil-status" class="font-bold text-primary dark:text-primary-fixed">Calculating</span>
+        </div>
+      </div>
+
+      <!-- Feature 2: Spraying Window -->
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm transition-all hover:border-leaf">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-sage/40">
+          <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed flex items-center gap-2">
+            <span class="material-symbols-outlined text-xl text-warning">pest_control</span>
+            <span>Spraying Window</span>
+          </h3>
+          <span id="weather-spraying-badge" class="self-start sm:self-auto px-3 py-1 bg-error/20 text-error text-xs font-bold rounded-full">Analyzing...</span>
+        </div>
+        <p id="weather-spraying-desc" class="text-xs md:text-sm text-on-surface-variant leading-relaxed mb-3">Analyzing wind velocity, drift risk, and rainfall forecast...</p>
+        <div class="flex items-center justify-between text-xs text-outline pt-2 border-t border-sage/30 bg-surface-container-low/50 -mx-5 -mb-5 px-5 py-2.5 rounded-b-2xl">
+          <span>Spray Drift Risk:</span>
+          <span id="weather-spray-drift-status" class="font-bold text-primary dark:text-primary-fixed">Checking</span>
+        </div>
+      </div>
+
+      <!-- Feature 3: Fungal & Pest Risk -->
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm transition-all hover:border-leaf">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-sage/40">
+          <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed flex items-center gap-2">
+            <span class="material-symbols-outlined text-xl text-error">coronavirus</span>
+            <span>Fungal & Pest Risk</span>
+          </h3>
+          <span id="weather-fungal-badge" class="self-start sm:self-auto px-3 py-1 bg-error/20 text-error text-xs font-bold rounded-full">Analyzing...</span>
+        </div>
+        <p id="weather-fungal-desc" class="text-xs md:text-sm text-on-surface-variant leading-relaxed mb-3">Correlating relative humidity and temperature for pathogen propagation...</p>
+        <div class="flex items-center justify-between text-xs text-outline pt-2 border-t border-sage/30 bg-surface-container-low/50 -mx-5 -mb-5 px-5 py-2.5 rounded-b-2xl">
+          <span>Pathogen Index:</span>
+          <span id="weather-pathogen-status" class="font-bold text-primary dark:text-primary-fixed">Evaluating</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
