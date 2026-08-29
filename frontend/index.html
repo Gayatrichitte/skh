@@ -147,10 +147,6 @@
           <span class="material-symbols-outlined text-xl">analytics</span>
           <span data-t="cropAnalysis">Crop Analysis</span>
         </a>
-        <a href="#ai-mentor" data-route="ai-mentor" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
-          <span class="material-symbols-outlined text-xl">psychology</span>
-          <span data-t="aiMentor">AI Mentor Chat</span>
-        </a>
         <a href="#weather" data-route="weather" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
           <span class="material-symbols-outlined text-xl">thunderstorm</span>
           <span data-t="weatherRisk">Weather Risk</span>
@@ -202,10 +198,6 @@
           <span class="material-symbols-outlined">analytics</span>
           <span data-t="cropAnalysis">Crop Analysis</span>
         </a>
-        <a href="#ai-mentor" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
-          <span class="material-symbols-outlined">psychology</span>
-          <span data-t="aiMentor">AI Mentor</span>
-        </a>
         <a href="#weather" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
           <span class="material-symbols-outlined">thunderstorm</span>
           <span data-t="weatherRisk">Weather Risk</span>
@@ -236,9 +228,9 @@
         </div>
         <span class="text-[10px] font-medium mt-0.5">Scan</span>
       </a>
-      <a href="#ai-mentor" class="flex flex-col items-center justify-center w-14 text-center py-1 text-on-surface-variant hover:text-primary">
-        <span class="material-symbols-outlined text-xl">psychology</span>
-        <span class="text-[10px] mt-0.5 font-medium">AI Chat</span>
+      <a href="#crop-analysis" class="flex flex-col items-center justify-center w-14 text-center py-1 text-on-surface-variant hover:text-primary">
+        <span class="material-symbols-outlined text-xl">analytics</span>
+        <span class="text-[10px] mt-0.5 font-medium">Analysis</span>
       </a>
       <a href="#weather" class="flex flex-col items-center justify-center w-14 text-center py-1 text-on-surface-variant hover:text-primary">
         <span class="material-symbols-outlined text-xl">thunderstorm</span>
@@ -608,12 +600,12 @@
         <p class="text-[11px] text-outline mt-0.5">Farm Plot AI & Advisory</p>
       </a>
 
-      <a href="#ai-mentor" class="p-4 rounded-2xl bg-surface-container-lowest border border-sage hover:border-leaf hover:shadow-md transition-all text-center group">
+      <a href="#weather" class="p-4 rounded-2xl bg-surface-container-lowest border border-sage hover:border-leaf hover:shadow-md transition-all text-center group">
         <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-sage/60 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
-          <span class="material-symbols-outlined text-2xl">psychology</span>
+          <span class="material-symbols-outlined text-2xl text-leaf">thunderstorm</span>
         </div>
-        <p class="font-bold text-xs md:text-sm text-primary dark:text-primary-fixed" data-t="aiMentor">Kisan AI Mentor</p>
-        <p class="text-[11px] text-outline mt-0.5">Voice & text advice</p>
+        <p class="font-bold text-xs md:text-sm text-primary dark:text-primary-fixed" data-t="weatherRisk">Weather Risk</p>
+        <p class="text-[11px] text-outline mt-0.5">Agromet forecast</p>
       </a>
 
       <a href="#schemes" class="p-4 rounded-2xl bg-surface-container-lowest border border-sage hover:border-leaf hover:shadow-md transition-all text-center group">
@@ -1176,56 +1168,7 @@
   </section>
 
 
-  <!-- ==================== VIEW 7: AI MENTOR CONVERSATIONAL CHAT ==================== -->
-  <section id="view-ai-mentor" class="app-view hidden max-w-4xl mx-auto px-4 md:px-8 py-4 h-[calc(100vh-5rem)] flex flex-col">
-    <!-- Chat Header -->
-    <div class="flex items-center justify-between pb-3 border-b border-sage/50 mb-3 flex-shrink-0">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-secondary-container text-on-secondary-container flex items-center justify-center">
-          <span class="material-symbols-outlined text-2xl text-leaf">psychology</span>
-        </div>
-        <div>
-          <h1 class="text-lg font-bold text-primary dark:text-primary-fixed">Kisan AI Mentor</h1>
-          <p class="text-xs text-leaf font-medium">● Online • Tailored for Nashik Onion Farming</p>
-        </div>
-      </div>
-      <button onclick="speakText('Namaste Ramesh ji! I am ready to help you with crops, weather, and market subsidies.')" class="p-2 rounded-xl bg-sage/50 hover:bg-secondary-container text-primary transition-colors">
-        <span class="material-symbols-outlined text-lg">volume_up</span>
-      </button>
-    </div>
 
-    <!-- Chat Messages Scroll Container -->
-    <div id="chat-messages-container" class="flex-1 overflow-y-auto pr-2 space-y-3 mb-3">
-      <!-- Dynamically filled by renderChatMessages() -->
-    </div>
-
-    <!-- Quick Prompt Chips -->
-    <div class="flex gap-2 overflow-x-auto pb-2 mb-2 no-scrollbar flex-shrink-0">
-      <button onclick="sendChatMessage('How to treat purple blotch on onions?')" class="whitespace-nowrap px-3 py-1.5 rounded-full bg-surface-container-high hover:bg-surface-variant text-xs text-charcoal dark:text-gray-200 border border-sage/60 transition-colors">
-        🌿 Treat Purple Blotch
-      </button>
-      <button onclick="sendChatMessage('Should I irrigate my onion farm tomorrow?')" class="whitespace-nowrap px-3 py-1.5 rounded-full bg-surface-container-high hover:bg-surface-variant text-xs text-charcoal dark:text-gray-200 border border-sage/60 transition-colors">
-        🌧️ Irrigation advice with rain
-      </button>
-      <button onclick="sendChatMessage('What government subsidies are available for drip irrigation in Maharashtra?')" class="whitespace-nowrap px-3 py-1.5 rounded-full bg-surface-container-high hover:bg-surface-variant text-xs text-charcoal dark:text-gray-200 border border-sage/60 transition-colors">
-        🏛️ Drip Irrigation Subsidy
-      </button>
-      <button onclick="sendChatMessage('What is the best fertilizer for 45-day-old onions?')" class="whitespace-nowrap px-3 py-1.5 rounded-full bg-surface-container-high hover:bg-surface-variant text-xs text-charcoal dark:text-gray-200 border border-sage/60 transition-colors">
-        🧪 Best fertilizer dosage
-      </button>
-    </div>
-
-    <!-- Chat Input Box -->
-    <div class="flex items-center gap-2 bg-surface-container-lowest border border-sage rounded-2xl p-2 shadow-sm flex-shrink-0">
-      <button onclick="alert('Voice recognition listening... Please speak your question.')" class="p-2.5 rounded-xl bg-sage/60 hover:bg-secondary-container text-primary transition-colors flex-shrink-0">
-        <span class="material-symbols-outlined text-lg">mic</span>
-      </button>
-      <input id="chat-input" type="text" placeholder="Ask Kisan AI about crops, fertilizers, pests, weather..." onkeydown="if(event.key === 'Enter') sendChatMessage()" class="flex-1 bg-transparent border-none text-sm text-charcoal dark:text-white placeholder:text-outline focus:outline-none px-2" />
-      <button onclick="sendChatMessage()" class="p-2.5 rounded-xl bg-primary text-on-primary hover:bg-primary-container transition-colors flex-shrink-0">
-        <span class="material-symbols-outlined text-lg">send</span>
-      </button>
-    </div>
-  </section>
 
 
   <!-- ==================== VIEW 8: WEATHER RISK & ADVISORY ==================== -->
