@@ -1,0 +1,210 @@
+/* KisanSathi / AgriGuide Design System & Custom Utilities */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+
+:root {
+  --primary: #012d1d;
+  --primary-container: #1b4332;
+  --on-primary: #ffffff;
+  --on-primary-container: #86af99;
+  --primary-fixed: #c1ecd4;
+  --primary-fixed-dim: #a5d0b9;
+  --secondary: #2c694e;
+  --secondary-container: #aeeecb;
+  --on-secondary-container: #316e52;
+  --leaf: #40916C;
+  --sage: #D8E2DC;
+  --beige: #F1E3D3;
+  --charcoal: #212529;
+  --surface: #f8f9fa;
+  --surface-container: #edeeef;
+  --surface-container-low: #f3f4f5;
+  --surface-container-high: #e7e8e9;
+  --surface-container-lowest: #ffffff;
+  --surface-variant: #e1e3e4;
+  --on-surface: #191c1d;
+  --on-surface-variant: #414844;
+  --outline: #717973;
+  --outline-variant: #c1c8c2;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --on-error-container: #93000a;
+  --warning: #f59e0b;
+  --warning-container: #fef3c7;
+}
+
+.dark {
+  --primary: #a5d0b9;
+  --primary-container: #1b4332;
+  --on-primary: #003822;
+  --on-primary-container: #c1ecd4;
+  --primary-fixed: #c1ecd4;
+  --primary-fixed-dim: #a5d0b9;
+  --secondary: #95d4b3;
+  --secondary-container: #134e35;
+  --on-secondary-container: #b1f0ce;
+  --leaf: #52b788;
+  --sage: #2a3d34;
+  --beige: #2d2a26;
+  --charcoal: #f8f9fa;
+  --surface: #111413;
+  --surface-container: #1a1e1c;
+  --surface-container-low: #151817;
+  --surface-container-high: #242926;
+  --surface-container-lowest: #0c0e0d;
+  --surface-variant: #2d3330;
+  --on-surface: #e1e3e0;
+  --on-surface-variant: #c1c8c2;
+  --outline: #8b938d;
+  --outline-variant: #414844;
+  --error: #ffb4ab;
+  --error-container: #93000a;
+  --on-error-container: #ffdad6;
+  --warning: #fbbf24;
+  --warning-container: #78350f;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--surface);
+  color: var(--on-surface);
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.material-symbols-outlined.fill-1 {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Glassmorphism & Card Styles */
+.glass-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(216, 226, 220, 0.6);
+}
+
+.dark .glass-card {
+  background: rgba(26, 30, 28, 0.75);
+  border: 1px solid rgba(65, 72, 68, 0.4);
+}
+
+.glass-nav {
+  background: rgba(248, 249, 250, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.dark .glass-nav {
+  background: rgba(17, 20, 19, 0.85);
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+}
+
+/* Fade In and Slide Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Scanner Laser Animation */
+@keyframes laserScan {
+  0%, 100% {
+    top: 5%;
+    opacity: 0.8;
+  }
+  50% {
+    top: 90%;
+    opacity: 1;
+  }
+}
+
+.laser-scan-line {
+  animation: laserScan 2.2s ease-in-out infinite;
+}
+
+/* Pulse Glow */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(64, 145, 108, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(64, 145, 108, 0.6);
+  }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2.5s infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--outline-variant);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--outline);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Active Nav Links */
+.nav-link.active {
+  background-color: var(--secondary-container);
+  color: var(--on-secondary-container);
+  font-weight: 600;
+}
+
+.dark .nav-link.active {
+  background-color: var(--primary-container);
+  color: var(--on-primary-container);
+}

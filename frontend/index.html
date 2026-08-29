@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+  <title>KisanSathi - Intelligent Agritech Platform</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#012d1d",
+            "primary-container": "#1b4332",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#86af99",
+            "primary-fixed": "#c1ecd4",
+            "primary-fixed-dim": "#a5d0b9",
+            "secondary": "#2c694e",
+            "secondary-container": "#aeeecb",
+            "on-secondary-container": "#316e52",
+            "leaf": "#40916C",
+            "sage": "#D8E2DC",
+            "beige": "#F1E3D3",
+            "charcoal": "#212529",
+            "surface": "#f8f9fa",
+            "surface-container": "#edeeef",
+            "surface-container-low": "#f3f4f5",
+            "surface-container-high": "#e7e8e9",
+            "surface-container-lowest": "#ffffff",
+            "surface-variant": "#e1e3e4",
+            "on-surface": "#191c1d",
+            "on-surface-variant": "#414844",
+            "outline": "#717973",
+            "outline-variant": "#c1c8c2",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a",
+            "warning": "#f59e0b"
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-surface text-on-surface antialiased font-sans min-h-screen relative overflow-x-hidden selection:bg-secondary-container selection:text-on-secondary-container">
+
+  <!-- ==================== GLOBAL APP SHELL (TopBar, SideNav, BottomNav, MobileDrawer) ==================== -->
+  <div id="app-shell-container" class="hidden">
+    
+    <!-- Top App Bar -->
+    <header class="fixed top-0 left-0 w-full z-40 h-16 flex items-center justify-between px-4 md:px-8 glass-nav border-b border-sage/40">
+      <div class="flex items-center gap-3">
+        <button onclick="openDrawer()" aria-label="Open Navigation Menu" class="p-2 text-primary dark:text-primary-fixed hover:bg-sage/20 rounded-full transition-all active:scale-95 md:hidden">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <a href="#dashboard" class="flex items-center gap-2 group">
+          <div class="w-9 h-9 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+            <span class="material-symbols-outlined fill-1 text-2xl text-leaf">eco</span>
+          </div>
+          <span class="font-bold text-xl tracking-tight text-primary dark:text-primary-fixed" data-t="appName">KisanSathi</span>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- Language Selector Dropdown -->
+        <div class="relative group">
+          <button class="p-2 text-primary dark:text-primary-fixed hover:bg-sage/20 rounded-full flex items-center gap-1 transition-all">
+            <span class="material-symbols-outlined text-xl">language</span>
+            <span class="text-xs font-semibold uppercase" id="current-lang-code">EN</span>
+          </button>
+          <div class="absolute right-0 top-full mt-1 w-36 bg-surface-container-lowest border border-sage rounded-xl shadow-lg py-1.5 hidden group-hover:block z-50">
+            <button onclick="setLanguage('en'); document.getElementById('current-lang-code').textContent='EN';" class="w-full text-left px-3 py-2 text-sm hover:bg-surface-variant flex items-center justify-between">
+              <span>English</span>
+              <span class="text-xs text-outline">EN</span>
+            </button>
+            <button onclick="setLanguage('hi'); document.getElementById('current-lang-code').textContent='HI';" class="w-full text-left px-3 py-2 text-sm hover:bg-surface-variant flex items-center justify-between">
+              <span>हिन्दी</span>
+              <span class="text-xs text-outline">HI</span>
+            </button>
+            <button onclick="setLanguage('mr'); document.getElementById('current-lang-code').textContent='MR';" class="w-full text-left px-3 py-2 text-sm hover:bg-surface-variant flex items-center justify-between">
+              <span>मराठी</span>
+              <span class="text-xs text-outline">MR</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dark/Light Theme Toggle -->
+        <button onclick="toggleDarkMode()" aria-label="Toggle Theme" class="p-2 text-primary dark:text-primary-fixed hover:bg-sage/20 rounded-full transition-all active:scale-95">
+          <span class="material-symbols-outlined theme-toggle-icon">dark_mode</span>
+        </button>
+
+        <!-- Profile Quick Chip -->
+        <div class="hidden sm:flex items-center gap-2 pl-2 border-l border-sage/50">
+          <div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm">
+            R
+          </div>
+          <div class="text-left leading-tight hidden lg:block">
+            <p class="text-xs font-bold text-primary dark:text-primary-fixed">Ramesh</p>
+            <p class="text-[11px] text-outline">Nashik • Onion</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Desktop Sidebar (md and above) -->
+    <aside class="hidden md:flex fixed inset-y-0 left-0 z-30 flex-col w-72 h-full bg-surface-container-lowest dark:bg-surface-container-low border-r border-sage/40 pt-20 pb-6 px-4">
+      <!-- Farmer Profile Header -->
+      <div class="flex items-center gap-3 p-3 mb-4 rounded-xl bg-surface-container/60 border border-sage/30">
+        <div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-lg shadow-inner">
+          <span class="material-symbols-outlined text-2xl">person</span>
+        </div>
+        <div>
+          <h3 class="font-bold text-primary dark:text-primary-fixed text-sm">Ramesh Patil</h3>
+          <p class="text-xs text-leaf font-medium">🌾 2 Acres • Onion</p>
+          <p class="text-[11px] text-outline">Nashik, MH</p>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="flex-1 space-y-1 overflow-y-auto pr-1">
+        <a href="#dashboard" data-route="dashboard" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
+          <span class="material-symbols-outlined text-xl">dashboard</span>
+          <span data-t="todayTasks">Dashboard</span>
+        </a>
+        <a href="#scanner" data-route="scanner" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
+          <span class="material-symbols-outlined text-xl">center_focus_strong</span>
+          <span data-t="cropScanner">Crop Scanner</span>
+        </a>
+        <a href="#crop-analysis" data-route="crop-analysis" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
+          <span class="material-symbols-outlined text-xl">analytics</span>
+          <span data-t="cropAnalysis">Crop Analysis</span>
+        </a>
+        <a href="#ai-mentor" data-route="ai-mentor" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
+          <span class="material-symbols-outlined text-xl">psychology</span>
+          <span data-t="aiMentor">AI Mentor Chat</span>
+        </a>
+        <a href="#weather" data-route="weather" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
+          <span class="material-symbols-outlined text-xl">thunderstorm</span>
+          <span data-t="weatherRisk">Weather Risk</span>
+        </a>
+        <a href="#schemes" data-route="schemes" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
+          <span class="material-symbols-outlined text-xl">account_balance</span>
+          <span data-t="schemes">Government Schemes</span>
+        </a>
+        <a href="#suggestions" data-route="suggestions" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
+          <span class="material-symbols-outlined text-xl">lightbulb</span>
+          <span data-t="suggestions">Impact Suggestions</span>
+        </a>
+        <a href="#management" data-route="management" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors hover:bg-surface-variant/70">
+          <span class="material-symbols-outlined text-xl">calendar_month</span>
+          <span data-t="management">Farming Workflow</span>
+        </a>
+      </nav>
+
+      <!-- Bottom Quick Actions -->
+      <div class="pt-3 border-t border-sage/40 space-y-2">
+        <a href="#welcome" class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs text-outline hover:bg-surface-variant transition-colors">
+          <span class="material-symbols-outlined text-base">logout</span>
+          <span>Switch User / Language</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Mobile Drawer Overlay & Drawer -->
+    <div id="drawer-overlay" onclick="closeDrawer()" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-opacity"></div>
+    <div id="mobile-drawer" class="fixed top-0 left-0 bottom-0 z-50 w-72 bg-surface-container-lowest border-r border-sage p-5 flex flex-col -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl">
+      <div class="flex items-center justify-between pb-4 border-b border-sage/40 mb-4">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center">
+            <span class="material-symbols-outlined text-xl text-leaf">eco</span>
+          </div>
+          <span class="font-bold text-lg text-primary dark:text-primary-fixed">KisanSathi</span>
+        </div>
+        <button onclick="closeDrawer()" class="p-1 text-outline hover:text-charcoal">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <nav class="flex-1 space-y-1 overflow-y-auto">
+        <a href="#dashboard" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
+          <span class="material-symbols-outlined">dashboard</span>
+          <span data-t="todayTasks">Dashboard</span>
+        </a>
+        <a href="#scanner" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
+          <span class="material-symbols-outlined">center_focus_strong</span>
+          <span data-t="cropScanner">Crop Scanner</span>
+        </a>
+        <a href="#crop-analysis" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
+          <span class="material-symbols-outlined">analytics</span>
+          <span data-t="cropAnalysis">Crop Analysis</span>
+        </a>
+        <a href="#ai-mentor" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
+          <span class="material-symbols-outlined">psychology</span>
+          <span data-t="aiMentor">AI Mentor</span>
+        </a>
+        <a href="#weather" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
+          <span class="material-symbols-outlined">thunderstorm</span>
+          <span data-t="weatherRisk">Weather Risk</span>
+        </a>
+        <a href="#schemes" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
+          <span class="material-symbols-outlined">account_balance</span>
+          <span data-t="schemes">Govt Schemes</span>
+        </a>
+        <a href="#suggestions" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
+          <span class="material-symbols-outlined">lightbulb</span>
+          <span data-t="suggestions">Impact Suggestions</span>
+        </a>
+        <a href="#management" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm">
+          <span class="material-symbols-outlined">calendar_month</span>
+          <span data-t="management">Farming Workflow</span>
+        </a>
+      </nav>
+
+      <div class="pt-4 border-t border-sage/40 flex flex-col gap-2">
+        <a href="#welcome" class="flex items-center gap-2 px-3 py-2 text-xs text-outline hover:text-primary">
+          <span class="material-symbols-outlined text-sm">translate</span>
+          <span>Change Language</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar (below md) -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 h-16 glass-nav border-t border-sage/40 flex items-center justify-around px-2">
+      <a href="#dashboard" class="flex flex-col items-center justify-center w-14 text-center py-1 text-on-surface-variant hover:text-primary">
+        <span class="material-symbols-outlined text-xl">dashboard</span>
+        <span class="text-[10px] mt-0.5 font-medium">Home</span>
+      </a>
+      <a href="#scanner" class="flex flex-col items-center justify-center w-14 text-center py-1 text-on-surface-variant hover:text-primary">
+        <div class="w-10 h-10 -mt-5 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-md">
+          <span class="material-symbols-outlined text-xl">center_focus_strong</span>
+        </div>
+        <span class="text-[10px] font-medium mt-0.5">Scan</span>
+      </a>
+      <a href="#ai-mentor" class="flex flex-col items-center justify-center w-14 text-center py-1 text-on-surface-variant hover:text-primary">
+        <span class="material-symbols-outlined text-xl">psychology</span>
+        <span class="text-[10px] mt-0.5 font-medium">AI Chat</span>
+      </a>
+      <a href="#weather" class="flex flex-col items-center justify-center w-14 text-center py-1 text-on-surface-variant hover:text-primary">
+        <span class="material-symbols-outlined text-xl">thunderstorm</span>
+        <span class="text-[10px] mt-0.5 font-medium">Weather</span>
+      </a>
+      <a href="#schemes" class="flex flex-col items-center justify-center w-14 text-center py-1 text-on-surface-variant hover:text-primary">
+        <span class="material-symbols-outlined text-xl">account_balance</span>
+        <span class="text-[10px] mt-0.5 font-medium">Schemes</span>
+      </a>
+    </nav>
+  </div>
+
+
+  <!-- ==================== VIEW 1: WELCOME / LANGUAGE SELECT ==================== -->
+  <section id="view-welcome" class="app-view min-h-screen flex flex-col justify-center items-center px-4 py-8 relative overflow-hidden bg-gradient-to-b from-surface via-surface-container-low to-surface">
+    <!-- Atmospheric Background Glows -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-secondary-container/30 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-sage/40 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative z-10 w-full max-w-md text-center">
+      <!-- App Brand -->
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-secondary-container text-on-secondary-container rounded-3xl shadow-md mb-6 pulse-glow">
+        <span class="material-symbols-outlined fill-1 text-5xl text-leaf">eco</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-extrabold text-primary dark:text-primary-fixed mb-2 tracking-tight">KisanSathi</h1>
+      <p class="text-sm md:text-base text-on-surface-variant mb-8" data-t="selectLang">Select your preferred language to begin</p>
+
+      <!-- Language Selection Option Cards -->
+      <div class="space-y-3.5 mb-8">
+        <!-- Marathi -->
+        <button onclick="setLanguage('mr'); navigateTo('login');" class="w-full text-left glass-card rounded-2xl p-4 flex items-center justify-between hover:scale-[1.02] hover:bg-surface-container-high transition-all duration-200 group border border-sage/60 shadow-sm">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-sage/70 flex items-center justify-center font-bold text-xl text-primary">
+              म
+            </div>
+            <div>
+              <span class="block font-bold text-lg text-charcoal dark:text-white">मराठी</span>
+              <span class="block text-xs text-outline">Marathi (महाराष्ट्र)</span>
+            </div>
+          </div>
+          <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">arrow_forward</span>
+        </button>
+
+        <!-- Hindi -->
+        <button onclick="setLanguage('hi'); navigateTo('login');" class="w-full text-left glass-card rounded-2xl p-4 flex items-center justify-between hover:scale-[1.02] hover:bg-surface-container-high transition-all duration-200 group border border-sage/60 shadow-sm">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-sage/70 flex items-center justify-center font-bold text-xl text-primary">
+              हि
+            </div>
+            <div>
+              <span class="block font-bold text-lg text-charcoal dark:text-white">हिन्दी</span>
+              <span class="block text-xs text-outline">Hindi</span>
+            </div>
+          </div>
+          <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">arrow_forward</span>
+        </button>
+
+        <!-- English -->
+        <button onclick="setLanguage('en'); navigateTo('login');" class="w-full text-left glass-card rounded-2xl p-4 flex items-center justify-between hover:scale-[1.02] hover:bg-surface-container-high transition-all duration-200 group border border-sage/60 shadow-sm">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-sage/70 flex items-center justify-center font-bold text-xl text-primary">
+              EN
+            </div>
+            <div>
+              <span class="block font-bold text-lg text-charcoal dark:text-white">English</span>
+              <span class="block text-xs text-outline">Standard English</span>
+            </div>
+          </div>
+          <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">arrow_forward</span>
+        </button>
+      </div>
+
+      <p class="text-xs text-outline">
+        Empowering farmers with AI diagnostics & climate intelligence.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ==================== VIEW 2: LOGIN ==================== -->
+  <section id="view-login" class="app-view hidden min-h-screen flex flex-col justify-center items-center px-4 py-8 relative bg-gradient-to-b from-surface via-surface-container-low to-surface">
+    <div class="w-full max-w-md">
+      <!-- Brand & Back -->
+      <div class="flex items-center justify-between mb-6">
+        <button onclick="navigateTo('welcome')" class="p-2 rounded-full hover:bg-sage/20 text-primary flex items-center gap-1 text-sm font-medium">
+          <span class="material-symbols-outlined text-base">arrow_back</span>
+          <span>Back</span>
+        </button>
+        <span class="font-bold text-lg text-primary dark:text-primary-fixed">KisanSathi</span>
+      </div>
+
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-6 shadow-sm">
+        <div class="text-center mb-6">
+          <div class="w-12 h-12 mx-auto mb-3 bg-sage/50 rounded-2xl flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined text-2xl fill-1">lock</span>
+          </div>
+          <h2 class="text-2xl font-bold text-charcoal dark:text-white" data-t="welcomeBack">Welcome Back</h2>
+          <p class="text-xs text-on-surface-variant mt-1">Enter your phone number to access your farm portal</p>
+        </div>
+
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-charcoal dark:text-gray-200 mb-1.5" data-t="mobileNumber">Mobile Number</label>
+            <div class="relative">
+              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-lg">phone_iphone</span>
+              <input type="tel" value="9823456789" required placeholder="10-digit mobile number" class="w-full bg-surface-container-low border border-sage rounded-xl py-3 pl-11 pr-3 text-sm text-charcoal dark:text-white focus:outline-none focus:border-leaf focus:ring-1 focus:ring-leaf transition-colors" />
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-1.5">
+              <label class="text-xs font-semibold text-charcoal dark:text-gray-200" data-t="password">Password / OTP</label>
+              <a href="#" class="text-xs text-leaf hover:underline">Forgot?</a>
+            </div>
+            <div class="relative">
+              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-lg">key</span>
+              <input type="password" value="123456" required placeholder="Enter password" class="w-full bg-surface-container-low border border-sage rounded-xl py-3 pl-11 pr-3 text-sm text-charcoal dark:text-white focus:outline-none focus:border-leaf focus:ring-1 focus:ring-leaf transition-colors" />
+            </div>
+          </div>
+
+          <div class="pt-2 space-y-3">
+            <button type="submit" class="w-full bg-primary text-on-primary font-semibold py-3.5 rounded-xl hover:bg-primary-container transition-all active:scale-[0.98] shadow-sm flex items-center justify-center gap-2">
+              <span data-t="login">Login to Farm</span>
+              <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </button>
+            <button type="button" onclick="navigateTo('onboarding')" class="w-full bg-transparent border border-primary text-primary dark:text-primary-fixed font-semibold py-3 rounded-xl hover:bg-sage/20 transition-all active:scale-[0.98] text-sm">
+              <span data-t="signUp">New Farmer? Create Profile</span>
+            </button>
+          </div>
+        </form>
+
+        <div class="mt-6 pt-4 border-t border-sage/40 text-center">
+          <p class="text-[11px] text-outline">
+            Quick Demo Login: Pre-filled with Ramesh Patil (Nashik, Onion)
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== VIEW 3: ONBOARDING ==================== -->
+  <section id="view-onboarding" class="app-view hidden min-h-screen flex flex-col justify-center items-center px-4 py-8 bg-gradient-to-b from-surface to-surface-container-low">
+    <div class="w-full max-w-lg">
+      <div class="flex items-center justify-between mb-6">
+        <button onclick="navigateTo('login')" class="p-2 rounded-full hover:bg-sage/20 text-primary flex items-center gap-1 text-sm font-medium">
+          <span class="material-symbols-outlined text-base">arrow_back</span>
+          <span>Back</span>
+        </button>
+        <span class="font-bold text-lg text-primary dark:text-primary-fixed">Farm Setup (Step 1/2)</span>
+      </div>
+
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-6 shadow-sm">
+        <h2 class="text-xl font-bold text-charcoal dark:text-white mb-1">Set Up Your Farm Profile</h2>
+        <p class="text-xs text-on-surface-variant mb-6">Customizes AI models and disease alerts for your specific crops and soil.</p>
+
+        <form id="onboarding-form" class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold mb-1">Farmer Name</label>
+              <input type="text" value="Ramesh Patil" required class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold mb-1">Location / District</label>
+              <input type="text" value="Nashik, Maharashtra" required class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold mb-1">Primary Crop</label>
+              <select class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm">
+                <option value="Onion" selected>Onion (कांदा / प्याज)</option>
+                <option value="Tomato">Tomato (टोमॅटो / टमाटर)</option>
+                <option value="Wheat">Wheat (गहू / गेहूं)</option>
+                <option value="Cotton">Cotton (कापूस / कपास)</option>
+                <option value="Soybean">Soybean (सोयाबीन)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold mb-1">Land Holding Size</label>
+              <input type="text" value="2 Acres" required class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold mb-1">Soil Classification</label>
+              <select class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm">
+                <option selected>Black Clay Loam (काळी माती)</option>
+                <option>Red Sandy Loam (तांबडी माती)</option>
+                <option>Alluvial Soil (गाळाची माती)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold mb-1">Irrigation Method</label>
+              <select class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 px-3 text-sm">
+                <option selected>Drip Irrigation (ठिबक सिंचन)</option>
+                <option>Sprinkler (तुषार सिंचन)</option>
+                <option>Flood / Canal (पाट पाणी)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="pt-4">
+            <button type="submit" class="w-full bg-primary text-on-primary font-semibold py-3.5 rounded-xl hover:bg-primary-container transition-all active:scale-[0.98] shadow-sm">
+              Save & Launch Dashboard
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== VIEW 4: FARMER HOME DASHBOARD ==================== -->
+  <section id="view-dashboard" class="app-view hidden max-w-6xl mx-auto px-4 md:px-8 py-6">
+    <!-- Header Greeting -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed tracking-tight">Hi Ramesh 👋</h1>
+        <div class="flex flex-wrap items-center gap-3 text-xs md:text-sm text-on-surface-variant mt-1">
+          <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-leaf">location_on</span> Nashik, Maharashtra</span>
+          <span>•</span>
+          <span class="flex items-center gap-1 font-medium text-primary dark:text-primary-fixed">🌱 Onion • 2 Acres (Active Stage: Bulb Formation)</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="#scanner" class="bg-primary text-on-primary px-4 py-2.5 rounded-xl font-semibold text-xs md:text-sm flex items-center gap-2 hover:bg-primary-container transition-all shadow-sm">
+          <span class="material-symbols-outlined text-lg">center_focus_strong</span>
+          <span>Quick Scan</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Critical Task Banner / Alert -->
+    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 md:p-6 mb-6 relative overflow-hidden shadow-sm">
+      <div class="absolute -right-10 -top-10 w-48 h-48 bg-warning/20 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-warning/20 text-warning flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">warning</span>
+              <span data-t="todayTasks">Action Recommended Today</span>
+            </span>
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold text-primary dark:text-primary-fixed" data-t="delayIrrigation">Delay Irrigation</h2>
+          <p class="text-sm md:text-base text-on-surface-variant mt-1" data-t="rainExpected">Rain is expected within 24 hours (72% rain probability, 18-24mm expected).</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <a href="#weather" class="bg-primary text-on-primary px-5 py-2.5 rounded-xl text-xs md:text-sm font-semibold hover:bg-primary-container transition-colors" data-t="why">
+            Why? Details
+          </a>
+          <button onclick="speakText('Attention Ramesh ji. We recommend delaying irrigation today. Rain is expected in Nashik within 24 hours with 72% probability.')" aria-label="Listen to advisory" class="w-11 h-11 rounded-xl bg-sage/60 hover:bg-secondary-container text-primary flex items-center justify-center transition-colors">
+            <span class="material-symbols-outlined text-xl">volume_up</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bento Grid Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+      
+      <!-- Weather Risk Card -->
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 flex flex-col justify-between shadow-sm">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-outline" data-t="weatherRisk">WEATHER RISK</span>
+          <span class="material-symbols-outlined text-leaf">thunderstorm</span>
+        </div>
+        <div class="my-2">
+          <div class="flex items-baseline gap-2">
+            <span class="text-3xl font-extrabold text-primary dark:text-primary-fixed">28°C</span>
+            <span class="text-xs text-on-surface-variant">Cloudy & Humid</span>
+          </div>
+          <div class="flex items-center gap-1 text-xs text-leaf font-semibold mt-1">
+            <span class="material-symbols-outlined text-sm">water_drop</span>
+            <span>72% Rain Probability (Nashik)</span>
+          </div>
+        </div>
+        <a href="#weather" class="mt-4 text-xs font-semibold text-leaf hover:underline flex items-center justify-between pt-3 border-t border-sage/40">
+          <span>7-Day Agromet Risk Chart</span>
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </a>
+      </div>
+
+      <!-- Crop Health Card -->
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 flex flex-col justify-between shadow-sm">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-outline" data-t="cropStatus">CROP STATUS</span>
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-secondary-container text-on-secondary-container">94% Healthy</span>
+        </div>
+        <div class="my-2">
+          <h3 class="text-xl font-bold text-primary dark:text-primary-fixed">Kharif Onion</h3>
+          <p class="text-xs text-on-surface-variant mt-1">Vegetative Stage • Day 48 • Next spray due in 3 days</p>
+        </div>
+        <a href="#crop-analysis" class="mt-4 text-xs font-semibold text-leaf hover:underline flex items-center justify-between pt-3 border-t border-sage/40">
+          <span>View Health & Pathogen Report</span>
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </a>
+      </div>
+
+      <!-- AI Yield & Financial Impact -->
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 flex flex-col justify-between shadow-sm">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-outline">IMPACT FORECAST</span>
+          <span class="material-symbols-outlined text-warning">trending_up</span>
+        </div>
+        <div class="my-2">
+          <div class="text-2xl font-extrabold text-primary dark:text-primary-fixed">+₹18,500 / acre</div>
+          <p class="text-xs text-on-surface-variant mt-1">Potential savings through precision irrigation & timely pest control</p>
+        </div>
+        <a href="#suggestions" class="mt-4 text-xs font-semibold text-leaf hover:underline flex items-center justify-between pt-3 border-t border-sage/40">
+          <span>Explore AI Recommendations</span>
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Navigation Tiles -->
+    <h2 class="text-sm font-bold uppercase tracking-wider text-charcoal dark:text-gray-300 mb-4">Quick Feature Access</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <a href="#scanner" class="p-4 rounded-2xl bg-surface-container-lowest border border-sage hover:border-leaf hover:shadow-md transition-all text-center group">
+        <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center group-hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined text-2xl text-leaf">center_focus_strong</span>
+        </div>
+        <p class="font-bold text-xs md:text-sm text-primary dark:text-primary-fixed" data-t="cropScanner">Crop Scanner</p>
+        <p class="text-[11px] text-outline mt-0.5">Detect leaf disease</p>
+      </a>
+
+      <a href="#ai-mentor" class="p-4 rounded-2xl bg-surface-container-lowest border border-sage hover:border-leaf hover:shadow-md transition-all text-center group">
+        <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-sage/60 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined text-2xl">psychology</span>
+        </div>
+        <p class="font-bold text-xs md:text-sm text-primary dark:text-primary-fixed" data-t="aiMentor">Kisan AI Mentor</p>
+        <p class="text-[11px] text-outline mt-0.5">Voice & text advice</p>
+      </a>
+
+      <a href="#schemes" class="p-4 rounded-2xl bg-surface-container-lowest border border-sage hover:border-leaf hover:shadow-md transition-all text-center group">
+        <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-sage/60 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined text-2xl">account_balance</span>
+        </div>
+        <p class="font-bold text-xs md:text-sm text-primary dark:text-primary-fixed" data-t="schemes">Govt Schemes</p>
+        <p class="text-[11px] text-outline mt-0.5">Subsidies & claims</p>
+      </a>
+
+      <a href="#management" class="p-4 rounded-2xl bg-surface-container-lowest border border-sage hover:border-leaf hover:shadow-md transition-all text-center group">
+        <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-sage/60 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined text-2xl">calendar_month</span>
+        </div>
+        <p class="font-bold text-xs md:text-sm text-primary dark:text-primary-fixed" data-t="management">Farm Workflow</p>
+        <p class="text-[11px] text-outline mt-0.5">Crop lifecycle plan</p>
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ==================== VIEW 5: AI CROP SCANNER ==================== -->
+  <section id="view-scanner" class="app-view hidden max-w-4xl mx-auto px-4 md:px-8 py-6">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="scanTitle">AI Crop Health Scanner</h1>
+        <p class="text-xs md:text-sm text-on-surface-variant" data-t="scanSubtitle">Capture or upload leaf photo for instant pathogen detection</p>
+      </div>
+      <a href="#crop-analysis" class="text-xs font-semibold text-leaf hover:underline flex items-center gap-1">
+        <span>Previous Reports</span>
+        <span class="material-symbols-outlined text-sm">history</span>
+      </a>
+    </div>
+
+    <!-- Scanner Camera Viewfinder Simulation -->
+    <div class="relative w-full max-w-md mx-auto aspect-[4/3] bg-charcoal rounded-3xl overflow-hidden border-4 border-sage/60 shadow-2xl flex flex-col justify-between p-4 mb-6">
+      <!-- Target Corner Overlays -->
+      <div class="absolute top-4 left-4 w-8 h-8 border-t-4 border-l-4 border-leaf rounded-tl-lg pointer-events-none"></div>
+      <div class="absolute top-4 right-4 w-8 h-8 border-t-4 border-r-4 border-leaf rounded-tr-lg pointer-events-none"></div>
+      <div class="absolute bottom-4 left-4 w-8 h-8 border-b-4 border-l-4 border-leaf rounded-bl-lg pointer-events-none"></div>
+      <div class="absolute bottom-4 right-4 w-8 h-8 border-b-4 border-r-4 border-leaf rounded-br-lg pointer-events-none"></div>
+
+      <!-- Animated Laser Line -->
+      <div class="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-leaf to-transparent laser-scan-line shadow-[0_0_12px_#40916C]"></div>
+
+      <!-- Viewfinder Center Graphic -->
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 bg-gradient-to-t from-black/60 via-transparent to-black/40">
+        <div class="w-20 h-20 rounded-full border-2 border-dashed border-leaf/60 flex items-center justify-center mb-3">
+          <span class="material-symbols-outlined text-4xl text-leaf">center_focus_strong</span>
+        </div>
+        <p class="text-white text-xs font-medium max-w-xs">Align infected leaf inside targeting reticle</p>
+        <span class="text-[11px] text-gray-300 mt-1">Resolution: 4K Neural Optical Sensor (Ready)</span>
+      </div>
+
+      <!-- Scanner Overlay Controls -->
+      <div class="relative z-10 flex justify-between items-center text-white">
+        <span class="px-2.5 py-1 bg-black/50 rounded-full text-xs font-semibold flex items-center gap-1 backdrop-blur-sm">
+          <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span> Live Vision
+        </span>
+        <button onclick="alert('Camera flash toggled.')" class="p-2 rounded-full bg-black/50 hover:bg-black/80 transition-colors">
+          <span class="material-symbols-outlined text-sm">flash_on</span>
+        </button>
+      </div>
+
+      <!-- Bottom Capture Trigger -->
+      <div class="relative z-10 flex justify-center items-center gap-6">
+        <label class="p-3 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white cursor-pointer transition-transform active:scale-95">
+          <input type="file" accept="image/*" class="hidden" onchange="runCropScan()" />
+          <span class="material-symbols-outlined text-xl">photo_library</span>
+        </label>
+        <button onclick="runCropScan()" class="w-16 h-16 rounded-full bg-leaf text-white flex items-center justify-center shadow-lg border-4 border-white hover:scale-105 active:scale-95 transition-all">
+          <span class="material-symbols-outlined text-3xl">photo_camera</span>
+        </button>
+        <button onclick="speakText('Position the affected leaf clearly in good lighting and tap scan.')" class="p-3 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white transition-transform active:scale-95">
+          <span class="material-symbols-outlined text-xl">volume_up</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sample Leaves for Instant Testing -->
+    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm">
+      <h2 class="text-xs font-bold uppercase tracking-wider text-outline mb-3">Or Select Sample Test Case (Instant AI Simulation)</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <button onclick="selectSampleLeaf('onion'); runCropScan();" data-sample="onion" class="sample-leaf-btn text-left p-3 rounded-xl bg-surface-container-low border border-sage hover:border-leaf transition-all">
+          <p class="font-bold text-xs text-primary dark:text-primary-fixed">🧅 Onion</p>
+          <p class="text-[11px] text-leaf font-medium mt-0.5">Purple Blotch</p>
+          <span class="text-[10px] text-outline">Moderate (28%)</span>
+        </button>
+
+        <button onclick="selectSampleLeaf('tomato'); runCropScan();" data-sample="tomato" class="sample-leaf-btn text-left p-3 rounded-xl bg-surface-container-low border border-sage hover:border-leaf transition-all">
+          <p class="font-bold text-xs text-primary dark:text-primary-fixed">🍅 Tomato</p>
+          <p class="text-[11px] text-leaf font-medium mt-0.5">Early Blight</p>
+          <span class="text-[10px] text-outline">Mild (12%)</span>
+        </button>
+
+        <button onclick="selectSampleLeaf('wheat'); runCropScan();" data-sample="wheat" class="sample-leaf-btn text-left p-3 rounded-xl bg-surface-container-low border border-sage hover:border-leaf transition-all">
+          <p class="font-bold text-xs text-primary dark:text-primary-fixed">🌾 Wheat</p>
+          <p class="text-[11px] text-error font-medium mt-0.5">Yellow Rust</p>
+          <span class="text-[10px] text-outline">Critical (42%)</span>
+        </button>
+
+        <button onclick="selectSampleLeaf('healthy'); runCropScan();" data-sample="healthy" class="sample-leaf-btn text-left p-3 rounded-xl bg-surface-container-low border border-sage hover:border-leaf transition-all">
+          <p class="font-bold text-xs text-primary dark:text-primary-fixed">🌱 Healthy Crop</p>
+          <p class="text-[11px] text-leaf font-medium mt-0.5">No Infection</p>
+          <span class="text-[10px] text-outline">99.4% Clean</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== VIEW 6: CROP ANALYSIS REPORT ==================== -->
+  <section id="view-crop-analysis" class="app-view hidden max-w-5xl mx-auto px-4 md:px-8 py-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <a href="#scanner" class="text-xs text-leaf hover:underline flex items-center gap-1 font-semibold">
+            <span class="material-symbols-outlined text-sm">arrow_back</span>
+            <span>New Scan</span>
+          </a>
+          <span class="text-xs text-outline">•</span>
+          <span class="text-xs text-outline">Diagnosis ID: #KSA-88492</span>
+        </div>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed">Diagnosis & Treatment Plan</h1>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="speakText('Diagnosis for your crop: ' + document.getElementById('analysis-disease-name').textContent + '. Severity level is ' + document.getElementById('analysis-severity').textContent + '. Action required: ' + document.getElementById('analysis-action').textContent)" class="px-4 py-2 rounded-xl bg-sage/60 text-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-secondary-container transition-colors">
+          <span class="material-symbols-outlined text-base">volume_up</span>
+          <span>Listen</span>
+        </button>
+        <button onclick="alert('Analysis report shared to WhatsApp (+91 98234 56789)')" class="px-4 py-2 rounded-xl bg-primary text-on-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-primary-container transition-colors">
+          <span class="material-symbols-outlined text-base">share</span>
+          <span>Share PDF</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+      
+      <!-- Primary Disease Diagnosis Card -->
+      <div class="md:col-span-8 bg-surface-container-lowest border border-sage rounded-2xl p-6 shadow-sm">
+        <div class="flex items-start justify-between mb-4">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-outline">TARGET CROP: <span id="analysis-crop-name" class="text-primary dark:text-primary-fixed">Onion (कांदा)</span></span>
+            <h2 id="analysis-disease-name" class="text-2xl font-bold text-primary dark:text-primary-fixed mt-1">Purple Blotch (Stemphylium vesicarium)</h2>
+          </div>
+          <span id="analysis-confidence" class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold">98% Match</span>
+        </div>
+
+        <div class="p-4 rounded-xl bg-surface-container-low border border-sage/60 mb-6">
+          <div class="flex items-center justify-between text-xs font-semibold mb-2">
+            <span>Infection Severity</span>
+            <span id="analysis-severity" class="text-warning font-bold">Moderate (28% affected leaf area)</span>
+          </div>
+          <div class="w-full h-3 bg-surface-container-high rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-leaf via-warning to-error rounded-full w-[28%]"></div>
+          </div>
+        </div>
+
+        <!-- Treatment Recommendations -->
+        <h3 class="text-sm font-bold uppercase tracking-wider text-charcoal dark:text-gray-200 mb-3">Recommended Treatment & Dosage</h3>
+        <div class="space-y-3 mb-6">
+          <div class="p-4 rounded-xl border border-leaf/40 bg-leaf/5 flex items-start gap-3">
+            <span class="material-symbols-outlined text-leaf text-xl mt-0.5">medication</span>
+            <div>
+              <p class="font-bold text-sm text-primary dark:text-primary-fixed">Chemical Control (Standard):</p>
+              <p id="analysis-recommendation" class="text-xs text-on-surface-variant mt-1">Spray Mancozeb 75% WP @ 2.5g/L or Hexaconazole 5% EC @ 1ml/L with wetting agent.</p>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl border border-sage bg-surface-container-low flex items-start gap-3">
+            <span class="material-symbols-outlined text-leaf text-xl mt-0.5">eco</span>
+            <div>
+              <p class="font-bold text-sm text-primary dark:text-primary-fixed">Organic / Bio-Fungicide Alternative:</p>
+              <p class="text-xs text-on-surface-variant mt-1">Neem Oil (1500 ppm) @ 5ml/L or Trichoderma viride @ 5g/L during early vegetative stages.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Urgency Callout -->
+        <div class="p-4 rounded-xl bg-warning/10 border-l-4 border-warning flex items-start gap-3">
+          <span class="material-symbols-outlined text-warning text-xl mt-0.5">schedule</span>
+          <div>
+            <p class="font-bold text-xs text-primary dark:text-primary-fixed">Timing & Weather Advisory:</p>
+            <p id="analysis-action" class="text-xs text-on-surface-variant mt-0.5">Apply within 48 hours before impending rainfall to prevent spore dispersal.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side Actions & AI Mentor Trigger -->
+      <div class="md:col-span-4 space-y-5">
+        <!-- Direct AI Mentor Card -->
+        <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm text-center">
+          <div class="w-14 h-14 mx-auto mb-3 bg-secondary-container text-on-secondary-container rounded-2xl flex items-center justify-center">
+            <span class="material-symbols-outlined text-3xl text-leaf">smart_toy</span>
+          </div>
+          <h3 class="font-bold text-base text-primary dark:text-primary-fixed">Have Questions on Dosage?</h3>
+          <p class="text-xs text-on-surface-variant mt-1 mb-4">Ask Kisan AI how to mix sprays or find local agro-dealer subsidies in Nashik.</p>
+          <a href="#ai-mentor" onclick="sendChatMessage('What is the exact spray schedule for Purple Blotch on my 2-acre onion plot?')" class="w-full block bg-primary text-on-primary font-semibold py-2.5 rounded-xl text-xs hover:bg-primary-container transition-colors">
+            Ask AI Mentor Now
+          </a>
+        </div>
+
+        <!-- Impact Forecast -->
+        <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm">
+          <h3 class="font-bold text-xs uppercase tracking-wider text-outline mb-2">Yield Protection ROI</h3>
+          <div class="flex items-center justify-between py-2 border-b border-sage/40 text-xs">
+            <span class="text-on-surface-variant">Estimated Yield Loss if untreated</span>
+            <span class="font-bold text-error">-25% (4.5 quintals)</span>
+          </div>
+          <div class="flex items-center justify-between py-2 border-b border-sage/40 text-xs">
+            <span class="text-on-surface-variant">Treatment Cost (2 acres)</span>
+            <span class="font-bold text-charcoal dark:text-white">₹850</span>
+          </div>
+          <div class="flex items-center justify-between pt-2 text-xs">
+            <span class="text-on-surface-variant font-bold">Net Crop Value Saved</span>
+            <span class="font-bold text-leaf">+₹14,200</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== VIEW 7: AI MENTOR CONVERSATIONAL CHAT ==================== -->
+  <section id="view-ai-mentor" class="app-view hidden max-w-4xl mx-auto px-4 md:px-8 py-4 h-[calc(100vh-5rem)] flex flex-col">
+    <!-- Chat Header -->
+    <div class="flex items-center justify-between pb-3 border-b border-sage/50 mb-3 flex-shrink-0">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-secondary-container text-on-secondary-container flex items-center justify-center">
+          <span class="material-symbols-outlined text-2xl text-leaf">psychology</span>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-primary dark:text-primary-fixed">Kisan AI Mentor</h1>
+          <p class="text-xs text-leaf font-medium">● Online • Tailored for Nashik Onion Farming</p>
+        </div>
+      </div>
+      <button onclick="speakText('Namaste Ramesh ji! I am ready to help you with crops, weather, and market subsidies.')" class="p-2 rounded-xl bg-sage/50 hover:bg-secondary-container text-primary transition-colors">
+        <span class="material-symbols-outlined text-lg">volume_up</span>
+      </button>
+    </div>
+
+    <!-- Chat Messages Scroll Container -->
+    <div id="chat-messages-container" class="flex-1 overflow-y-auto pr-2 space-y-3 mb-3">
+      <!-- Dynamically filled by renderChatMessages() -->
+    </div>
+
+    <!-- Quick Prompt Chips -->
+    <div class="flex gap-2 overflow-x-auto pb-2 mb-2 no-scrollbar flex-shrink-0">
+      <button onclick="sendChatMessage('How to treat purple blotch on onions?')" class="whitespace-nowrap px-3 py-1.5 rounded-full bg-surface-container-high hover:bg-surface-variant text-xs text-charcoal dark:text-gray-200 border border-sage/60 transition-colors">
+        🌿 Treat Purple Blotch
+      </button>
+      <button onclick="sendChatMessage('Should I irrigate my onion farm tomorrow?')" class="whitespace-nowrap px-3 py-1.5 rounded-full bg-surface-container-high hover:bg-surface-variant text-xs text-charcoal dark:text-gray-200 border border-sage/60 transition-colors">
+        🌧️ Irrigation advice with rain
+      </button>
+      <button onclick="sendChatMessage('What government subsidies are available for drip irrigation in Maharashtra?')" class="whitespace-nowrap px-3 py-1.5 rounded-full bg-surface-container-high hover:bg-surface-variant text-xs text-charcoal dark:text-gray-200 border border-sage/60 transition-colors">
+        🏛️ Drip Irrigation Subsidy
+      </button>
+      <button onclick="sendChatMessage('What is the best fertilizer for 45-day-old onions?')" class="whitespace-nowrap px-3 py-1.5 rounded-full bg-surface-container-high hover:bg-surface-variant text-xs text-charcoal dark:text-gray-200 border border-sage/60 transition-colors">
+        🧪 Best fertilizer dosage
+      </button>
+    </div>
+
+    <!-- Chat Input Box -->
+    <div class="flex items-center gap-2 bg-surface-container-lowest border border-sage rounded-2xl p-2 shadow-sm flex-shrink-0">
+      <button onclick="alert('Voice recognition listening... Please speak your question.')" class="p-2.5 rounded-xl bg-sage/60 hover:bg-secondary-container text-primary transition-colors flex-shrink-0">
+        <span class="material-symbols-outlined text-lg">mic</span>
+      </button>
+      <input id="chat-input" type="text" placeholder="Ask Kisan AI about crops, fertilizers, pests, weather..." onkeydown="if(event.key === 'Enter') sendChatMessage()" class="flex-1 bg-transparent border-none text-sm text-charcoal dark:text-white placeholder:text-outline focus:outline-none px-2" />
+      <button onclick="sendChatMessage()" class="p-2.5 rounded-xl bg-primary text-on-primary hover:bg-primary-container transition-colors flex-shrink-0">
+        <span class="material-symbols-outlined text-lg">send</span>
+      </button>
+    </div>
+  </section>
+
+
+  <!-- ==================== VIEW 8: WEATHER RISK & ADVISORY ==================== -->
+  <section id="view-weather" class="app-view hidden max-w-5xl mx-auto px-4 md:px-8 py-6">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="weatherRisk">Agromet Weather Risk Advisory</h1>
+        <p class="text-xs md:text-sm text-on-surface-variant">Actionable weather intelligence for Nashik, Maharashtra</p>
+      </div>
+      <button onclick="speakText('Weather advisory: 72% rain probability in the next 24 hours. Wind speed 18 kilometers per hour. Delay pesticide spraying and irrigation.')" class="px-4 py-2 rounded-xl bg-sage/60 text-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-secondary-container transition-colors">
+        <span class="material-symbols-outlined text-base">volume_up</span>
+        <span>Listen</span>
+      </button>
+    </div>
+
+    <!-- Top Alert Card -->
+    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-6 mb-6 shadow-sm">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 flex items-center justify-center">
+            <span class="material-symbols-outlined text-4xl fill-1">rainy</span>
+          </div>
+          <div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-black text-primary dark:text-primary-fixed">28°C</span>
+              <span class="text-sm font-semibold text-leaf">Nashik Farm Zone</span>
+            </div>
+            <p class="text-xs text-on-surface-variant mt-0.5">Heavy overcast with convective rain bands moving from Western Ghats.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 text-center">
+          <div class="p-3 bg-surface-container-low rounded-xl border border-sage/40">
+            <span class="material-symbols-outlined text-leaf text-lg">water_drop</span>
+            <p class="font-bold text-sm text-primary dark:text-primary-fixed">72%</p>
+            <p class="text-[10px] text-outline">Rain Prob.</p>
+          </div>
+          <div class="p-3 bg-surface-container-low rounded-xl border border-sage/40">
+            <span class="material-symbols-outlined text-warning text-lg">air</span>
+            <p class="font-bold text-sm text-primary dark:text-primary-fixed">18 km/h</p>
+            <p class="text-[10px] text-outline">Wind Speed</p>
+          </div>
+          <div class="p-3 bg-surface-container-low rounded-xl border border-sage/40">
+            <span class="material-symbols-outlined text-blue-500 text-lg">humidity_percentage</span>
+            <p class="font-bold text-sm text-primary dark:text-primary-fixed">84%</p>
+            <p class="text-[10px] text-outline">Humidity</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Risk Indices Bento -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="font-bold text-sm text-primary dark:text-primary-fixed">Irrigation Advisory</h3>
+          <span class="px-2 py-0.5 bg-warning/20 text-warning text-[10px] font-bold rounded-full">Postpone</span>
+        </div>
+        <p class="text-xs text-on-surface-variant">Postpone drip irrigation for 48 hours. Soil moisture will remain saturated from natural rainfall.</p>
+      </div>
+
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="font-bold text-sm text-primary dark:text-primary-fixed">Spraying Window</h3>
+          <span class="px-2 py-0.5 bg-error/20 text-error text-[10px] font-bold rounded-full">Unfavorable</span>
+        </div>
+        <p class="text-xs text-on-surface-variant">Winds &gt; 15 km/h will cause pesticide drift. Optimal spraying window opens Thursday morning.</p>
+      </div>
+
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="font-bold text-sm text-primary dark:text-primary-fixed">Fungal Risk Index</h3>
+          <span class="px-2 py-0.5 bg-error/20 text-error text-[10px] font-bold rounded-full">High</span>
+        </div>
+        <p class="text-xs text-on-surface-variant">High relative humidity (84%) creates favorable environment for Purple Blotch and Thrips.</p>
+      </div>
+    </div>
+
+    <!-- 7-Day Forecast Row -->
+    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm">
+      <h3 class="text-xs font-bold uppercase tracking-wider text-outline mb-4">7-Day Agri-Forecast</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
+        <div class="p-3 rounded-xl bg-secondary-container/40 border border-leaf/40 text-center">
+          <p class="text-xs font-bold">Today</p>
+          <span class="material-symbols-outlined text-leaf text-2xl my-1">rainy</span>
+          <p class="text-xs font-extrabold">28° / 21°</p>
+          <p class="text-[10px] text-leaf font-semibold">72% Rain</p>
+        </div>
+
+        <div class="p-3 rounded-xl bg-surface-container-low text-center">
+          <p class="text-xs font-bold text-outline">Tomorrow</p>
+          <span class="material-symbols-outlined text-blue-500 text-2xl my-1">thunderstorm</span>
+          <p class="text-xs font-extrabold">27° / 20°</p>
+          <p class="text-[10px] text-outline">65% Rain</p>
+        </div>
+
+        <div class="p-3 rounded-xl bg-surface-container-low text-center">
+          <p class="text-xs font-bold text-outline">Wed</p>
+          <span class="material-symbols-outlined text-yellow-500 text-2xl my-1">partly_cloudy_day</span>
+          <p class="text-xs font-extrabold">29° / 22°</p>
+          <p class="text-[10px] text-outline">20% Rain</p>
+        </div>
+
+        <div class="p-3 rounded-xl bg-surface-container-low text-center">
+          <p class="text-xs font-bold text-outline">Thu</p>
+          <span class="material-symbols-outlined text-amber-500 text-2xl my-1">wb_sunny</span>
+          <p class="text-xs font-extrabold">31° / 21°</p>
+          <p class="text-[10px] text-leaf font-semibold">Spray Ideal</p>
+        </div>
+
+        <div class="p-3 rounded-xl bg-surface-container-low text-center">
+          <p class="text-xs font-bold text-outline">Fri</p>
+          <span class="material-symbols-outlined text-amber-500 text-2xl my-1">wb_sunny</span>
+          <p class="text-xs font-extrabold">32° / 22°</p>
+          <p class="text-[10px] text-outline">Dry</p>
+        </div>
+
+        <div class="p-3 rounded-xl bg-surface-container-low text-center">
+          <p class="text-xs font-bold text-outline">Sat</p>
+          <span class="material-symbols-outlined text-yellow-500 text-2xl my-1">partly_cloudy_day</span>
+          <p class="text-xs font-extrabold">30° / 23°</p>
+          <p class="text-[10px] text-outline">10% Rain</p>
+        </div>
+
+        <div class="p-3 rounded-xl bg-surface-container-low text-center">
+          <p class="text-xs font-bold text-outline">Sun</p>
+          <span class="material-symbols-outlined text-amber-500 text-2xl my-1">wb_sunny</span>
+          <p class="text-xs font-extrabold">31° / 22°</p>
+          <p class="text-[10px] text-outline">Dry</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== VIEW 9: GOVERNMENT SCHEMES ==================== -->
+  <section id="view-schemes" class="app-view hidden max-w-5xl mx-auto px-4 md:px-8 py-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="schemes">Government Schemes & Subsidies</h1>
+        <p class="text-xs md:text-sm text-on-surface-variant">Central & State agriculture benefit programs eligible for your land</p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="filterSchemes('all')" data-category="all" class="scheme-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-primary text-on-primary transition-all">All</button>
+        <button onclick="filterSchemes('subsidy')" data-category="subsidy" class="scheme-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface-container text-on-surface hover:bg-surface-variant transition-all">Subsidies</button>
+        <button onclick="filterSchemes('insurance')" data-category="insurance" class="scheme-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface-container text-on-surface hover:bg-surface-variant transition-all">Insurance</button>
+        <button onclick="filterSchemes('solar')" data-category="solar" class="scheme-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface-container text-on-surface hover:bg-surface-variant transition-all">Solar</button>
+      </div>
+    </div>
+
+    <!-- Scheme Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+      
+      <!-- Card 1: PM-Kisan -->
+      <div data-category="subsidy" class="scheme-card bg-surface-container-lowest border border-sage rounded-2xl p-5 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-secondary-container text-on-secondary-container">Central Scheme</span>
+            <span class="text-xs font-bold text-leaf">₹6,000 / year</span>
+          </div>
+          <h3 class="text-lg font-bold text-primary dark:text-primary-fixed">PM-Kisan Samman Nidhi</h3>
+          <p class="text-xs text-on-surface-variant mt-1.5">Direct income support of ₹6,000 in three equal installments directly to bank accounts for all landholding farmer families.</p>
+        </div>
+        <div class="pt-4 mt-4 border-t border-sage/40 flex items-center justify-between">
+          <span class="text-xs text-outline">Status: Enrolled (Active)</span>
+          <button onclick="openSchemeModal('PM-Kisan Samman Nidhi', '₹6,000/yr Direct Benefit Transfer')" class="px-4 py-2 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-container transition-colors" data-t="checkEligibility">
+            Check Status
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 2: Solar Pump (Magel Tyala Saur Krushi Pump) -->
+      <div data-category="solar" class="scheme-card bg-surface-container-lowest border border-sage rounded-2xl p-5 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900">90% Subsidy</span>
+            <span class="text-xs font-bold text-leaf">Save ₹1,80,000</span>
+          </div>
+          <h3 class="text-lg font-bold text-primary dark:text-primary-fixed">PM-KUSUM / Saur Krushi Pump</h3>
+          <p class="text-xs text-on-surface-variant mt-1.5">Get 3HP / 5HP Solar Powered Agricultural pumps with 90% government financial assistance for off-grid day-time irrigation.</p>
+        </div>
+        <div class="pt-4 mt-4 border-t border-sage/40 flex items-center justify-between">
+          <span class="text-xs text-outline">Eligibility: Verified for 2 Acres</span>
+          <button onclick="openSchemeModal('Magel Tyala Saur Krushi Pump (PM-KUSUM)', '90% Financial Assistance on Solar Pumps')" class="px-4 py-2 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-container transition-colors" data-t="applyNow">
+            Apply Now
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 3: PM Fasal Bima Yojana -->
+      <div data-category="insurance" class="scheme-card bg-surface-container-lowest border border-sage rounded-2xl p-5 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 text-blue-900">Crop Insurance</span>
+            <span class="text-xs font-bold text-leaf">₹1 Premium Scheme (MH)</span>
+          </div>
+          <h3 class="text-lg font-bold text-primary dark:text-primary-fixed">Pradhan Mantri Fasal Bima (PMFBY)</h3>
+          <p class="text-xs text-on-surface-variant mt-1.5">Comprehensive risk insurance covering non-preventable yield losses from unseasonal rains, drought, flood, and localized pest infestation.</p>
+        </div>
+        <div class="pt-4 mt-4 border-t border-sage/40 flex items-center justify-between">
+          <span class="text-xs text-outline">Kharif Onion Coverage</span>
+          <button onclick="openSchemeModal('Pradhan Mantri Fasal Bima Yojana (PMFBY)', 'Comprehensive ₹1 Claim Protection')" class="px-4 py-2 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-container transition-colors" data-t="applyNow">
+            Apply / Claim
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 4: Drip & Micro-Irrigation Subsidy -->
+      <div data-category="subsidy" class="scheme-card bg-surface-container-lowest border border-sage rounded-2xl p-5 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-secondary-container text-on-secondary-container">80% Subsidy</span>
+            <span class="text-xs font-bold text-leaf">Per Drop More Crop</span>
+          </div>
+          <h3 class="text-lg font-bold text-primary dark:text-primary-fixed">Micro Irrigation (Drip/Sprinkler) Subsidy</h3>
+          <p class="text-xs text-on-surface-variant mt-1.5">Subsidy on high-grade inline drip irrigation kits, filters, and automated fertigation venturi systems under Mahadbt portal.</p>
+        </div>
+        <div class="pt-4 mt-4 border-t border-sage/40 flex items-center justify-between">
+          <span class="text-xs text-outline">Mahadbt Verified</span>
+          <button onclick="openSchemeModal('Micro Irrigation Subsidy (Drip & Sprinkler)', '80% Subsidy for Small & Marginal Farmers')" class="px-4 py-2 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-container transition-colors" data-t="applyNow">
+            Apply Now
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== VIEW 10: AI SUGGESTIONS & ROI IMPACT ==================== -->
+  <section id="view-suggestions" class="app-view hidden max-w-5xl mx-auto px-4 md:px-8 py-6">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="suggestions">AI Suggestions & Yield Impact</h1>
+        <p class="text-xs md:text-sm text-on-surface-variant">Data-driven recommendations to boost harvest quality and maximize profit</p>
+      </div>
+      <button onclick="speakText('Here are your top suggestions: Postpone irrigation, apply micronutrient spray on day 52, and enroll in solar pump scheme to save 18,500 rupees per acre.')" class="px-4 py-2 rounded-xl bg-sage/60 text-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-secondary-container transition-colors">
+        <span class="material-symbols-outlined text-base">volume_up</span>
+        <span>Listen</span>
+      </button>
+    </div>
+
+    <div class="space-y-4">
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-2xl text-leaf">water_drop</span>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed">Delay Drip Fertigation by 48 Hours</h3>
+            <span class="text-xs font-bold text-leaf">Saves ₹1,400</span>
+          </div>
+          <p class="text-xs text-on-surface-variant mt-1">Upcoming precipitation will wash away soluble nutrients if applied now. Apply once topsoil dries on Thursday.</p>
+        </div>
+      </div>
+
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-2xl">science</span>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed">Foliar Spray of 00:52:34 + Boron</h3>
+            <span class="text-xs font-bold text-leaf">+15% Bulb Size</span>
+          </div>
+          <p class="text-xs text-on-surface-variant mt-1">At bulb enlargement stage (Day 50-60), Potassium and Boron promote uniform bulb firmness and storage shelf-life.</p>
+        </div>
+      </div>
+
+      <div class="bg-surface-container-lowest border border-sage rounded-2xl p-5 shadow-sm flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-2xl">solar_power</span>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-sm md:text-base text-primary dark:text-primary-fixed">Solar Pump Grid Transition</h3>
+            <span class="text-xs font-bold text-leaf">90% Subsidy</span>
+          </div>
+          <p class="text-xs text-on-surface-variant mt-1">Eliminate diesel generator expenses and erratic night power cuts by applying for PM-KUSUM 5HP solar pump.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== VIEW 11: FARMING MANAGEMENT & WORKFLOW ==================== -->
+  <section id="view-management" class="app-view hidden max-w-5xl mx-auto px-4 md:px-8 py-6">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-primary dark:text-primary-fixed" data-t="management">Farming Workflow & Crop Calendar</h1>
+        <p class="text-xs md:text-sm text-on-surface-variant">Lifecycle milestones & task tracker for Kharif Onion (2 Acres)</p>
+      </div>
+      <button onclick="alert('Task completed and saved to farm log.')" class="px-4 py-2 rounded-xl bg-primary text-on-primary font-semibold text-xs flex items-center gap-1.5 hover:bg-primary-container transition-colors">
+        <span class="material-symbols-outlined text-base">add_task</span>
+        <span>Add Farm Task</span>
+      </button>
+    </div>
+
+    <!-- Timeline Milestones -->
+    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-6 shadow-sm mb-6">
+      <h3 class="text-xs font-bold uppercase tracking-wider text-outline mb-6">Crop Lifecycle Progress (Day 48 of 110)</h3>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 relative">
+        <!-- Milestone 1 -->
+        <div class="p-4 rounded-xl bg-secondary-container/50 border border-leaf/40">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="material-symbols-outlined text-leaf text-base">check_circle</span>
+            <span class="text-xs font-bold text-primary">Nursery & Sowing</span>
+          </div>
+          <p class="text-[11px] text-outline">Day 1 - 15 • Completed</p>
+        </div>
+
+        <!-- Milestone 2 -->
+        <div class="p-4 rounded-xl bg-secondary-container/50 border border-leaf/40">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="material-symbols-outlined text-leaf text-base">check_circle</span>
+            <span class="text-xs font-bold text-primary">Transplanting</span>
+          </div>
+          <p class="text-[11px] text-outline">Day 16 - 30 • Completed</p>
+        </div>
+
+        <!-- Milestone 3 (Current Active) -->
+        <div class="p-4 rounded-xl bg-primary text-on-primary shadow-md">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="material-symbols-outlined text-secondary-container text-base">autorenew</span>
+            <span class="text-xs font-bold">Bulb Formation</span>
+          </div>
+          <p class="text-[11px] text-primary-fixed-dim">Day 31 - 75 • Active Phase</p>
+        </div>
+
+        <!-- Milestone 4 -->
+        <div class="p-4 rounded-xl bg-surface-container-low border border-sage/40">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="material-symbols-outlined text-outline text-base">schedule</span>
+            <span class="text-xs font-bold text-outline">Maturity & Harvest</span>
+          </div>
+          <p class="text-[11px] text-outline">Day 76 - 110 • Upcoming</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Tasks Checklist -->
+    <div class="bg-surface-container-lowest border border-sage rounded-2xl p-6 shadow-sm">
+      <h3 class="text-xs font-bold uppercase tracking-wider text-outline mb-4">Pending Farm Actions</h3>
+      <div class="space-y-3">
+        <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-surface-container-low cursor-pointer transition-colors border border-sage/40">
+          <input type="checkbox" class="w-5 h-5 rounded text-leaf focus:ring-leaf" />
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-charcoal dark:text-white">Postpone irrigation till Thursday dry window</p>
+            <p class="text-xs text-outline">Weather Alert Trigger • High Priority</p>
+          </div>
+        </label>
+
+        <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-surface-container-low cursor-pointer transition-colors border border-sage/40">
+          <input type="checkbox" class="w-5 h-5 rounded text-leaf focus:ring-leaf" />
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-charcoal dark:text-white">Apply Mancozeb 75% WP preventative spray for Purple Blotch</p>
+            <p class="text-xs text-outline">Crop Health Task • Due Day 50</p>
+          </div>
+        </label>
+
+        <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-surface-container-low cursor-pointer transition-colors border border-sage/40">
+          <input type="checkbox" class="w-5 h-5 rounded text-leaf focus:ring-leaf" />
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-charcoal dark:text-white">Submit 7/12 land document on Mahadbt for Drip Subsidy</p>
+            <p class="text-xs text-outline">Government Schemes • Due this week</p>
+          </div>
+        </label>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== MODALS: SCAN PROCESSING & SCHEME APPLICATION ==================== -->
+  
+  <!-- Scan Processing Animation Modal -->
+  <div id="scan-processing-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-surface-container-lowest border border-sage rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl">
+      <div class="relative w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+        <div class="absolute inset-0 rounded-full border-4 border-leaf/20 animate-ping"></div>
+        <div class="w-20 h-20 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center pulse-glow">
+          <span class="material-symbols-outlined text-4xl text-leaf">center_focus_strong</span>
+        </div>
+      </div>
+      <h3 class="text-lg font-bold text-primary dark:text-primary-fixed mb-2">Analyzing Leaf Sample</h3>
+      <p id="scan-progress-text" class="text-xs text-on-surface-variant h-8 animate-pulse">Initializing Neural Vision model...</p>
+    </div>
+  </div>
+
+  <!-- Scheme Application Modal -->
+  <div id="scheme-apply-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-surface-container-lowest border border-sage rounded-3xl p-6 max-w-md w-full shadow-2xl">
+      <div class="flex items-center justify-between pb-3 border-b border-sage/40 mb-4">
+        <h3 class="font-bold text-base text-primary dark:text-primary-fixed">Scheme Application Portal</h3>
+        <button onclick="closeSchemeModal()" class="p-1 text-outline hover:text-charcoal">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <h4 id="scheme-modal-title" class="font-bold text-lg text-charcoal dark:text-white">Scheme Name</h4>
+        <span id="scheme-modal-subsidy" class="inline-block mt-1 text-xs font-bold px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container">Subsidy Info</span>
+      </div>
+
+      <div class="space-y-3 mb-6 text-xs text-on-surface-variant bg-surface-container-low p-4 rounded-xl border border-sage/40">
+        <p class="font-bold text-primary dark:text-primary-fixed">Required Documents:</p>
+        <ul class="list-disc pl-4 space-y-1">
+          <li>Aadhaar Card (Linked with Phone)</li>
+          <li>7/12 & 8A Land Record Extracts</li>
+          <li>Bank Passbook (IFSC & Account No.)</li>
+        </ul>
+      </div>
+
+      <div class="flex gap-3">
+        <button onclick="closeSchemeModal()" class="flex-1 py-2.5 rounded-xl border border-sage text-xs font-semibold hover:bg-surface-variant">Cancel</button>
+        <button onclick="alert('Application submitted successfully! Tracking SMS sent to +91 98234 56789'); closeSchemeModal();" class="flex-1 py-2.5 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-container">Confirm & Submit</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Application Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>
