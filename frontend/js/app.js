@@ -1,10 +1,43 @@
 /**
- * KisanSathi - Core Application Logic, Router & Real-Time Open-Meteo Weather Service with Interactive Leaflet Map
+ * KisanSathi - Intelligent Agritech Platform
+ * Features:
+ * 1. Firebase Authentication (Google, Email/Phone, Demo Guest Auth)
+ * 2. Open-Meteo High-Resolution Real-Time Weather & Agromet Engine
+ * 3. Interactive Leaflet GIS & Satellite Maps with Pin Pointing
+ * 4. Multi-language Support (Marathi, Hindi, English)
+ * 5. Conversational AI Mentor & Leaf Scanner Diagnostics
  */
+
+// ==========================================
+// FIREBASE AUTHENTICATION CONFIGURATION & SERVICE
+// ==========================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBNPnbgN2ZoS1fUJ4bYXJ4wz0RMSV3b1tg",
+  authDomain: "skhwinners.firebaseapp.com",
+  projectId: "skhwinners",
+  storageBucket: "skhwinners.firebasestorage.app",
+  messagingSenderId: "301326625767",
+  appId: "1:301326625767:web:31af8b74e173375aa36b42",
+  measurementId: "G-LHHTFXF6M7"
+};
+
+// Initialize Firebase
+let firebaseAuth = null;
+if (typeof firebase !== 'undefined') {
+  try {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    firebaseAuth = firebase.auth();
+  } catch (e) {
+    console.warn('Firebase init warning:', e);
+  }
+}
 
 const APP_STATE = {
   language: localStorage.getItem('kisansathi_lang') || 'en', // 'mr', 'hi', 'en'
   darkMode: localStorage.getItem('kisansathi_theme') === 'dark',
+  currentUser: null,
   user: {
     name: 'Ramesh Patil',
     role: 'Premium Farmer',
@@ -261,6 +294,215 @@ function closeDrawer() {
     overlay.classList.add('hidden');
   }
 }
+
+// ==========================================
+// FIREBASE AUTHENTICATION SERVICE
+// ==========================================
+const AUTH_SERVICE = {
+  authMode: 'signin', // 'signin' or 'signup'
+
+  initAuth() {
+    if (!firebaseAuth) return;
+
+    firebaseAuth.onAuthStateChanged(user => {
+      if (user) {
+        APP_STATE.currentUser = user;
+        const name = user.displayName || (user.email ? user.email.split('@')[0] : 'Ramesh Patil');
+        APP_STATE.user.name = name;
+        APP_STATE.user.phone = user.phoneNumber || user.email || '+91 98234 56789';
+
+        WEATHER_SERVICE.renderProfileLocations();
+
+        // If on login or welcome, navigate to dashboard
+        if (['login', 'welcome'].includes(APP_STATE.currentRoute)) {
+          navigateTo('dashboard');
+        }
+      } else {
+        APP_STATE.currentUser = null;
+      }
+    });
+  },
+
+  switchTab(mode) {
+    this.authMode = mode;
+    const tabIn = document.getElementById('tab-sign-in');
+    const tabUp = document.getElementById('tab-sign-up');
+    const nameField = document.getElementById('signup-name-field');
+    const heading = document.getElementById('auth-heading');
+    const btnText = document.getElementById('auth-btn-text');
+
+    this.hideAlert();
+
+    if (mode === 'signup') {
+      if (tabUp) tabUp.className = 'flex-1 py-2 rounded-lg bg-primary text-on-primary shadow-sm transition-all text-center';
+      if (tabIn) tabIn.className = 'flex-1 py-2 rounded-lg text-outline hover:text-primary transition-all text-center';
+      if (nameField) nameField.classList.remove('hidden');
+      if (heading) heading.textContent = 'Create Farm Account';
+      if (btnText) btnText.textContent = 'Register & Setup Farm';
+    } else {
+      if (tabIn) tabIn.className = 'flex-1 py-2 rounded-lg bg-primary text-on-primary shadow-sm transition-all text-center';
+      if (tabUp) tabUp.className = 'flex-1 py-2 rounded-lg text-outline hover:text-primary transition-all text-center';
+      if (nameField) nameField.classList.add('hidden');
+      if (heading) heading.textContent = 'Welcome Back';
+      if (btnText) btnText.textContent = 'Login to Farm';
+    }
+  },
+
+  normalizeEmail(input) {
+    const trimmed = input.trim();
+    if (trimmed.includes('@')) return trimmed;
+    // Format numeric phone into valid email domain for Firebase auth
+    const digits = trimmed.replace(/\D/g, '');
+    return `${digits || 'farmer'}@kisansathi.agri`;
+  },
+
+  async handleFormSubmit() {
+    const emailInput = document.getElementById('auth-email-input');
+    const passwordInput = document.getElementById('auth-password-input');
+    const nameInput = document.getElementById('auth-name-input');
+
+    if (!emailInput || !passwordInput) return;
+
+    const email = this.normalizeEmail(emailInput.value);
+    const password = passwordInput.value;
+    const name = nameInput && nameInput.value ? nameInput.value.trim() : 'Farmer';
+
+    const submitBtn = document.getElementById('auth-submit-btn');
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+      if (!firebaseAuth) {
+        // Offline demo fallback
+        APP_STATE.user.name = name || 'Ramesh Patil';
+        navigateTo('dashboard');
+        return;
+      }
+
+      if (this.authMode === 'signup') {
+        const cred = await firebaseAuth.createUserWithEmailAndPassword(email, password);
+        if (cred.user && name) {
+          await cred.user.updateProfile({ displayName: name });
+        }
+        APP_STATE.user.name = name;
+        this.showAlert('Account created successfully! Welcome to KisanSathi.', 'success');
+        setTimeout(() => navigateTo('onboarding'), 600);
+      } else {
+        await firebaseAuth.signInWithEmailAndPassword(email, password);
+        this.showAlert('Login successful! Loading your farm dashboard...', 'success');
+        setTimeout(() => navigateTo('dashboard'), 500);
+      }
+    } catch (err) {
+      console.warn('Firebase Auth Error:', err);
+      let msg = err.message || 'Authentication error';
+      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+        msg = 'Invalid credentials. You can use Quick Demo Sign-In or Register a new account.';
+      } else if (err.code === 'auth/email-already-in-use') {
+        msg = 'An account with this email/number already exists. Please Sign In.';
+      } else if (err.code === 'auth/weak-password') {
+        msg = 'Password should be at least 6 characters.';
+      }
+      this.showAlert(msg, 'error');
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  },
+
+  async signInWithGoogle() {
+    if (!firebaseAuth) {
+      this.signInDemoFarmer();
+      return;
+    }
+
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      const result = await firebaseAuth.signInWithPopup(provider);
+      if (result.user) {
+        APP_STATE.user.name = result.user.displayName || 'Farmer';
+        this.showAlert(`Welcome ${APP_STATE.user.name}!`, 'success');
+        setTimeout(() => navigateTo('dashboard'), 500);
+      }
+    } catch (err) {
+      console.warn('Google Sign-In Popup failed, trying demo login:', err);
+      this.showAlert(err.message || 'Google sign in was cancelled or not supported.', 'error');
+    }
+  },
+
+  async signInDemoFarmer() {
+    try {
+      if (firebaseAuth) {
+        try {
+          await firebaseAuth.signInWithEmailAndPassword('ramesh.patil@kisansathi.agri', 'kisan1234');
+        } catch (e) {
+          // If demo user doesn't exist, create it or sign in anonymously
+          try {
+            await firebaseAuth.createUserWithEmailAndPassword('ramesh.patil@kisansathi.agri', 'kisan1234');
+            if (firebaseAuth.currentUser) {
+              await firebaseAuth.currentUser.updateProfile({ displayName: 'Ramesh Patil' });
+            }
+          } catch (e2) {
+            await firebaseAuth.signInAnonymously();
+          }
+        }
+      }
+    } catch (err) {
+      console.warn('Demo login note:', err);
+    }
+    APP_STATE.user.name = 'Ramesh Patil';
+    APP_STATE.user.location = 'Nashik, Maharashtra';
+    APP_STATE.user.crop = 'Onion';
+    WEATHER_SERVICE.renderProfileLocations();
+    navigateTo('dashboard');
+  },
+
+  async forgotPassword() {
+    const emailInput = document.getElementById('auth-email-input');
+    const rawVal = emailInput ? emailInput.value : '';
+    const email = prompt('Enter your registered email address to receive password reset link:', rawVal || '');
+    if (!email) return;
+
+    try {
+      if (firebaseAuth) {
+        await firebaseAuth.sendPasswordResetEmail(email.trim());
+        alert(`Password reset link sent to ${email}. Please check your inbox.`);
+      } else {
+        alert('Password reset link simulated for ' + email);
+      }
+    } catch (err) {
+      alert('Error: ' + err.message);
+    }
+  },
+
+  async logout() {
+    try {
+      if (firebaseAuth) {
+        await firebaseAuth.signOut();
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+    APP_STATE.currentUser = null;
+    navigateTo('welcome');
+  },
+
+  showAlert(message, type = 'error') {
+    const alertEl = document.getElementById('auth-alert');
+    if (!alertEl) return;
+
+    alertEl.textContent = message;
+    alertEl.classList.remove('hidden', 'bg-error/15', 'text-error', 'border-error/40', 'bg-leaf/15', 'text-leaf', 'border-leaf/40');
+    
+    if (type === 'success') {
+      alertEl.classList.add('bg-leaf/15', 'text-leaf', 'border', 'border-leaf/40');
+    } else {
+      alertEl.classList.add('bg-error/15', 'text-error', 'border', 'border-error/40');
+    }
+  },
+
+  hideAlert() {
+    const alertEl = document.getElementById('auth-alert');
+    if (alertEl) alertEl.classList.add('hidden');
+  }
+};
 
 // ==========================================
 // OPEN-METEO & LEAFLET AGRO-GIS MAP SERVICE
@@ -979,6 +1221,7 @@ const WEATHER_SERVICE = {
     const sName = document.getElementById('sidebar-farmer-name');
     const hName = document.getElementById('header-farmer-name');
     const dName = document.getElementById('dashboard-farmer-name');
+    const hAvatar = document.getElementById('header-avatar');
 
     if (sLoc) sLoc.textContent = this.activeLocationName;
     if (hProf) hProf.textContent = `${this.activeLocationName.split(',')[0]} • ${APP_STATE.user.crop}`;
@@ -987,6 +1230,7 @@ const WEATHER_SERVICE = {
     if (sName) sName.textContent = APP_STATE.user.name;
     if (hName) hName.textContent = APP_STATE.user.name.split(' ')[0];
     if (dName) dName.textContent = `Hi ${APP_STATE.user.name.split(' ')[0]}`;
+    if (hAvatar) hAvatar.textContent = (APP_STATE.user.name || 'R').charAt(0).toUpperCase();
   },
 
   // Voice narration of current live analysis
@@ -1219,16 +1463,10 @@ window.addEventListener('DOMContentLoaded', () => {
   updateThemeIcons();
   handleRouting();
 
-  window.addEventListener('hashchange', handleRouting);
+  // Initialize Firebase Auth state listener
+  AUTH_SERVICE.initAuth();
 
-  // Setup login form handler
-  const loginForm = document.getElementById('login-form');
-  if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      navigateTo('dashboard');
-    });
-  }
+  window.addEventListener('hashchange', handleRouting);
 
   // Setup onboarding form handler
   const onboardingForm = document.getElementById('onboarding-form');

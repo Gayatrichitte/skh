@@ -170,11 +170,15 @@
       </nav>
 
       <!-- Bottom Quick Actions -->
-      <div class="pt-3 border-t border-sage/40 space-y-2">
+      <div class="pt-3 border-t border-sage/40 space-y-1">
         <a href="#welcome" class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs text-outline hover:bg-surface-variant transition-colors">
-          <span class="material-symbols-outlined text-base">logout</span>
-          <span>Switch User / Language</span>
+          <span class="material-symbols-outlined text-base">translate</span>
+          <span>Change Language</span>
         </a>
+        <button onclick="AUTH_SERVICE.logout()" class="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs text-error hover:bg-error/10 transition-colors text-left">
+          <span class="material-symbols-outlined text-base">logout</span>
+          <span>Sign Out / Lock</span>
+        </button>
       </div>
     </aside>
 
@@ -330,7 +334,7 @@
   </section>
 
 
-  <!-- ==================== VIEW 2: LOGIN ==================== -->
+  <!-- ==================== VIEW 2: LOGIN & AUTH ==================== -->
   <section id="view-login" class="app-view hidden min-h-screen flex flex-col justify-center items-center px-4 py-8 relative bg-gradient-to-b from-surface via-surface-container-low to-surface">
     <div class="w-full max-w-md">
       <!-- Brand & Back -->
@@ -343,48 +347,85 @@
       </div>
 
       <div class="bg-surface-container-lowest border border-sage rounded-2xl p-6 shadow-sm">
-        <div class="text-center mb-6">
+        <div class="text-center mb-5">
           <div class="w-12 h-12 mx-auto mb-3 bg-sage/50 rounded-2xl flex items-center justify-center text-primary">
             <span class="material-symbols-outlined text-2xl fill-1">lock</span>
           </div>
-          <h2 class="text-2xl font-bold text-charcoal dark:text-white" data-t="welcomeBack">Welcome Back</h2>
-          <p class="text-xs text-on-surface-variant mt-1">Enter your phone number to access your farm portal</p>
+          <h2 id="auth-heading" class="text-2xl font-bold text-charcoal dark:text-white" data-t="welcomeBack">Welcome Back</h2>
+          <p id="auth-subheading" class="text-xs text-on-surface-variant mt-1">Sign in with Google, phone, or email to access your farm portal</p>
         </div>
 
-        <form id="login-form" class="space-y-4">
-          <div>
-            <label class="block text-xs font-semibold text-charcoal dark:text-gray-200 mb-1.5" data-t="mobileNumber">Mobile Number</label>
+        <!-- Auth Mode Switcher Tabs -->
+        <div class="flex p-1 bg-surface-container-low rounded-xl border border-sage/40 mb-4 text-xs font-semibold">
+          <button type="button" id="tab-sign-in" onclick="AUTH_SERVICE.switchTab('signin')" class="flex-1 py-2 rounded-lg bg-primary text-on-primary shadow-sm transition-all text-center">Sign In</button>
+          <button type="button" id="tab-sign-up" onclick="AUTH_SERVICE.switchTab('signup')" class="flex-1 py-2 rounded-lg text-outline hover:text-primary transition-all text-center">Register New</button>
+        </div>
+
+        <!-- Error/Success Message Alert -->
+        <div id="auth-alert" class="hidden p-3 mb-4 rounded-xl text-xs flex items-center gap-2"></div>
+
+        <!-- Google One-Click Auth Button -->
+        <button type="button" onclick="AUTH_SERVICE.signInWithGoogle()" class="w-full py-3 px-4 bg-surface-container-low hover:bg-surface-variant border border-sage/70 rounded-xl font-semibold text-xs text-charcoal dark:text-white flex items-center justify-center gap-2.5 transition-all shadow-sm active:scale-[0.98] mb-4">
+          <svg class="w-4 h-4" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span>Continue with Google</span>
+        </button>
+
+        <div class="relative flex py-1 items-center mb-4">
+          <div class="flex-grow border-t border-sage/60"></div>
+          <span class="flex-shrink mx-3 text-[11px] text-outline uppercase font-semibold">Or with credentials</span>
+          <div class="flex-grow border-t border-sage/60"></div>
+        </div>
+
+        <!-- Email/Phone & Password Form -->
+        <form id="login-form" onsubmit="event.preventDefault(); AUTH_SERVICE.handleFormSubmit();" class="space-y-3.5">
+          <div id="signup-name-field" class="hidden">
+            <label class="block text-xs font-semibold text-charcoal dark:text-gray-200 mb-1">Full Name</label>
             <div class="relative">
-              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-lg">phone_iphone</span>
-              <input type="tel" value="9823456789" required placeholder="10-digit mobile number" class="w-full bg-surface-container-low border border-sage rounded-xl py-3 pl-11 pr-3 text-sm text-charcoal dark:text-white focus:outline-none focus:border-leaf focus:ring-1 focus:ring-leaf transition-colors" />
+              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-lg">person</span>
+              <input id="auth-name-input" type="text" placeholder="Farmer name" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 pl-11 pr-3 text-sm text-charcoal dark:text-white focus:outline-none focus:border-leaf focus:ring-1 focus:ring-leaf transition-colors" />
             </div>
           </div>
 
           <div>
-            <div class="flex justify-between items-center mb-1.5">
-              <label class="text-xs font-semibold text-charcoal dark:text-gray-200" data-t="password">Password / OTP</label>
-              <a href="#" class="text-xs text-leaf hover:underline">Forgot?</a>
+            <label class="block text-xs font-semibold text-charcoal dark:text-gray-200 mb-1" data-t="mobileNumber">Phone / Email</label>
+            <div class="relative">
+              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-lg">alternate_email</span>
+              <input id="auth-email-input" type="text" value="ramesh.farmer@kisansathi.agri" required placeholder="Phone number or email" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 pl-11 pr-3 text-sm text-charcoal dark:text-white focus:outline-none focus:border-leaf focus:ring-1 focus:ring-leaf transition-colors" />
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="text-xs font-semibold text-charcoal dark:text-gray-200" data-t="password">Password</label>
+              <a href="javascript:void(0)" onclick="AUTH_SERVICE.forgotPassword()" class="text-xs text-leaf hover:underline">Forgot?</a>
             </div>
             <div class="relative">
               <span class="absolute left-3.5 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-lg">key</span>
-              <input type="password" value="123456" required placeholder="Enter password" class="w-full bg-surface-container-low border border-sage rounded-xl py-3 pl-11 pr-3 text-sm text-charcoal dark:text-white focus:outline-none focus:border-leaf focus:ring-1 focus:ring-leaf transition-colors" />
+              <input id="auth-password-input" type="password" value="kisan1234" required placeholder="Enter password (min 6 chars)" class="w-full bg-surface-container-low border border-sage rounded-xl py-2.5 pl-11 pr-3 text-sm text-charcoal dark:text-white focus:outline-none focus:border-leaf focus:ring-1 focus:ring-leaf transition-colors" />
             </div>
           </div>
 
-          <div class="pt-2 space-y-3">
-            <button type="submit" class="w-full bg-primary text-on-primary font-semibold py-3.5 rounded-xl hover:bg-primary-container transition-all active:scale-[0.98] shadow-sm flex items-center justify-center gap-2">
-              <span data-t="login">Login to Farm</span>
+          <div class="pt-2 space-y-2.5">
+            <button id="auth-submit-btn" type="submit" class="w-full bg-primary text-on-primary font-semibold py-3 rounded-xl hover:bg-primary-container transition-all active:scale-[0.98] shadow-sm flex items-center justify-center gap-2 text-sm">
+              <span id="auth-btn-text" data-t="login">Login to Farm</span>
               <span class="material-symbols-outlined text-sm">arrow_forward</span>
             </button>
-            <button type="button" onclick="navigateTo('onboarding')" class="w-full bg-transparent border border-primary text-primary dark:text-primary-fixed font-semibold py-3 rounded-xl hover:bg-sage/20 transition-all active:scale-[0.98] text-sm">
-              <span data-t="signUp">New Farmer? Create Profile</span>
+            
+            <button type="button" onclick="AUTH_SERVICE.signInDemoFarmer()" class="w-full bg-surface-container-low border border-sage text-primary dark:text-primary-fixed font-semibold py-2.5 rounded-xl hover:bg-secondary-container transition-all active:scale-[0.98] text-xs flex items-center justify-center gap-1.5">
+              <span class="material-symbols-outlined text-sm text-leaf">bolt</span>
+              <span>Quick Demo Sign-In (Ramesh Patil)</span>
             </button>
           </div>
         </form>
 
-        <div class="mt-6 pt-4 border-t border-sage/40 text-center">
+        <div class="mt-5 pt-3 border-t border-sage/40 text-center">
           <p class="text-[11px] text-outline">
-            Quick Demo Login: Pre-filled with Ramesh Patil (Nashik, Onion)
+            🔒 Secured with Firebase Authentication (SKH Winners)
           </p>
         </div>
       </div>
@@ -1364,6 +1405,10 @@
     </div>
   </div>
 
+
+  <!-- Firebase SDK (v10 Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 
   <!-- Leaflet Map Library -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
